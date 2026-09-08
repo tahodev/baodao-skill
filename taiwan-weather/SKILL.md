@@ -1,6 +1,6 @@
 ---
 name: taiwan-weather
-description: 用 Open-Meteo（免 API 金鑰）查台灣 22 縣市現在天氣與未來數日預報。天氣、氣溫、下雨、降雨機率、明天天氣、週末天氣的問題適用，是沒有金鑰時的快速備援。颱風警報、豪雨特報不支援（請看中央氣象署）;有 CWA 授權碼時正式預報請用 cwa-weather。
+description: 用 Open-Meteo（免 API 金鑰）查台灣 22 縣市現在天氣與未來數日預報,並用 NCDR CAP 公開 feed（免金鑰）查颱風、地震、海嘯、淹水等災害警報。天氣、氣溫、下雨、降雨機率、明天天氣、週末天氣、颱風警報、地震速報、豪雨特報的問題適用,是沒有金鑰時的快速備援。有 CWA 授權碼時正式預報請用 cwa-weather。
 license: MIT
 metadata:
   category: weather
@@ -95,6 +95,54 @@ curl -sm 30 'https://api.open-meteo.com/v1/forecast?latitude=25.053&longitude=12
 - **座標不在台灣**:確認 `country_code=TW` 的地理編碼結果，回傳的 `name` 與使用者問的地點不符時，先回報找到的地名再給天氣。中文地名在地理編碼 API 查不到是已知限制，改用英文/拼音，仍查不到就照上一節指示降級，不要自行估座標。
 - **颱風、警報相關問題**:本技能不提供。直接請使用者看中央氣象署或下載中央氣象署 App。
 
+
+## 災害警報與速報（NCDR CAP,免金鑰）
+
+Open-Meteo 本身沒有警報資料。台灣的颱風、地震、海嘯等災害警報可以用**國家災害防救科技中心（NCDR）的 CAP 公開 feed** 查,官方來源、免金鑰、免登入:
+
+```bash
+curl -sm 30 'https://alerts.ncdr.nat.gov.tw/RssAtomFeed.ashx?AlertType=5' -o /tmp/typhoon.xml
+```
+
+URL 形式為 `https://alerts.ncdr.nat.gov.tw/RssAtomFeed.ashx?AlertType=<類型代碼>`。類型代碼（2026-09-09 逐一實測）:
+
+| 代碼 | 類型 |
+| --- | --- |
+| 5 | 颱風 |
+| 6 | 地震 |
+| 7 | 海嘯 |
+| 8 | 淹水 |
+| 9 | 土石流及大規模崩塌 |
+| 10 | 降雨 |
+| 11 | 河川高水位 |
+
+1~4 回「存取檔案有誤」（不存在或未開放）。feed 是 Atom + CAP 格式:每則 entry 有 `<title>`（類型）、`<updated>`、`<summary>`（警報全文）、`<cap:expires>` 等;無有效警報時 feed 仍在但筆數少,近期已解除的警報也會留著,**回報前先確認發布時間與 expires,過期的警報不要當現況**。
+
+```bash
+# 列出颱風 feed 裡每則警報的標題與更新時間
+python3 - <<'PY2'
+import re
+h = open('/tmp/typhoon.xml', encoding='utf-8').read()
+for e in re.findall(r'<entry>(.*?)</entry>', h, re.S):
+    t = re.search(r'<title>([^<]*)</title>', e)
+    u = re.search(r'<updated>([^<]*)</updated>', e)
+    x = re.search(r'<cap:expires>([^<]*)</cap:expires>', e)
+    print(t.group(1) if t else '?', '|', u.group(1) if u else '?', '| expires:', x.group(1) if x else '-')
+PY2
+```
+
+**速率限制:連續請求間隔至少 3 秒**,否則回 `429 限制存取間隔時間為3秒`（2026-09-09 實測）。一次查多種類型時逐個加 sleep。正式警報內容仍以中央氣象署公告為準;這個 feed 是 NCDR 彙整各機關（氣象署、水利署等）的 CAP 警報。
+
+## Open-Meteo（本技能）vs CWA（cwa-weather）怎麼選
+
+| | taiwan-weather（Open-Meteo） | cwa-weather（CWA 開放資料） |
+| --- | --- | --- |
+| 金鑰 | 不需要 | 需要（免費即時發給） |
+| 資料來源 | 國際氣象模式 | 中央氣象署官方預報 |
+| 適合 | 快速概況、手邊沒金鑰 | 正式預報、鄉鎮級細節 |
+| 警報 / 颱風 / 地震 | NCDR CAP feed（本文件上方） | NCDR CAP feed 同樣適用;CWA 官網有 Bot 防護（2026-09-09 實測 403）不適合程式查 |
+| 準確性判斷 | 國際模式,山區/局部天氣可能與官方有落差 | 台灣官方預報為準 |
+
 ## English summary
 
-Queries current weather and multi-day forecasts for Taiwanese cities through the keyless Open-Meteo API (`curl` only). Ships a geocoded coordinate table for major cities and a WMO weather-code table in Traditional Chinese. The data comes from international models, not the CWA - for typhoons, heavy-rain advisories, and any official warning, always direct the user to the Central Weather Administration (https://www.cwa.gov.tw). Quote the response's `time` field and never fabricate readings on failure.
+Current weather and forecasts for 22 Taiwan counties via the keyless Open-Meteo API (curl only) - the fallback when no CWA API key is at hand; for official forecasts prefer cwa-weather. Disaster alerts (typhoon, earthquake, tsunami, flood, debris flow, rainfall, high river levels) are available keyless via the NCDR CAP Atom feeds at alerts.ncdr.nat.gov.tw - AlertType 5/6/7/8/9/10/11 respectively (types 1-4 do not exist); respect the 3-second rate limit (429 otherwise) and always check each entry's updated/expires before reporting an alert as current. The geocoding API only accepts English/pinyin names; verify country_code=TW before using coordinates.
