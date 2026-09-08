@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>baodao-skill | 台灣日常,交給 AI 代理</title>
+<meta name="description" content="台灣日常生活查詢的 AI 代理技能組合。統一發票對獎、YouBike 即時站點、台北垃圾車路線、中央氣象署天氣預報。只用官方 API 與公開資料,免登入的查詢型技能 5 組,MIT 開源。">
+<meta property="og:title" content="baodao-skill | 台灣日常,交給 AI 代理">
+<meta property="og:description" content="統一發票 · YouBike · 垃圾車 · 天氣。只用官方公開資料的 AI 代理技能集。MIT 開源。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tahodev.github.io/baodao-skill/">
+<meta property="og:site_name" content="baodao-skill">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://tahodev.github.io/baodao-skill/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="baodao-skill — 台灣日常生活的 AI 代理技能。">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="baodao-skill | 台灣日常,交給 AI 代理">
+<meta name="twitter:description" content="統一發票 · YouBike · 垃圾車 · 天氣。只用官方公開資料的 AI 代理技能集。MIT 開源。">
+<meta name="twitter:image" content="https://tahodev.github.io/baodao-skill/og.png">
+<meta name="keywords" content="AI代理,技能,台灣,統一發票,對獎,YouBike,垃圾車,天氣,中央氣象署,開放資料,開源,MIT,npx skills add,Claude Code,Codex">
+<meta name="robots" content="index,follow">
+<meta name="author" content="tahodev">
+<link rel="canonical" href="https://tahodev.github.io/baodao-skill/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareSourceCode",
+  "name": "baodao-skill",
+  "alternateName": "寶島技能",
+  "description": "台灣日常生活查詢的 AI 代理技能組合。財政部電子發票、臺北市資料大平臺、YouBike 公開資料、中央氣象署開放資料平臺等官方來源。",
+  "codeRepository": "https://github.com/tahodev/baodao-skill",
+  "license": "https://opensource.org/licenses/MIT",
+  "inLanguage": "zh-Hant",
+  "keywords": "AI代理, 技能, 台灣, 統一發票, YouBike, 垃圾車, 天氣, 開放資料",
+  "author": {"@type": "Person", "name": "tahodev", "url": "https://github.com/tahodev"},
+  "url": "https://tahodev.github.io/baodao-skill/"
+}
+</script>
+<link rel="icon" type="image/png" href="emblem.png">
+<link rel="apple-touch-icon" href="emblem-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --kinari:#F8F4E9;
+  --kinari-2:#F1EBDC;
+  --celadon:#25507E;     /* 青花 */
+  --celadon-deep:#0F2540;
+  --celadon-bright:#2F66A3;
+  --sumi:#2B2B2B;
+  --sumi-soft:#5C5C56;
+  --line:#D8D0BC;
+  --washi:radial-gradient(circle at 20% 10%, rgba(255,255,255,.5), transparent 55%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--kinari);
+  background-image:var(--washi);
+  color:var(--sumi);
+  font-family:'Noto Sans TC',sans-serif;
+  font-weight:400;
+  line-height:1.9;
+  letter-spacing:.02em;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:880px;margin:0 auto;padding:0 22px}
+.wordmark{
+  font-weight:700;
+  font-size:clamp(30px,7.4vw,44px);
+  letter-spacing:.01em;
+  color:var(--celadon-deep);line-height:1.3;
+}
+.heroseal{width:92px;height:92px;margin:0 auto 22px;display:block;filter:drop-shadow(0 6px 14px rgba(37,80,126,.25))}
+.wordmark-sub{
+  margin-top:12px;
+  font-size:12px;letter-spacing:.42em;text-indent:.42em;
+  color:var(--sumi-soft);
+}
+.serif{font-family:'Noto Serif TC',serif}
+
+nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(248,244,233,.88);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+nav .brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--celadon-deep)}
+nav .brand .navseal{width:26px;height:26px;display:block}
+nav .brand .navword{font-weight:700;font-size:14px;letter-spacing:.06em;color:var(--celadon-deep)}
+nav .links{display:flex;gap:18px;font-size:13px}
+nav .links a{color:var(--celadon);text-decoration:none}
+nav .links a:hover{color:var(--celadon-bright)}
+@media(max-width:560px){nav .links a:not(:last-child){display:none}}
+
+header.hero{
+  padding:84px 0 72px;
+  text-align:center;
+  position:relative;
+}
+.hero .kanji-bg{
+  position:absolute;top:30px;right:-10px;
+  writing-mode:vertical-rl;
+  font-family:'Noto Serif TC',serif;
+  font-size:15px;letter-spacing:.5em;
+  color:var(--celadon);opacity:.28;
+  user-select:none;
+}
+@media(max-width:680px){.hero .kanji-bg{display:none}}
+.hero h1{
+  font-weight:700;
+  font-size:clamp(30px,6.4vw,44px);
+  color:var(--celadon-deep);
+  line-height:1.35;
+}
+.hero p.lead{
+  margin:22px auto 0;max-width:560px;
+  color:var(--sumi-soft);font-size:15px;
+}
+.hero .cta{
+  margin-top:34px;display:inline-flex;gap:14px;flex-wrap:wrap;justify-content:center;
+}
+.btn{
+  display:inline-block;padding:12px 26px;border-radius:6px;
+  font-size:14px;text-decoration:none;letter-spacing:.08em;
+  transition:opacity .2s;
+}
+.btn:hover{opacity:.85}
+.btn-primary{background:var(--celadon);color:#fff}
+.btn-ghost{border:1px solid var(--line);color:var(--celadon);background:transparent}
+
+section{padding:64px 0}
+h2.sec{
+  font-family:'Noto Serif TC',serif;font-weight:600;
+  font-size:22px;color:var(--celadon-deep);
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:30px;
+}
+h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
+h2.sec .no{font-size:12px;color:var(--celadon);letter-spacing:.2em;font-family:'Noto Sans TC',sans-serif}
+
+.skill{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:22px 24px;margin-bottom:14px;
+}
+.skill h3{font-size:16px;color:var(--celadon-deep);font-weight:700}
+.skill h3 code{
+  font-family:ui-monospace,Menlo,monospace;font-size:13px;
+  color:var(--celadon);background:var(--kinari-2);
+  padding:2px 8px;border-radius:4px;margin-left:8px;font-weight:500;
+}
+.skill p{margin-top:8px;font-size:14px;color:var(--sumi-soft)}
+.skill .tag{
+  display:inline-block;margin-top:10px;
+  font-size:11px;color:var(--celadon);
+  border:1px solid var(--line);border-radius:20px;padding:2px 10px;
+  letter-spacing:.06em;
+}
+
+pre.install{
+  background:var(--celadon-deep);color:#E8E2D2;
+  padding:24px 26px;border-radius:8px;overflow-x:auto;
+  font-family:ui-monospace,Menlo,monospace;font-size:13.5px;line-height:2;
+}
+pre.install .c{color:#7C93A8}
+.note{margin-top:14px;font-size:13px;color:var(--sumi-soft)}
+
+.challenge{
+  background:var(--kinari-2);border:1px solid var(--line);
+  border-radius:8px;padding:28px;
+}
+.challenge p{font-size:14.5px;color:var(--sumi-soft)}
+.challenge a{color:var(--celadon)}
+
+.principles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.principle{border:1px solid var(--line);border-radius:8px;padding:20px;background:#fff}
+.principle h4{font-size:14px;color:var(--celadon);letter-spacing:.1em;margin-bottom:8px}
+.principle p{font-size:13px;color:var(--sumi-soft)}
+
+footer{
+  border-top:1px solid var(--line);
+  padding:44px 0 60px;margin-top:20px;
+  text-align:center;
+}
+footer .footseal{width:44px;height:44px;margin:0 auto 14px;display:block;opacity:.9}
+footer p{font-size:12.5px;color:var(--sumi-soft)}
+footer a{color:var(--celadon);text-decoration:none}
+footer a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <img class="navseal" src="emblem.png" alt="baodao-skill 印章標誌">
+      <span class="navword">baodao-skill</span>
+    </a>
+    <div class="links">
+      <a href="#skills">技能</a>
+      <a href="#install">安裝</a>
+      <a href="#plan">30 天計畫</a>
+      <a href="https://github.com/tahodev/baodao-skill">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="kanji-bg serif">寶島・日常生活・開放資料</div>
+    <img class="heroseal" src="emblem.png" alt="baodao-skill 青花印章標誌">
+    <h1 class="wordmark">baodao-skill</h1>
+    <div class="wordmark-sub serif">寶島 — 台灣日常生活的 AI 代理技能</div>
+    <p class="lead">統一發票對獎、YouBike 即時站點、台北垃圾車路線、官方天氣預報。<br>
+    只用官方 API 與公開資料,免登入、免爬蟲,Claude Code、Codex 等編碼代理都能用。</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#install">開始安裝</a>
+      <a class="btn btn-ghost" href="https://github.com/tahodev/baodao-skill">GitHub 倉庫</a>
+    </div>
+  </div>
+</header>
+
+<section id="skills">
+  <div class="wrap">
+    <h2 class="sec"><span class="no">01</span>技能一覽</h2>
+
+    <div class="skill">
+      <h3>統一發票對獎 <code>invoice-winning-numbers</code></h3>
+      <p>從財政部電子發票整合服務平台公開頁面取得最新中獎號碼,附上對獎流程。</p>
+      <span class="tag">免登入</span>
+    </div>
+
+    <div class="skill">
+      <h3>YouBike 站點即時查詢 <code>youbike-realtime</code></h3>
+      <p>台北市+新北市 YouBike 2.0 站點的可借車輛、可還空位即時數量。</p>
+      <span class="tag">免登入</span>
+    </div>
+
+    <div class="skill">
+      <h3>台北市垃圾車路線 <code>taipei-garbage</code></h3>
+      <p>臺北市資料大平臺的垃圾清運路線 CSV:各里清運點與抵達時間。</p>
+      <span class="tag">免登入</span>
+    </div>
+
+    <div class="skill">
+      <h3>中央氣象署天氣預報 <code>cwa-weather</code></h3>
+      <p>用 CWA 開放資料 API 查各縣市 36 小時與鄉鎮預報,官方資料。</p>
+      <span class="tag">免費即時發給 API 金鑰</span>
+    </div>
+
+    <div class="skill">
+      <h3>台灣天氣查詢 <code>taiwan-weather</code></h3>
+      <p>用 Open-Meteo(免金鑰)查台灣各縣市現在天氣與未來預報,cwa-weather 的免金鑰備援。</p>
+      <span class="tag">免登入</span>
+    </div>
+  </div>
+</section>
+
+<section id="install">
+  <div class="wrap">
+    <h2 class="sec"><span class="no">02</span>安裝</h2>
+    <pre class="install"><span class="c"># 安裝全部技能</span>
+npx --yes skills add tahodev/baodao-skill --all -g
+
+<span class="c"># 只安裝特定技能</span>
+npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g</pre>
+    <p class="note">需要 Node.js 18 以上與 npx。支援 <code>npx skills add</code> 的編碼代理(Claude Code、Codex、OpenCode 等)都可以使用。</p>
+  </div>
+</section>
+
+<section id="plan">
+  <div class="wrap">
+    <h2 class="sec"><span class="no">03</span>30 天計畫</h2>
+    <div class="challenge">
+      <p>這個倉庫以「一天一技能」的速度成長中:國定假日、高鐵與台鐵時刻表、AQI、地震速報、匯率、停班停課公告⋯⋯都在候選清單上。進度與候選技能見 <a href="https://github.com/tahodev/baodao-skill#30-天計畫">README 的 30 天計畫</a>。</p>
+    </div>
+  </div>
+</section>
+
+<section id="principles">
+  <div class="wrap">
+    <h2 class="sec"><span class="no">04</span>設計原則</h2>
+    <div class="principles">
+      <div class="principle">
+        <h4>官方資料</h4>
+        <p>只用官方 API 與公開資料集:財政部、臺北市資料大平臺、YouBike、中央氣象署、Open-Meteo。</p>
+      </div>
+      <div class="principle">
+        <h4>免登入</h4>
+        <p>不需要帳號、不需要 API 金鑰就能用(cwa-weather 使用免費、即時發給的金鑰)。</p>
+      </div>
+      <div class="principle">
+        <h4>只查不寫</h4>
+        <p>不改變外部狀態:不預約、不購買、不發文,只有查詢與計算。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <img class="footseal" src="emblem.png" alt="">
+    <p>baodao-skill — 台灣日常生活的 AI 代理技能<br>
+    <a href="https://github.com/tahodev/baodao-skill">GitHub</a> · MIT License · © tahodev</p>
+  </div>
+</footer>
+
+</body>
+</html>
