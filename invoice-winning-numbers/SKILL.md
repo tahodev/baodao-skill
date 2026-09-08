@@ -1,6 +1,6 @@
 ---
 name: invoice-winning-numbers
-description: 從財政部電子發票整合服務平台的公開頁面查詢統一發票最新中獎號碼並對獎。免 API 金鑰、免登入。
+description: 從財政部電子發票整合服務平台查統一發票最新中獎號碼並對獎。發票對獎、統一發票、中獎號碼、特別獎、特獎、頭獎、增開六獎、兌獎期限的問題適用。免 API 金鑰、免登入。雲端發票專屬獎在另一頁(cloudNowNumber.html),本技能內有對應查法。發票以外的稅務申報、記帳問題不適用。
 license: MIT
 metadata:
   category: finance

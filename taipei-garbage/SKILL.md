@@ -1,6 +1,6 @@
 ---
 name: taipei-garbage
-description: 查台北市各里的垃圾車停靠點、路線與抵達、離開時間。免登入,臺北市資料大平臺公開 CSV。
+description: 查台北市各里的垃圾車清運點、路線與抵達、離開時間。垃圾車、倒垃圾、垃圾時間、清運點、資源回收車、幾點來的問題適用。免登入,臺北市資料大平臺公開 CSV。只涵蓋台北市(其他縣市不支援);是計畫停靠時間,不是即時 GPS。
 license: MIT
 metadata:
   category: city

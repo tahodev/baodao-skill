@@ -1,6 +1,6 @@
 ---
 name: taiwan-weather
-description: 用 Open-Meteo(免 API 金鑰)查台灣各縣市現在天氣與未來數日預報。颱風與警報請以中央氣象署為準。
+description: 用 Open-Meteo(免 API 金鑰)查台灣 22 縣市現在天氣與未來數日預報。天氣、氣溫、下雨、降雨機率、明天天氣、週末天氣的問題適用,是沒有金鑰時的快速備援。颱風警報、豪雨特報不支援(請看中央氣象署);有 CWA 授權碼時正式預報請用 cwa-weather。
 license: MIT
 metadata:
   category: weather

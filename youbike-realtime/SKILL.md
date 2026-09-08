@@ -1,6 +1,6 @@
 ---
 name: youbike-realtime
-description: 查台北市 YouBike 2.0 站點的即時可借車輛與可還空位。免 API 金鑰、免登入,官方公開 JSON。
+description: 查台北市與新北市 YouBike 2.0 站點的即時可借車輛與可還空位。YouBike、微笑單車、公共自行車、借車、還車、站點、哪裡有車的問題適用。免 API 金鑰、免登入,官方公開 JSON。雙北以外的縣市、預約租車、費用計算不適用。
 license: MIT
 metadata:
   category: transport
