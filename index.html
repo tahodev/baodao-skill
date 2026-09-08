@@ -193,6 +193,26 @@ footer .footseal{width:44px;height:44px;margin:0 auto 14px;display:block;opacity
 footer p{font-size:12.5px;color:var(--sumi-soft)}
 footer a{color:var(--celadon);text-decoration:none}
 footer a:hover{text-decoration:underline}
+
+/* community repos */
+.repos{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+a.repo{
+  display:flex;align-items:baseline;gap:14px;padding:16px 4px;border-bottom:1px solid var(--line);
+  text-decoration:none;
+}
+a.repo:hover{background:rgba(255,255,255,.5)}
+a.repo .rname{
+  flex:0 0 250px;font-size:13.5px;font-weight:700;color:var(--celadon-deep);
+  font-family:ui-monospace,Menlo,monospace;
+}
+a.repo .rdesc{flex:1;font-size:13px;color:var(--sumi-soft);line-height:1.7}
+a.repo .stars{flex:0 0 auto;font-size:11.5px;color:var(--celadon);letter-spacing:.05em}
+.repo-note{margin-top:14px;font-size:12px;color:var(--sumi-soft)}
+@media(max-width:640px){
+  a.repo{flex-wrap:wrap;gap:3px 12px;padding:15px 4px}
+  a.repo .rname{min-width:0;flex:1 1 100%}
+  a.repo .rdesc{flex:1 1 auto;font-size:12.5px}
+}
 </style>
 </head>
 <body>
@@ -207,6 +227,7 @@ footer a:hover{text-decoration:underline}
       <a href="#skills">技能</a>
       <a href="#install">安裝</a>
       <a href="#plan">30 天計畫</a>
+      <a href="#community">開源專案</a>
       <a href="https://github.com/tahodev/baodao-skill">GitHub</a>
     </div>
   </div>
@@ -301,6 +322,45 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g</pr
         <p>不改變外部狀態:不預約、不購買、不發文,只有查詢與計算。</p>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="community">
+  <div class="wrap">
+    <h2 class="sec"><span class="no">05</span>台灣開源專案</h2>
+    <div class="repos">
+      <a class="repo" href="https://github.com/g0v/moedict-webkit">
+        <span class="rname">g0v/moedict-webkit</span>
+        <span class="rdesc">萌典 — 國語、台語、客語線上辭典,g0v 最具代表性的專案。</span>
+        <span class="stars">★ 652</span>
+      </a>
+      <a class="repo" href="https://github.com/g0v/twgeojson">
+        <span class="rname">g0v/twgeojson</span>
+        <span class="rdesc">台灣鄉鎮市區界線等地理資料的 GeoJSON 開放資料集,地圖應用的基本功。</span>
+        <span class="stars">★ 211</span>
+      </a>
+      <a class="repo" href="https://github.com/g0v/tw-rental-house-data">
+        <span class="rname">g0v/tw-rental-house-data</span>
+        <span class="rdesc">從公開租屋網站蒐集的台灣租屋開放資料集,居住議題研究常用。</span>
+        <span class="stars">★ 174</span>
+      </a>
+      <a class="repo" href="https://github.com/donma/LunarData">
+        <span class="rname">donma/LunarData</span>
+        <span class="rdesc">1970~2100 年農民曆/農曆 JSON 資料,節氣、生肖、宜忌都查得到。</span>
+        <span class="stars">★ 53</span>
+      </a>
+      <a class="repo" href="https://github.com/imsyuan/taiwan-holidays">
+        <span class="rname">imsyuan/taiwan-holidays</span>
+        <span class="rdesc">台灣例假日與工作天計算引擎,附給 AI 代理使用的 MCP server。</span>
+        <span class="stars">★ 16</span>
+      </a>
+      <a class="repo" href="https://github.com/lis186/taiwan-holiday-skills">
+        <span class="rname">lis186/taiwan-holiday-skills</span>
+        <span class="rdesc">台灣假日的 Claude Agent Skills,和 baodao-skill 同類型的好鄰居。</span>
+        <span class="stars">★ 8</span>
+      </a>
+    </div>
+    <p class="repo-note">收錄標準:以公開資料、官方 API 為基礎,與台灣日常生活直接相關的專案。收錄或下架需求請到 <a href="https://github.com/tahodev/baodao-skill/issues">GitHub issue</a>。</p>
   </div>
 </section>
 
