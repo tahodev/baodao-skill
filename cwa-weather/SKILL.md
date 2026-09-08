@@ -50,6 +50,21 @@ curl -sm 30 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/<F-D0047-xxx>?Aut
 - **颱風、警報、地震相關問題**:本技能不提供。直接請使用者看中央氣象署官網或 App。
 - **金鑰是秘密**:不要把授權碼寫進回覆、文件或提交紀錄;範例一律用 `<授權碼>` 占位。
 
+
+## 警特報、颱風與地震
+
+本技能只涵蓋一般天氣預報。颱風動態、豪雨特報、各種警報與地震速報:
+
+- **免金鑰**:用 taiwan-weather 技能裡的 NCDR CAP 公開 feed（國家災害防救科技中心彙整的官方警報,含颱風、地震、海嘯、淹水等類型,2026-09-09 實測可用）。
+- CWA 官網的警報頁有 Bot 防護（2026-09-09 實測從一般網路連線回 403）,不適合程式查詢。
+- CWA 開放資料平台另有警特報相關資料集（同樣用本技能的授權碼呼叫）,但截至 2026-09-09 未逐一實測;要使用時請先到 https://opendata.cwa.gov.tw 資料目錄確認資料集 id 再實測,不要直接引用未驗證的 id。
+
+正式警報內容一律以中央氣象署公告為準。
+
+## Open-Meteo（taiwan-weather）vs 本技能怎麼選
+
+有授權碼時正式預報優先用本技能（官方資料、鄉鎮級）;手邊沒金鑰或只要快速概況時用 taiwan-weather（Open-Meteo,國際模式,可能與官方預報有落差）。兩者的警報查詢都走 taiwan-weather 的 NCDR CAP 段。
+
 ## English summary
 
-Queries official weather forecasts (36-hour per-county via F-C0032-001， township forecasts via the F-D0047 series) from Taiwan's Central Weather Administration open-data platform. Requires a free, instantly issued API key from opendata.cwa.gov.tw - keyless and bad-key calls return 401 (verified 2026-09-09; no end-to-end test with a real key yet, so the response layout follows the official docs). Typhoons, heavy-rain advisories, warnings, and earthquake reports are out of scope - always point to https://www.cwa.gov.tw. Without a key, fall back to the keyless taiwan-weather (Open-Meteo) skill. Never echo the user's key into replies or commits.
+Queries official weather forecasts (36-hour per-county via F-C0032-001， township forecasts via the F-D0047 series) from Taiwan's Central Weather Administration open-data platform. Requires a free, instantly issued API key from opendata.cwa.gov.tw - keyless and bad-key calls return 401 (verified 2026-09-09; no end-to-end test with a real key yet, so the response layout follows the official docs). For typhoons, heavy-rain advisories, warnings, and earthquake reports, use the keyless NCDR CAP feeds documented in taiwan-weather (the CWA website is bot-protected; verified 403 on 2026-09-09) - official announcements remain at https://www.cwa.gov.tw. Without a key, fall back to the keyless taiwan-weather (Open-Meteo) skill. Never echo the user's key into replies or commits.
