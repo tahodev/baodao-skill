@@ -24,7 +24,7 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 | 功能 | 技能名 | 說明 | 登入 | 文件 |
 | --- | --- | --- | --- | --- |
 | 統一發票對獎 | `invoice-winning-numbers` | 從財政部電子發票整合服務平台公開頁面取得最新中獎號碼並對獎 | 不需要 | [invoice-winning-numbers 指南](docs/features/invoice-winning-numbers.md) |
-| YouBike 站點即時查詢 | `youbike-realtime` | 台北市 YouBike 2.0 站點的可借車輛、可還空位即時數量 | 不需要 | [youbike-realtime 指南](docs/features/youbike-realtime.md) |
+| YouBike 站點即時查詢 | `youbike-realtime` | 台北市+新北市 YouBike 2.0 站點的可借車輛、可還空位即時數量(其他縣市未支援) | 不需要 | [youbike-realtime 指南](docs/features/youbike-realtime.md) |
 | 台北市垃圾車路線 | `taipei-garbage` | 臺北市資料大平臺的垃圾清運路線 CSV:各里停靠點與抵達時間 | 不需要 | [taipei-garbage 指南](docs/features/taipei-garbage.md) |
 | 中央氣象署天氣預報 | `cwa-weather` | 用 CWA 開放資料 API 查各縣市 36 小時與鄉鎮預報(官方資料) | 需要(免費即時發給) | [cwa-weather 指南](docs/features/cwa-weather.md) |
 | 台灣天氣查詢 | `taiwan-weather` | 用 Open-Meteo(免金鑰)查台灣各縣市現在天氣與未來預報(cwa-weather 的免金鑰備援) | 不需要 | [taiwan-weather 指南](docs/features/taiwan-weather.md) |
@@ -91,7 +91,7 @@ Node.js 18+ and `npx` are required. See the [install guide](docs/install.md) for
 | What you can do | Skill | Description | Login | Docs |
 | --- | --- | --- | --- | --- |
 | Check Taiwan uniform-invoice winning numbers | `invoice-winning-numbers` | Latest winning numbers from the Ministry of Finance's public e-invoice pages, plus a prize-matching procedure | Not required | [invoice-winning-numbers guide](docs/features/invoice-winning-numbers.md) |
-| Look up YouBike station availability | `youbike-realtime` | Real-time rentable bikes and return docks for Taipei City YouBike 2.0 stations | Not required | [youbike-realtime guide](docs/features/youbike-realtime.md) |
+| Look up YouBike station availability | `youbike-realtime` | Real-time rentable bikes and return docks for Taipei + New Taipei YouBike 2.0 stations (other cities not supported) | Not required | [youbike-realtime guide](docs/features/youbike-realtime.md) |
 | Look up Taipei garbage truck routes | `taipei-garbage` | Collection stops and arrival times per neighborhood from the Taipei open-data CSV | Not required | [taipei-garbage guide](docs/features/taipei-garbage.md) |
 | Look up official CWA forecasts | `cwa-weather` | 36-hour county and township forecasts from the CWA open-data API (official source) | Free instant API key | [cwa-weather guide](docs/features/cwa-weather.md) |
 | Look up weather in Taiwan | `taiwan-weather` | Current weather and forecasts for Taiwanese cities via the keyless Open-Meteo API (keyless fallback for cwa-weather) | Not required | [taiwan-weather guide](docs/features/taiwan-weather.md) |
