@@ -27,26 +27,33 @@ curl -sm 30 https://invoice.etax.nat.gov.tw/lastNumber.html -o /tmp/lastNumber.h
 
 ### 2. 解析
 
-**務必先移除 HTML 標籤再取數字。** 號碼會被標籤切開(例如頭獎 07225810 在原始碼中被拆成兩段),直接對原始 HTML 下正則會漏。
+**務必先把 HTML 標籤「整個刪掉」(取代成空字串)再取數字。** 號碼會被標籤切開(例如頭獎 07225810 在原始碼中被拆成 `072</span><span ...>25810` 兩段)。如果把標籤取代成空白,數字會斷成 3 碼碎片(`072`、`258`、`10`),對獎會全錯;直接對原始 HTML 下正則也會漏。
 
 ```bash
 python3 - <<'PY'
 import re
 h = open('/tmp/lastNumber.html', encoding='utf-8').read()
-text = re.sub(r'<[^>]+>', ' ', h)
+text = re.sub(r'<[^>]+>', '', h)   # 標籤整個刪除,不要取代成空白
 text = re.sub(r'\s+', ' ', text)
 m = re.search(r'(1\d\d年\d\d-\d\d月)中獎號碼單', text)
 print('期別:', m.group(1) if m else '找不到')
-for prize in ['特別獎', '特獎', '頭獎', '增開六獎']:
-    i = text.find(prize)
+if m:
+    seg = text[m.end():m.end()+1200]
+    for prize in ['特別獎', '特獎']:
+        i = seg.find(prize)
+        n = re.search(r'\d{8}', seg[i:i+100]) if i >= 0 else None
+        print(prize, n.group(0) if n else '找不到')
+    i = seg.find('頭獎')
     if i >= 0:
-        seg = text[i:i+200]
-        nums = re.findall(r'\d{8}|\d{3}(?!\d)', seg)
-        print(prize, nums)
-i = text.find('領獎期間')
-print(text[i:i+40] if i >= 0 else '無領獎期間')
+        j = seg.find('同期', i)          # 頭獎可能多組,取到說明文字前為止
+        print('頭獎', re.findall(r'\d{8}', seg[i:j if j > i else i+200]))
+    i = seg.find('增開六獎')
+    if i >= 0:                            # 不是每期都有
+        print('增開六獎', re.findall(r'(?<!\d)\d{3}(?!\d)', seg[i:i+100]))
 PY
 ```
+
+2026-09-09 實測(115年05-06月期):特別獎 `19531471`、特獎 `85941329`、頭獎 `07225810` `20231230` `83518781` 三組皆完整取出,無增開六獎。
 
 獎項結構(2026-09-09 實測頁面記載):
 
