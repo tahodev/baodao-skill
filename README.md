@@ -1,7 +1,7 @@
 # baodao-skill
 
 台灣日常生活查詢的 AI 代理技能集(寶島 = 台灣的美稱)。
-只使用官方 API 與公開資料:財政部電子發票整合服務平台、臺北市資料大平臺、YouBike 微笑單車公開資料、Open-Meteo。以不需要登入、不需要 API 金鑰就能安全使用的查詢型技能為核心。
+只使用官方 API 與公開資料:財政部電子發票整合服務平台、臺北市資料大平臺、YouBike 微笑單車公開資料、Open-Meteo、中央氣象署開放資料平臺。以不需要登入、不需要 API 金鑰就能安全使用的查詢型技能為核心;少數技能(cwa-weather)使用免費、即時發給的 API 金鑰。
 
 Claude Code、Codex、OpenCode 等支援 `npx skills add` 的編碼代理都可以使用。
 
@@ -26,7 +26,8 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 | 統一發票對獎 | `invoice-winning-numbers` | 從財政部電子發票整合服務平台公開頁面取得最新中獎號碼並對獎 | 不需要 | [invoice-winning-numbers 指南](docs/features/invoice-winning-numbers.md) |
 | YouBike 站點即時查詢 | `youbike-realtime` | 台北市 YouBike 2.0 站點的可借車輛、可還空位即時數量 | 不需要 | [youbike-realtime 指南](docs/features/youbike-realtime.md) |
 | 台北市垃圾車路線 | `taipei-garbage` | 臺北市資料大平臺的垃圾清運路線 CSV:各里停靠點與抵達時間 | 不需要 | [taipei-garbage 指南](docs/features/taipei-garbage.md) |
-| 台灣天氣查詢 | `taiwan-weather` | 用 Open-Meteo(免金鑰)查台灣各縣市現在天氣與未來預報 | 不需要 | [taiwan-weather 指南](docs/features/taiwan-weather.md) |
+| 中央氣象署天氣預報 | `cwa-weather` | 用 CWA 開放資料 API 查各縣市 36 小時與鄉鎮預報(官方資料) | 需要(免費即時發給) | [cwa-weather 指南](docs/features/cwa-weather.md) |
+| 台灣天氣查詢 | `taiwan-weather` | 用 Open-Meteo(免金鑰)查台灣各縣市現在天氣與未來預報(cwa-weather 的免金鑰備援) | 不需要 | [taiwan-weather 指南](docs/features/taiwan-weather.md) |
 
 各技能的**正本是 `<技能名>/SKILL.md`**。`docs/features/` 的指南是摘要版,詳細步驟、參數與錯誤處理請務必參考 SKILL.md。
 
@@ -41,7 +42,7 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 這個倉庫以「一天一技能」的速度成長中。以下是候選技能,順序未定,完成後會打勾:
 
 - [ ] 國定假日與連假查詢(行政院人事行政總處辦公日曆表)
-- [ ] 中央氣象署天氣預報(免費 API 金鑰)
+- [x] 中央氣象署天氣預報(免費 API 金鑰)→ `cwa-weather`
 - [ ] 雲端發票專屬獎中獎號碼
 - [ ] 其他縣市垃圾車(新北、桃園、台中、台南、高雄)
 - [ ] 高鐵時刻表與票價(TDX,免費 API 金鑰)
@@ -92,7 +93,8 @@ Node.js 18+ and `npx` are required. See the [install guide](docs/install.md) for
 | Check Taiwan uniform-invoice winning numbers | `invoice-winning-numbers` | Latest winning numbers from the Ministry of Finance's public e-invoice pages, plus a prize-matching procedure | Not required | [invoice-winning-numbers guide](docs/features/invoice-winning-numbers.md) |
 | Look up YouBike station availability | `youbike-realtime` | Real-time rentable bikes and return docks for Taipei City YouBike 2.0 stations | Not required | [youbike-realtime guide](docs/features/youbike-realtime.md) |
 | Look up Taipei garbage truck routes | `taipei-garbage` | Collection stops and arrival times per neighborhood from the Taipei open-data CSV | Not required | [taipei-garbage guide](docs/features/taipei-garbage.md) |
-| Look up weather in Taiwan | `taiwan-weather` | Current weather and forecasts for Taiwanese cities via the keyless Open-Meteo API | Not required | [taiwan-weather guide](docs/features/taiwan-weather.md) |
+| Look up official CWA forecasts | `cwa-weather` | 36-hour county and township forecasts from the CWA open-data API (official source) | Free instant API key | [cwa-weather guide](docs/features/cwa-weather.md) |
+| Look up weather in Taiwan | `taiwan-weather` | Current weather and forecasts for Taiwanese cities via the keyless Open-Meteo API (keyless fallback for cwa-weather) | Not required | [taiwan-weather guide](docs/features/taiwan-weather.md) |
 
 The canonical source for each skill is its `<skill>/SKILL.md`. The guides under `docs/features/` are summaries only - always refer to SKILL.md for full procedures, parameters, and error handling.
 
