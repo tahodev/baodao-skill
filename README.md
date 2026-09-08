@@ -1,4 +1,16 @@
-# baodao-skill
+<p align="center">
+  <a href="https://tahodev.github.io/baodao-skill/">
+    <img src="https://tahodev.github.io/baodao-skill/emblem.png" alt="baodao-skill 青花台字印章標誌" width="120">
+  </a>
+</p>
+
+<h1 align="center">baodao-skill</h1>
+
+<p align="center">
+  台灣日常,交給 AI 代理。<br>
+  <a href="https://tahodev.github.io/baodao-skill/"><strong>介紹網站 — tahodev.github.io/baodao-skill</strong></a>
+</p>
+
 
 台灣日常生活查詢的 AI 代理技能組合（寶島 = 台灣的美稱）。
 只使用官方 API 與公開資料:財政部電子發票整合服務平台、臺北市資料大平臺、YouBike 微笑單車公開資料、Open-Meteo、中央氣象署開放資料平臺。以不需要登入、不需要 API 金鑰就能安全使用的查詢型技能為核心;少數技能（cwa-weather）使用免費、即時發給的 API 金鑰。
