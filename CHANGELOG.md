@@ -2,6 +2,20 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.2.0] - 2026-09-09
+
+### Added
+
+- `invoice-winning-numbers`:批次對獎腳本（多張發票一次對）、雲端發票專屬獎完整查法（cloudNowNumber.html → 各獎別 PDF 清單 → pdftotext,獎別依 PDF 標題行識別,字軌+8碼全碼比對）、歷年專屬獎（cloudListNumber.html）、一般發票歷史期別指引（ETW183W2_<期別>,JS 頁面僅供手動確認）、每期開獎日（單月 25 日）自動對獎流程
+- `youbike-realtime`:新增台中市（newdatacenter.taichung.gov.tw,1,824 站）與桃園市（opendata.tycg.gov.tw,需帶 limit=2000,702 站）;電輔車篩選（新北 `eyb_quantity`、台中/桃園 `sbi_detail`）
+- `taipei-garbage` → 改名 `taiwan-garbage`:新增新北市（data.ntpc.gov.tw JSON API,分頁上限 10,000 列、全量約 26,655 列,含 `garbage<weekday>`/`recycling<weekday>` 星期排程欄位,可判斷「今天有沒有收」）;兩市皆加入依經緯度找最近清運點範例
+- `taiwan-weather`:新增災害警報查詢（NCDR CAP 公開 feed,免金鑰;AlertType 5=颱風、6=地震、7=海嘯、8=淹水、9=土石流及大規模崩塌、10=降雨、11=河川高水位;3 秒速率限制）、Open-Meteo vs CWA 選擇對照表
+- `cwa-weather`:新增警特報指引（免金鑰走 NCDR CAP;CWA 官網 2026-09-09 實測 403 Bot 防護）
+
+### Notes
+
+- 高雄市 YouBike:已知來源 data.kcg.gov.tw 於 2026-09-09 連線逾時無法驗證,暫未收錄
+
 ## [0.1.0] - 2026-09-09
 
 ### Added
