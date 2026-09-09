@@ -2,6 +2,22 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.3.0] - 2026-09-10
+
+### Added
+
+- `youbike-realtime`:新增官方統一即時 feed(apis.youbike.com.tw/json/station-yb2.json,youbike.com.tw 地圖使用的 JSON)作為主要資料源 — 一次取回全台 14 個服務區約 9,500 站(2026-09-10 實測 9,521 站),新增高雄、台南、新竹、嘉義、苗栗、屏東、台東等縣市;每站含電輔車明細 `available_spaces_detail`(yb1/yb2/eyb),台北電輔車篩選從「不支援」變成可用;雙北邊界查詢可用 `area_code` 一次完成。各市府 feed 保留為備援,統一 feed 為非公開文件化 API 的注意事項已記載
+- `youbike-realtime`:站名「台 / 臺」正規化指引(台北 147 站用「臺」、新北兩者混用、統一 feed 全台 385 站含「臺」),搜尋範例改用 `gsub("臺";"台")`
+- `youbike-realtime`:更新時間欄位格式對照表(台北 `YYYY-MM-DD HH:MM:SS`、新北 `YYYYMMDDTHHMMSS`、台中/桃園 `YYYYMMDDHHMMSS`、統一 feed `updated_at`,全部 UTC+8)
+- `youbike-realtime`:雙北市府 feed 合併查詢範例(`jq -sr` 欄位正規化後合併)
+- CI:`scripts/check-urls.sh` 新增 YouBike feed 深度驗證 — JSON 解析 + 各 feed 最低站數門檻,抓出「HTTP 200 但回錯誤頁或空 JSON」的沉默失敗;深度驗證過的 URL 不再重複做一般 curl 檢查
+
+### Changed
+
+- `youbike-realtime`:站數改為約略值並標註實測日(2026-09-10),避免設站增加造成文件數字失真(桃園 702 → 約 700,實測 703)
+- `youbike-realtime`:高雄市改為經統一 feed 支援(`area_code=="12"`);高雄市政府 openapi.kcg.gov.tw 端點 2026-09-09 從台灣境外連線逾時、無法驗證,標註為不可依賴
+- `youbike-realtime`:桃園 `limit` 注意事項強化 — 回傳筆數等於 `limit` 時可能被截斷,要加大再查
+
 ## [0.2.0] - 2026-09-09
 
 ### Added
