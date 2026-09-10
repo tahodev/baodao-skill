@@ -26,6 +26,8 @@ curl -sm 60 https://apis.youbike.com.tw/json/station-yb2.json -o /tmp/youbike_al
 
 2026-09-10 實測：HTTP 200、約 6.2MB、9,521 站、14 個服務區，回應內 `updated_at` 與查詢時刻差約 1 分鐘（近即時）。檔案大，短時間內重複查詢請用同一份快取（1~2 分鐘），不要連續請求。
 
+**連線地區注意：apis.youbike.com.tw 由 Incapsula 防護，會依來源 IP 攔截。** 2026-09-11 實測：GitHub Actions（美國機房 IP）拿到非 JSON 回應導致 CI 深度驗證失敗，同一時間從其他海外 IP（GCP 美國）與一般連線仍正常（HTTP 200、9,537 站）。從台灣 IP `curl` 可正常使用；在機房或海外環境拿到 503 / 非 JSON 回應時，改用第 2 層各市府 feed，不要當成全台資料失效。
+
 ### 欄位
 
 | 欄位 | 意義 |
@@ -218,7 +220,7 @@ jq -sr '
 ## 錯誤與失敗時的處理
 
 - **連線逾時 / 5xx**:`curl` 一律加 `-m 30`（統一 feed 用 `-m 60`），隔幾秒重試 1~2 次。
-- **統一 feed 失敗**：改用第 2 層市府 feed（雙北台中桃園）；其他縣市則告知統一 feed 暫時異常，建議 YouBike 官方 App 或 https://www.youbike.com.tw 確認。
+- **統一 feed 失敗（含 Incapsula 地區/IP 攔截的 503、非 JSON 回應）**：改用第 2 層市府 feed（雙北台中桃園）；其他縣市則告知統一 feed 暫時異常或所在網路被擋，建議 YouBike 官方 App 或 https://www.youbike.com.tw 確認（2026-09-11 實測：美國機房 IP 被擋、台灣 IP 正常）。
 - **市府 feed 失敗**：統一 feed 還正常時直接用統一 feed 頂替；兩層都失敗就告知公開資料源可能暫時異常。
 - **回傳空陣列或不是 JSON**:視為失敗，不要用舊資料冒充即時資料。
 - **`status` / `act` 不是營運中**：該站暫停營運，明確告知，不要只回報 0 台可借。
