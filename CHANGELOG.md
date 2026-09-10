@@ -2,6 +2,12 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.3.2] - 2026-09-11
+
+### Added
+
+- CI:health-check 成功時自動關閉仍開啟的 health-check issue — 先前只在失敗時開單/更新,恢復正常後 issue 一直留著;現在全部檢查通過時會在該 issue 留言註明恢復日期與 run 連結後關閉(先以 `health-check` label 尋找,找不到再以標題 `health-check failed` 搜尋,涵蓋 label 不存在時建立的舊單)
+
 ## [0.3.1] - 2026-09-11
 
 ### Fixed
