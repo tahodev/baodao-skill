@@ -2,6 +2,18 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.3.3] - 2026-09-11
+
+### Fixed
+
+- README:英文版補上 cwa-weather 的金鑰例外 — 英文簡介原先寫「no API keys」,與 zh-TW 內文(cwa-weather 使用免費、即時發給的 CWA API 金鑰)直接矛盾
+- README:30 天計畫候選清單拆分為「新技能候選」(19 項、已完成 1 項)與「既有技能的擴充」(3 項、已完成 2 項) — 原先新技能與擴充項目混在同一個打勾清單,3 個勾不代表 3 個技能,進度顯示失真;22 個候選項目本身內容不變
+
+### Added
+
+- `docs/features/youbike-realtime.md`:統一 feed 補上 Incapsula 依來源 IP 攔截的注意事項,並註明 CI URL 檢查刻意跳過 youbike.com.tw 網域、需從台灣 IP 手動驗證(先前只有 SKILL.md 有這段)
+- `youbike-realtime`:SKILL.md 的 English summary 補上 Incapsula 地區/IP 攔截與降級到市府 feed 的指引(先前只有 zh-TW 內文有)
+
 ## [0.3.2] - 2026-09-11
 
 ### Added

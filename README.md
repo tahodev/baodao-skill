@@ -51,14 +51,13 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 
 ## 30 天計畫
 
-這個倉庫以「一天一技能」的速度成長中。以下是候選技能，順序未定，完成後會打勾：
+這個倉庫以「一天一技能」的速度成長中，目前有 5 個技能（見上方功能表）。候選項目分兩類：**全新技能**與**既有技能的擴充**；打勾代表該項目完成，完成一個擴充項目不代表新增一個技能。
 
-- [ ] 國定假日與連假查詢（行政院人事行政總處辦公日曆表）
+### 新技能候選（19 項，已完成 1 項）
+
 - [x] 中央氣象署天氣預報（免費 API 金鑰）→ `cwa-weather`
-- [x] 雲端發票專屬獎中獎號碼 → `invoice-winning-numbers`（PDF 清單解析，2026-09-09）
-- [ ] 其他縣市垃圾車（新北 → `taiwan-garbage` 已支援；桃園、台中、台南、高雄待支援）
+- [ ] 國定假日與連假查詢（行政院人事行政總處辦公日曆表）
 - [ ] 空氣品質指標 AQI
-- [x] 地震速報與颱風動態 → `taiwan-weather` 的 NCDR CAP 段（2026-09-09）
 - [ ] 停車場剩餘車位
 - [ ] 郵遞區號查詢
 - [ ] 台電電力供需資訊
@@ -76,6 +75,12 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 - [ ] 勞健保費率計算
 - [ ] 郵資計算
 
+### 既有技能的擴充（3 項，已完成 2 項）
+
+- [x] 雲端發票專屬獎中獎號碼 → `invoice-winning-numbers`（PDF 清單解析，2026-09-09）
+- [x] 地震速報與颱風動態 → `taiwan-weather` 的 NCDR CAP 段（2026-09-09）
+- [ ] 其他縣市垃圾車 → `taiwan-garbage`（新北已支援；桃園、台中、台南、高雄待支援）
+
 評估後否決（來源不合，不再重複評估）：
 
 - 匯率查詢（台灣銀行牌告匯率）：台銀網站有 bot 防護，程式存取會被導到 JS 驗證頁、拿不到資料（2026-09-11 實測 HTTP 200 但回 Challenge Validation 頁）。
@@ -83,7 +88,7 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 
 ## English
 
-**baodao-skill** (寶島, "baodao" = treasure island, an affectionate name for Taiwan) is a collection of AI-agent skills for daily life in Taiwan. It focuses on read-only lookups built only on official APIs and public datasets: no login walls, no API keys, no scraping.
+**baodao-skill** (寶島, "baodao" = treasure island, an affectionate name for Taiwan) is a collection of AI-agent skills for daily life in Taiwan. It focuses on read-only lookups built only on official APIs and public datasets: no login walls, no API keys, no scraping. One exception: `cwa-weather` uses a CWA API key - free and issued instantly on registration (the other four skills need no key).
 
 Works with any coding agent that supports `npx skills add` (Claude Code, Codex, OpenCode, ...).
 
