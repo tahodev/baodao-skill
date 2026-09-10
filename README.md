@@ -7,13 +7,13 @@
 <h1 align="center">baodao-skill</h1>
 
 <p align="center">
-  台灣日常,交給 AI 代理。<br>
+  台灣日常，交給 AI 代理。<br>
   <a href="https://tahodev.github.io/baodao-skill/"><strong>介紹網站 — tahodev.github.io/baodao-skill</strong></a>
 </p>
 
 
 台灣日常生活查詢的 AI 代理技能組合（寶島 = 台灣的美稱）。
-只使用官方 API 與公開資料:財政部電子發票整合服務平台、臺北市資料大平臺、新北市資料開放平臺、台中市政府資料開放平臺、桃園市政府資料開放平臺、YouBike 微笑單車公開資料與官方地圖即時 feed、Open-Meteo、中央氣象署開放資料平臺、國家災害防救科技中心（NCDR CAP）。以不需要登入、不需要 API 金鑰就能安全使用的查詢型技能為核心;少數技能（cwa-weather）使用免費、即時發給的 API 金鑰。
+只使用官方 API 與公開資料：財政部電子發票整合服務平台、臺北市資料大平臺、新北市資料開放平臺、台中市政府資料開放平臺、桃園市政府資料開放平臺、YouBike 微笑單車公開資料與官方地圖即時 feed、Open-Meteo、中央氣象署開放資料平臺、國家災害防救科技中心（NCDR CAP）。以不需要登入、不需要 API 金鑰就能安全使用的查詢型技能為核心；少數技能（cwa-weather）使用免費、即時發給的 API 金鑰。
 
 Claude Code、Codex、OpenCode 等支援 `npx skills add` 的編碼代理（coding agent）都可以使用。
 
@@ -27,7 +27,7 @@ npx --yes skills add tahodev/baodao-skill --all -g
 npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 ```
 
-需要 Node.js 18 以上與 `npx`。詳見[安裝指南](docs/install.md)。
+需要 Node.js 18 以上與 `npx`。詳見[安裝指南]（docs/install.md）。
 
 ## 功能
 
@@ -36,37 +36,33 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 | 功能 | 技能名 | 說明 | 登入 | 文件 |
 | --- | --- | --- | --- | --- |
 | 統一發票對獎 | `invoice-winning-numbers` | 最新中獎號碼對獎、批次對獎、雲端發票專屬獎（PDF 清單）、歷史期別指引 | 不需要 | [invoice-winning-numbers 指南](docs/features/invoice-winning-numbers.md) |
-| YouBike 站點即時查詢 | `youbike-realtime` | 全台 14 個服務區（雙北、桃園、台中、台南、高雄等）YouBike 2.0 站點的可借車輛、可還空位即時數量,含電輔車篩選 | 不需要 | [youbike-realtime 指南](docs/features/youbike-realtime.md) |
-| 台北/新北垃圾車路線 | `taiwan-garbage` | 台北市（CSV）+新北市（JSON API）的垃圾清運點與停靠時間;新北含星期排程,可判斷今天有沒有收 | 不需要 | [taiwan-garbage 指南](docs/features/taiwan-garbage.md) |
+| YouBike 站點即時查詢 | `youbike-realtime` | 全台 14 個服務區（雙北、桃園、台中、台南、高雄等）YouBike 2.0 站點的可借車輛、可還空位即時數量，含電輔車篩選 | 不需要 | [youbike-realtime 指南](docs/features/youbike-realtime.md) |
+| 台北/新北垃圾車路線 | `taiwan-garbage` | 台北市（CSV）+新北市（JSON API）的垃圾清運點與停靠時間；新北含星期排程，可判斷今天有沒有收 | 不需要 | [taiwan-garbage 指南](docs/features/taiwan-garbage.md) |
 | 中央氣象署天氣預報 | `cwa-weather` | 用 CWA 開放資料 API 查各縣市 36 小時與鄉鎮預報（官方資料） | 需要（免費即時發給） | [cwa-weather 指南](docs/features/cwa-weather.md) |
-| 台灣天氣查詢 | `taiwan-weather` | 用 Open-Meteo（免金鑰）查天氣,並用 NCDR CAP feed（免金鑰）查颱風/地震/海嘯等災害警報（cwa-weather 的免金鑰備援） | 不需要 | [taiwan-weather 指南](docs/features/taiwan-weather.md) |
+| 台灣天氣查詢 | `taiwan-weather` | 用 Open-Meteo（免金鑰）查天氣，並用 NCDR CAP feed（免金鑰）查颱風/地震/海嘯等災害警報（cwa-weather 的免金鑰備援） | 不需要 | [taiwan-weather 指南](docs/features/taiwan-weather.md) |
 
 各技能的**正本是 `<技能名>/SKILL.md`**。`docs/features/` 的指南是摘要版，詳細步驟、參數與錯誤處理請務必參考 SKILL.md。
 
-範圍說明:
+範圍說明：
 
 - 防爬蟲嚴格的服務（蝦皮、momo、591、foodpanda 等）不在範圍內。
-- 不改變外部狀態:不預約、不購買、不發文，只有查詢與計算。
+- 不改變外部狀態：不預約、不購買、不發文，只有查詢與計算。
 - 資料是各官方來源公告的原始內容。重要判斷（領獎期限、停收日、颱風警報等）請務必回到官方網站確認。
 
 ## 30 天計畫
 
-這個倉庫以「一天一技能」的速度成長中。以下是候選技能，順序未定，完成後會打勾:
+這個倉庫以「一天一技能」的速度成長中。以下是候選技能，順序未定，完成後會打勾：
 
 - [ ] 國定假日與連假查詢（行政院人事行政總處辦公日曆表）
 - [x] 中央氣象署天氣預報（免費 API 金鑰）→ `cwa-weather`
-- [x] 雲端發票專屬獎中獎號碼 → `invoice-winning-numbers`（PDF 清單解析,2026-09-09）
-- [ ] 其他縣市垃圾車（新北 → `taiwan-garbage` 已支援;桃園、台中、台南、高雄待支援）
-- [ ] 高鐵時刻表與票價（TDX，免費 API 金鑰）
-- [ ] 台鐵時刻表（TDX，免費 API 金鑰）
-- [ ] 公車動態查詢（TDX）
+- [x] 雲端發票專屬獎中獎號碼 → `invoice-winning-numbers`（PDF 清單解析，2026-09-09）
+- [ ] 其他縣市垃圾車（新北 → `taiwan-garbage` 已支援；桃園、台中、台南、高雄待支援）
 - [ ] 空氣品質指標 AQI
 - [x] 地震速報與颱風動態 → `taiwan-weather` 的 NCDR CAP 段（2026-09-09）
 - [ ] 停車場剩餘車位
 - [ ] 郵遞區號查詢
 - [ ] 台電電力供需資訊
 - [ ] 油價查詢（台灣中油）
-- [ ] 匯率查詢
 - [ ] 停班停課公告
 - [ ] 農產品交易行情
 - [ ] 綜合所得稅試算
@@ -79,6 +75,11 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 - [ ] 節氣與農曆換算
 - [ ] 勞健保費率計算
 - [ ] 郵資計算
+
+評估後否決（來源不合，不再重複評估）：
+
+- 匯率查詢（台灣銀行牌告匯率）：台銀網站有 bot 防護，程式存取會被導到 JS 驗證頁、拿不到資料（2026-09-11 實測 HTTP 200 但回 Challenge Validation 頁）。
+- 高鐵時刻表與票價、台鐵時刻表、公車動態查詢（TDX 運輸資料流通服務）：需要註冊會員取得 Client ID / Secret 才能呼叫（2026-09-11 實測 token 端點無憑證回 invalid_client），不符合本倉庫免金鑰的原則。
 
 ## English
 
