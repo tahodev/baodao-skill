@@ -37,3 +37,16 @@ jobs:
             gh issue create --title "$TITLE" --body "$BODY" --label 'health-check' || \
             gh issue create --title "$TITLE" --body "$BODY"
           fi
+      - name: Close the health-check issue when checks pass again
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          EXISTING=$(gh issue list --state open --label 'health-check' --json number --jq '.[0].number // empty')
+          if [ -z "$EXISTING" ]; then
+            EXISTING=$(gh issue list --state open --search 'health-check failed' --json number --jq '.[0].number // empty')
+          fi
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "Health-check 已恢復通過($(date -u +%Y-%m-%d))。Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            gh issue close "$EXISTING"
+          fi
