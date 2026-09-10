@@ -10,6 +10,8 @@
 - `taiwan-weather` / `cwa-weather`:錯誤處理一節過時的「颱風、警報相關問題:本技能不提供,直接請使用者看中央氣象署」改為指向 NCDR CAP 免金鑰段(該能力 0.2.0 已加入,條目未同步)
 - `docs/install.md`:技能名範例 `taipei-garbage` 更正為 `taiwan-garbage`(0.2.0 改名後未同步)
 - CI:health-check 失敗自動開的 issue,標題日期現在會在既有 issue 上同步更新,不再停留在第一次失敗的日期
+- CI:apis.youbike.com.tw 移出深度驗證、youbike.com.tw 網域改為 skip-with-reason — 統一 feed 由 Incapsula 依來源 IP 攔截,2026-09-11 GitHub Actions(美國機房 IP)拿到非 JSON 回應使 health-check 失敗;台灣 IP 與部分海外 IP 正常,改為註明從台灣 IP 手動驗證
+- `youbike-realtime`:SKILL.md 補上統一 feed 的 Incapsula 地區/IP 攔截注意事項(503/非 JSON 時降級到市府 feed)
 
 ### Added
 
