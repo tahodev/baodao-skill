@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Extract http(s) URLs from each skill's SKILL.md and verify they respond.
 # Skipped:
-#   - templated URLs (containing { }): need real parameters
+#   - templated URLs (containing { } or < >): need real parameters
 #   - URLs ending in '=': a <placeholder> parameter was cut off
 #   - opendata.cwa.gov.tw/api/*: requires a CWA API key (401 without one)
 #   - the YouBike feeds below: covered by deep JSON validation instead
@@ -33,11 +33,11 @@ for url in "${!FEEDS[@]}"; do
   fi
 done
 
-mapfile -t urls < <(grep -hoE "https?://[^ )\"\`<'。，、；：（）]+" -- */SKILL.md \
+mapfile -t urls < <(grep -hoE "https?://[^ )\"\`'。，、；：（）]+" -- */SKILL.md \
   | sed 's/[.,;。,]*$//' | sort -u)
 for url in "${urls[@]}"; do
   case "$url" in
-    *'{'*|*'}'*) echo "SKIP  $url (templated)"; continue ;;
+    *'{'*|*'}'*|*'<'*|*'>'*) echo "SKIP  $url (templated)"; continue ;;
     *=) echo "SKIP  $url (placeholder parameter)"; continue ;;
     *opendata.cwa.gov.tw/api/*) echo "SKIP  $url (needs CWA API key)"; continue ;;
   esac
