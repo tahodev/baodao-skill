@@ -4,7 +4,10 @@
 #   - templated URLs (containing { } or < >): need real parameters
 #   - URLs ending in '=': a <placeholder> parameter was cut off
 #   - opendata.cwa.gov.tw/api/*: requires a CWA API key (401 without one)
-#   - the YouBike feeds below: covered by deep JSON validation instead
+#   - the YouBike city feeds below: covered by deep JSON validation instead
+#   - youbike.com.tw (unified feed + map site): Incapsula blocks some
+#     datacenter/overseas IPs (GitHub Actions failed 2026-09-11 while other
+#     overseas IPs got 200) - verify manually from a Taiwan IP instead
 # Fullwidth CJK punctuation (。,,、;:()) terminates a URL in zh-TW prose;
 # halfwidth delimiters are stripped only at the end via sed.
 set -u
@@ -15,7 +18,6 @@ fail=0
 # as JSON and enforce a minimum station count per feed (thresholds are
 # ~85% of the 2026-09-10 counts; station numbers only drift slowly).
 declare -A FEEDS=(
-  ["https://apis.youbike.com.tw/json/station-yb2.json"]=9000
   ["https://tcgbusfs.blob.core.windows.net/dotapp/youbike/v2/youbike_immediate.json"]=1500
   ["https://data.ntpc.gov.tw/api/datasets/010E5B15-3823-4B20-B401-B1CF000550C5/json?page=0&size=5000"]=1400
   ["https://newdatacenter.taichung.gov.tw/api/v1/no-auth/resource.download?rid=9468c0d0-e1ed-4ecc-a86f-ab5a9fd590ff"]=1600
@@ -40,6 +42,7 @@ for url in "${urls[@]}"; do
     *'{'*|*'}'*|*'<'*|*'>'*) echo "SKIP  $url (templated)"; continue ;;
     *=) echo "SKIP  $url (placeholder parameter)"; continue ;;
     *opendata.cwa.gov.tw/api/*) echo "SKIP  $url (needs CWA API key)"; continue ;;
+    *youbike.com.tw*) echo "SKIP  $url (Incapsula IP/region blocking - verify from a Taiwan IP)"; continue ;;
   esac
   skip=0
   for feed in "${!FEEDS[@]}"; do
