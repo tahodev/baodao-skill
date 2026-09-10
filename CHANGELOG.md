@@ -2,6 +2,25 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.3.1] - 2026-09-11
+
+### Fixed
+
+- CI:`scripts/check-urls.sh` 修正模板 URL 擷取 — 含 `<...>` 佔位符的 URL(如 `ETW183W2_<期別>`、`pdf/<檔名>.pdf`、`name=<英文地名>`)先前在 `<` 處被截斷,殘段(`ETW183W2_`、`pdf/` 等)被當真網址 curl 而 404/403,是 health-check 連續失敗的主因;現在整段擷取後以 templated 跳過
+- `taiwan-weather` / `cwa-weather`:錯誤處理一節過時的「颱風、警報相關問題:本技能不提供,直接請使用者看中央氣象署」改為指向 NCDR CAP 免金鑰段(該能力 0.2.0 已加入,條目未同步)
+- `docs/install.md`:技能名範例 `taipei-garbage` 更正為 `taiwan-garbage`(0.2.0 改名後未同步)
+- CI:health-check 失敗自動開的 issue,標題日期現在會在既有 issue 上同步更新,不再停留在第一次失敗的日期
+
+### Added
+
+- `docs/install.md`:新增「乾淨環境安裝實測(2026-09-11)」— `--all -g` 非互動可裝;單一技能在無 TTY 環境需加 `-y`,否則提示取消、什麼都不裝;Eve / PromptScript 不支援全域安裝會被略過
+- `docs/install.md`:補上執行期需求(curl、jq、python3、pdftotext、awk/sed)
+- README:30 天計畫新增「評估後否決」區塊 — 台銀匯率(bot 防護,2026-09-11 實測回 Challenge Validation 頁)、TDX 三項(高鐵/台鐵/公車,需註冊 Client ID/Secret),避免重複研究
+
+### Changed
+
+- 5 個 SKILL.md、README、docs/features/、docs/install.md:zh-TW 標點統一為全形(，：；（）？!),程式碼區塊、行內 code、URL 與英文段落維持半形
+
 ## [0.3.0] - 2026-09-10
 
 ### Added
