@@ -40,6 +40,9 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 | 台北/新北垃圾車路線 | `taiwan-garbage` | 台北市（CSV）+新北市（JSON API）的垃圾清運點與停靠時間；新北含星期排程，可判斷今天有沒有收 | 不需要 | [taiwan-garbage 指南](docs/features/taiwan-garbage.md) |
 | 中央氣象署天氣預報 | `cwa-weather` | 用 CWA 開放資料 API 查各縣市 36 小時與鄉鎮預報（官方資料） | 需要（免費即時發給） | [cwa-weather 指南](docs/features/cwa-weather.md) |
 | 台灣天氣查詢 | `taiwan-weather` | 用 Open-Meteo（免金鑰）查天氣，並用 NCDR CAP feed（免金鑰）查颱風/地震/海嘯等災害警報（cwa-weather 的免金鑰備援） | 不需要 | [taiwan-weather 指南](docs/features/taiwan-weather.md) |
+| 國定假日與連假查詢 | `taiwan-holidays` | 行政院人事行政總處辦公日曆表：國定假日、連假、補班日（當年度 xlsx 月曆 + 歷年結構化 CSV） | 不需要 | [taiwan-holidays 指南](docs/features/taiwan-holidays.md) |
+| 台股行情快照 | `taiwan-stock` | 上市（TWSE）與上櫃（TPEX）每日收盤行情、個股本月每日成交、大盤指數（收盤統計，非盤中報價） | 不需要 | [taiwan-stock 指南](docs/features/taiwan-stock.md) |
+| 郵遞區號與地址英譯 | `postal-address` | 中華郵政官方對照表：3 碼郵遞區號、縣市鄉鎮/村里/路街中英對照（漢語拼音） | 不需要 | [postal-address 指南](docs/features/postal-address.md) |
 
 各技能的**正本是 `<技能名>/SKILL.md`**。`docs/features/` 的指南是摘要版，詳細步驟、參數與錯誤處理請務必參考 SKILL.md。
 
@@ -53,13 +56,13 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 
 這個倉庫以「一天一技能」的速度成長中，目前有 5 個技能（見上方功能表）。候選項目分兩類：**全新技能**與**既有技能的擴充**；打勾代表該項目完成，完成一個擴充項目不代表新增一個技能。
 
-### 新技能候選（19 項，已完成 1 項）
+### 新技能候選（20 項，已完成 4 項）
 
 - [x] 中央氣象署天氣預報（免費 API 金鑰）→ `cwa-weather`
-- [ ] 國定假日與連假查詢（行政院人事行政總處辦公日曆表）
+- [x] 國定假日與連假查詢（行政院人事行政總處辦公日曆表）→ `taiwan-holidays`
 - [ ] 空氣品質指標 AQI
 - [ ] 停車場剩餘車位
-- [ ] 郵遞區號查詢
+- [x] 郵遞區號查詢 → `postal-address`（含地址英譯對照）
 - [ ] 台電電力供需資訊
 - [ ] 油價查詢（台灣中油）
 - [ ] 停班停課公告
@@ -74,6 +77,7 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 - [ ] 節氣與農曆換算
 - [ ] 勞健保費率計算
 - [ ] 郵資計算
+- [x] 台股行情快照（TWSE/TPEX 每日收盤）→ `taiwan-stock`
 
 ### 既有技能的擴充（3 項，已完成 2 項）
 
@@ -113,6 +117,9 @@ Node.js 18+ and `npx` are required. See the [install guide](docs/install.md) for
 | Look up garbage truck routes | `taiwan-garbage` | Collection stops and times for Taipei (CSV) and New Taipei (JSON API with weekday schedules) | Not required | [taiwan-garbage guide](docs/features/taiwan-garbage.md) |
 | Look up official CWA forecasts | `cwa-weather` | 36-hour county and township forecasts from the CWA open-data API (official source) | Free instant API key | [cwa-weather guide](docs/features/cwa-weather.md) |
 | Look up weather in Taiwan | `taiwan-weather` | Keyless Open-Meteo weather plus keyless disaster alerts (typhoon, earthquake, tsunami) via the NCDR CAP feeds (fallback for cwa-weather) | Not required | [taiwan-weather guide](docs/features/taiwan-weather.md) |
+| Look up Taiwan public holidays | `taiwan-holidays` | DGPA government work calendar: national holidays, long weekends, makeup workdays (current-year xlsx + historical structured CSV) | Not required | [taiwan-holidays guide](docs/features/taiwan-holidays.md) |
+| Taiwan stock daily-close snapshot | `taiwan-stock` | TWSE/TPEX daily closing quotes, per-stock daily rows, index levels (close statistics, not intraday) | Not required | [taiwan-stock guide](docs/features/taiwan-stock.md) |
+| Postal codes and address transliteration | `postal-address` | Chunghwa Post tables: 3-digit postal codes plus county/village/road Chinese-English tables (Hanyu Pinyin) | Not required | [postal-address guide](docs/features/postal-address.md) |
 
 The canonical source for each skill is its `<skill>/SKILL.md`. The guides under `docs/features/` are summaries only - always refer to SKILL.md for full procedures, parameters, and error handling.
 
