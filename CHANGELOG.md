@@ -2,6 +2,13 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.5.0] - 2026-09-12
+
+### Added
+
+- `taiwan-garbage`:新增台中市 — data.gov.tw 資料集 84004 經 newdatacenter.taichung.gov.tw 免驗證資源下載(JSON 13.7MB、20,090 列、涵蓋全台中 29 區,2026-09-12 實測 HTTP 200);`g_d1~d7`/`r_d1~d7` 週排程(d1=週一,空值率驗證:週三、週日全面停收),HH:MM 時間全部合法;用資料集 id 直接打 API 會得 NO_AUTH,文件明確指引走資源 rid 路徑;台中資料無經緯度(僅地址)已如實記載。查詢範例以當日資料實測
+- README:功能表與擴充清單加入台中;`docs/features/taiwan-garbage.md` 同步
+
 ## [0.4.2] - 2026-09-12
 
 ### Changed
