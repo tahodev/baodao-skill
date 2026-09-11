@@ -37,7 +37,7 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 | --- | --- | --- | --- | --- |
 | 統一發票對獎 | `invoice-winning-numbers` | 最新中獎號碼對獎、批次對獎、雲端發票專屬獎（PDF 清單）、歷史期別指引 | 不需要 | [invoice-winning-numbers 指南](docs/features/invoice-winning-numbers.md) |
 | YouBike 站點即時查詢 | `youbike-realtime` | 全台 14 個服務區（雙北、桃園、台中、台南、高雄等）YouBike 2.0 站點的可借車輛、可還空位即時數量，含電輔車篩選 | 不需要 | [youbike-realtime 指南](docs/features/youbike-realtime.md) |
-| 台北/新北垃圾車路線 | `taiwan-garbage` | 台北市（CSV）+新北市（JSON API）的垃圾清運點與停靠時間；新北含星期排程，可判斷今天有沒有收 | 不需要 | [taiwan-garbage 指南](docs/features/taiwan-garbage.md) |
+| 台北/新北/台中垃圾車路線 | `taiwan-garbage` | 台北市（CSV）、新北市（JSON API）與台中市（data.gov.tw 84004 資源下載）的垃圾清運點與停靠時間；新北、台中含星期排程，可判斷今天有沒有收 | 不需要 | [taiwan-garbage 指南](docs/features/taiwan-garbage.md) |
 | 中央氣象署天氣預報 | `cwa-weather` | 用 CWA 開放資料 API 查各縣市 36 小時與鄉鎮預報（官方資料） | 需要（免費即時發給） | [cwa-weather 指南](docs/features/cwa-weather.md) |
 | 台灣天氣查詢 | `taiwan-weather` | 用 Open-Meteo（免金鑰）查天氣，並用 NCDR CAP feed（免金鑰）查颱風/地震/海嘯等災害警報（cwa-weather 的免金鑰備援） | 不需要 | [taiwan-weather 指南](docs/features/taiwan-weather.md) |
 | 國定假日與連假查詢 | `taiwan-holidays` | 行政院人事行政總處辦公日曆表：國定假日、連假、補班日（當年度 xlsx 月曆 + 歷年結構化 CSV） | 不需要 | [taiwan-holidays 指南](docs/features/taiwan-holidays.md) |
@@ -83,7 +83,7 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 
 - [x] 雲端發票專屬獎中獎號碼 → `invoice-winning-numbers`（PDF 清單解析，2026-09-09）
 - [x] 地震速報與颱風動態 → `taiwan-weather` 的 NCDR CAP 段（2026-09-09）
-- [ ] 其他縣市垃圾車 → `taiwan-garbage`（新北已支援；桃園、台中、台南、高雄待支援）
+- [ ] 其他縣市垃圾車 → `taiwan-garbage`（新北、台中已支援；桃園、台南、高雄待支援）
 
 評估後否決（來源不合，不再重複評估）：
 
@@ -114,7 +114,7 @@ Node.js 18+ and `npx` are required. See the [install guide](docs/install.md) for
 | --- | --- | --- | --- | --- |
 | Check Taiwan uniform-invoice winning numbers | `invoice-winning-numbers` | Latest winning numbers, batch matching, cloud-invoice exclusive prizes (PDF lists), and history pointers from the Ministry of Finance's public pages | Not required | [invoice-winning-numbers guide](docs/features/invoice-winning-numbers.md) |
 | Look up YouBike station availability | `youbike-realtime` | Real-time rentable bikes and return docks for YouBike 2.0 stations across 14 service areas nationwide (Taipei, New Taipei, Taoyuan, Taichung, Tainan, Kaohsiung, and more), incl. e-bike filtering | Not required | [youbike-realtime guide](docs/features/youbike-realtime.md) |
-| Look up garbage truck routes | `taiwan-garbage` | Collection stops and times for Taipei (CSV) and New Taipei (JSON API with weekday schedules) | Not required | [taiwan-garbage guide](docs/features/taiwan-garbage.md) |
+| Look up garbage truck routes | `taiwan-garbage` | Collection stops and times for Taipei (CSV), New Taipei (JSON API), and Taichung (data.gov.tw 84004 download); New Taipei and Taichung carry weekday schedules so you can tell whether there is collection today | Not required | [taiwan-garbage guide](docs/features/taiwan-garbage.md) |
 | Look up official CWA forecasts | `cwa-weather` | 36-hour county and township forecasts from the CWA open-data API (official source) | Free instant API key | [cwa-weather guide](docs/features/cwa-weather.md) |
 | Look up weather in Taiwan | `taiwan-weather` | Keyless Open-Meteo weather plus keyless disaster alerts (typhoon, earthquake, tsunami) via the NCDR CAP feeds (fallback for cwa-weather) | Not required | [taiwan-weather guide](docs/features/taiwan-weather.md) |
 | Look up Taiwan public holidays | `taiwan-holidays` | DGPA government work calendar: national holidays, long weekends, makeup workdays (current-year xlsx + historical structured CSV) | Not required | [taiwan-holidays guide](docs/features/taiwan-holidays.md) |
