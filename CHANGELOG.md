@@ -2,6 +2,16 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.4.2] - 2026-09-12
+
+### Changed
+
+- `taiwan-holidays`:改為 CSV 優先 — data.gov.tw 資料集 14718 其實有 106-116 年全年度 CSV（含當年度 115 年、明年 116 年,2026-09-12 實測 115 CSV 365 列、平日放假 16 天、總放假 120 天,與 xlsx 解析及人事總處公告一致）;官方 xlsx 月曆解析降為備援與交叉驗證。補上 114 下半年起官方廢除補班制度的說明
+- `taiwan-holidays`:114 年改用 114/10/20 更新版 CSV（舊版漏答 2025/9 後新增的教師節、光復節、行憲紀念日放假）;該檔為 Big5 需 iconv,與 115/116 的 UTF-8 不同,文件改為依檔案確認編碼
+- `docs/features/taiwan-garbage.md`:其他縣市研究結果複驗更新 — 台中資料集 84004 經資源 rid 的免驗證路徑可下載（CSV 4.7MB/JSON 13.7MB,2026-09-12 實測）,改列擴充候選（時效待驗證）;台南更正為「curl 可連、僅瀏覽器代理黑名單」;桃園、高雄維持不可達
+- `taiwan-stock`:English summary 補上 openapi STOCK_DAY_ALL 延遲約半天的 caveat（與 zh-TW 內文對齊）
+- `postal-address`:補資料特性一節 — 全檔掃描結果（路街 30,031 列/村里 8,369 列無缺譯無亂碼）、路名無縣市前綴有 21 組重名、村里英譯 220 列用 U+2019 彎撇號、路街英文欄 2 列含全形數字
+
 ## [0.4.1] - 2026-09-12
 
 ### Fixed
