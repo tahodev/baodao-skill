@@ -9,7 +9,7 @@ metadata:
 
 # postal-address
 
-用中華郵政官網下載區的公開對照表查郵遞區號（前 3 碼）與地址英譯。不需要 API 金鑰或登入。下載區總頁：https://www.post.gov.tw/post/internet/Download/all_list.jsp?ID=2201 （2026-09-12 實測可連）。**全部檔案是 Big5 編碼**，處理前先 `iconv -f big5 -t utf-8`。
+用中華郵政官網下載區的公開對照表查郵遞區號（前 3 碼）與地址英譯。不需要 API 金鑰或登入。下載區總頁：https://www.post.gov.tw/post/internet/Download/all_list.jsp?ID=2201 （2026-09-12 實測可連）。**TXT 檔是 Big5 編碼**，處理前先 `iconv -f big5 -t utf-8`；XML 檔（County_h_10906.xml 等）是 UTF-8，**不要**過 iconv，會轉壞。
 
 ## 1. 3 碼郵遞區號（各鄉鎮市區）
 
@@ -23,7 +23,7 @@ grep '大安' /tmp/zip3.txt
 ## 2. 地址英譯對照（漢語拼音，三層）
 
 ```bash
-# 縣市鄉鎮中英對照（XML，54KB）
+# 縣市鄉鎮中英對照（XML，54KB，UTF-8 編碼，直接讀取即可）
 curl -sm 30 -o /tmp/county.xml 'https://www.post.gov.tw/post/download/County_h_10906.xml'
 # 村里文字巷中英對照（TXT，約 222KB）
 curl -sm 30 'https://www.post.gov.tw/post/download/%E6%9D%91%E9%87%8C%E6%96%87%E5%AD%97%E5%B7%B7%E4%B8%AD%E8%8B%B1%E5%B0%8D%E7%85%A7.TXT' | iconv -f big5 -t utf-8 > /tmp/village.txt
@@ -31,11 +31,12 @@ curl -sm 30 'https://www.post.gov.tw/post/download/%E6%9D%91%E9%87%8C%E6%96%87%E
 curl -sm 30 'https://www.post.gov.tw/post/download/%E4%B8%AD%E8%8B%B1%E6%96%87%E8%A1%97%E8%B7%AF%E5%90%8D%E7%A8%B1%E5%B0%8D%E7%85%A7%E6%AA%941130401.TXT' | iconv -f big5 -t utf-8 > /tmp/roads.txt
 ```
 
-2026-09-12 實測：三個檔都 HTTP 200。路街檔是兩欄 CSV 格式 `中文路名,English Name`（例：`一貢一路,Yigong Rd.`、`一心二路,Yixin 2nd Rd.`）。組英文地址時順序反轉（英文由小到大）：路街拼音 + 鄉鎮拼音 + 縣市拼音 + 郵遞區號 + Taiwan (R.O.C.)。
+2026-09-12 實測：三個檔都 HTTP 200。路街檔是兩欄 CSV 格式 `中文路名,English Name`（例：`一工路,Yigong Rd.`、`一心二路,Yixin 2nd Rd.`）。組英文地址時順序反轉（英文由小到大）：路街拼音 + 鄉鎮拼音 + 縣市拼音 + 郵遞區號 + Taiwan (R.O.C.)。
 
 ```bash
 grep '^中正路,' /tmp/roads.txt | head -5
-grep '大安區' /tmp/village.txt | head -5
+# 村里檔是引號 CSV 格式（"中文名,""English Name"""），且不含縣市/鄉鎮前綴，用村里名本身查：
+grep '^"大安里,"' /tmp/village.txt | head -3
 ```
 
 ## 限制（要對使用者誠實說明）
@@ -46,10 +47,10 @@ grep '大安區' /tmp/village.txt | head -5
 
 ## 錯誤與失敗時的處理
 
-- **亂碼**：忘了 iconv。所有檔案（含 .xml 的部分宣告）實際內容是 Big5。
+- **亂碼**：TXT 檔忘了 iconv（Big5→UTF-8）；或反過來把 UTF-8 的 XML 檔也過了 iconv 轉壞。分工：.TXT/.txt=Big5 要轉，.xml=UTF-8 直接讀。
 - **下載 404**：中華郵政改版時檔名會帶日期更新（如路街檔的 `1130401`）。回下載區總頁找最新檔名替換。
 - **找不到的路名**：先查村里檔再查路街檔；都沒有就引導到官方中英對照查詢頁，不要翻譯充數。
 
 ## English summary
 
-Taiwan postal codes (3-digit) and Chinese-to-English address transliteration (Hanyu Pinyin), keyless, from Chunghwa Post's official download area. Files verified 2026-09-12: the 3-digit postal code table (Big5 txt, plus a lat/lng XML), county/township, village, and road/street Chinese-English tables (Big5 TXT/XML). Always `iconv -f big5 -t utf-8` first. Full 3+3 six-digit delivery codes are NOT available as a keyless machine-readable table (official Windows app or registered web service only) - send users to post.gov.tw for those; never guess the last three digits.
+Taiwan postal codes (3-digit) and Chinese-to-English address transliteration (Hanyu Pinyin), keyless, from Chunghwa Post's official download area. Files verified 2026-09-12: the 3-digit postal code table (Big5 txt, plus a lat/lng XML), county/township, village, and road/street Chinese-English tables. The .TXT files are Big5 - run `iconv -f big5 -t utf-8` first; the .xml files (e.g. County_h_10906.xml) are UTF-8 - read them directly, do NOT iconv. The village file is quoted CSV ("name,""English""") with no district prefix - grep by the village/lane name itself. Full 3+3 six-digit delivery codes are NOT available as a keyless machine-readable table (official Windows app or registered web service only) - send users to post.gov.tw for those; never guess the last three digits.
