@@ -17,7 +17,7 @@ metadata:
 curl -sm 30 'https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL' -o /tmp/twse.json
 ```
 
-2026-09-12 實測：HTTP 200、約 319KB JSON 陣列，每筆一檔股票（最新交易日，當日為 1150910）。欄位：`Date`（民國年月日）、`Code`、`Name`、`TradeVolume`（成交股數）、`TradeValue`（成交金額）、`OpeningPrice`、`HighestPrice`、`LowestPrice`、`ClosingPrice`、`Change`（漲跌，字串，含 +/-）。
+2026-09-12 實測：HTTP 200、約 319KB JSON 陣列，每筆一檔股票。**注意更新延遲**：這個 openapi 端點比 www.twse.com.tw 的 STOCK_DAY 慢約半天——收盤當晚 STOCK_DAY 已有當日資料時，STOCK_DAY_ALL 還停在前一交易日（2026-09-12 清晨實測：openapi 顯示 1150910，STOCK_DAY 已有 1150911）。要最新交易日資料用第 3 節的 STOCK_DAY 或 TPEX 端點。欄位：`Date`（民國年月日）、`Code`、`Name`、`TradeVolume`（成交股數）、`TradeValue`（成交金額）、`OpeningPrice`、`HighestPrice`、`LowestPrice`、`ClosingPrice`、`Change`（漲跌，字串，含 +/-）、`Transaction`（成交筆數）。
 
 ```bash
 # 查台積電
@@ -63,7 +63,7 @@ curl -sm 30 'https://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&date=
 
 - **非交易日**：假日沒有資料不是錯誤。先查 STOCK_DAY_ALL（永遠回最新交易日），需要指定日時若回空，往前找最近交易日。
 - **民國年換算**：API 的 `Date`/`日期` 是民國年，西元年 = 民國 + 1911（115 → 2026）。
-- **數字是字串**：`ClosingPrice`、`Change` 等全是字串，jq 計算前要 `tonumber`；`Change` 可能帶空白（如 `"-0.17 "`），tonumber 會自動容忍。
+- **數字是字串**：`ClosingPrice`、`Change` 等全是字串，jq 計算前要 `tonumber`。
 - **盤中資料**：本 API 盤中不更新；若使用者要即時報價，說明這是收盤統計資料。
 - **HTTP 200 但內容是 HTML**：可能是 WAF 暫時攔截，換 openapi.twse.com.tw 主機（或反向）再試一次；兩個主機都失敗就回報資料源異常，不要靜默編造數字。
 
