@@ -2,6 +2,20 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.4.0] - 2026-09-12
+
+### Added
+
+- `taiwan-holidays`:國定假日、連假、補班日查詢 — 行政院人事行政總處辦公日曆表;當年度（115 年）官方 xlsx 月曆用 python3 標準庫解析（紅字樣式判斷放假,365 天全量驗證,2026-09-12 實測),114 年及更早用 data.gov.tw 資料集 14718 的結構化 CSV;免金鑰
+- `taiwan-stock`:台股每日收盤行情 — TWSE `openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL`（全市場）、`STOCK_DAY`（個股本月每日）、`MI_INDEX`（指數）與 TPEX `tpex_mainboard_daily_close_quotes`;民國年日期、非交易日回空的處理方式已寫入;免金鑰,全部端點 2026-09-12 實測 HTTP 200
+- `postal-address`:3 碼郵遞區號與地址英譯 — 中華郵政下載區官方對照表（鄉鎮 3 碼表、縣市鄉鎮/村里/路街中英對照,Big5 需 iconv）;完整 3+3 六碼無免登入機讀全表的限制如實記載;免金鑰,全部檔案 2026-09-12 實測可下載
+- `docs/features/`:新增 taiwan-holidays.md、taiwan-stock.md、postal-address.md 摘要指南
+
+### Changed
+
+- `docs/features/taiwan-garbage.md`:補上其他縣市（桃園、台中、台南、高雄）資料源的 2026-09-12 實測研究結果與阻礙原因,維持台北/新北支援範圍
+- README:功能表新增三個技能;30 天計畫清單勾選國定假日、郵遞區號、台股三項
+
 ## [0.3.3] - 2026-09-11
 
 ### Fixed
