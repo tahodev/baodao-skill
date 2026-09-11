@@ -2,6 +2,16 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.4.1] - 2026-09-12
+
+### Fixed
+
+- `postal-address`:縣市鄉鎮中英對照 XML（County_h_10906.xml）實為 UTF-8,原先「全部檔案是 Big5」與錯誤處理一節的說法會讓人把 XML 也過 iconv 轉壞 — 改為 TXT=Big5 要轉、XML=UTF-8 直接讀（2026-09-12 複驗 `file` 與 XML 宣告）
+- `postal-address`:村里檔範例 `grep '大安區'` 查不到（該檔無縣市/鄉鎮前綴、為引號 CSV 格式）— 範例改為 `grep '^"大安里,"'` 並補格式說明;路街檔範例「一貢一路」更正為實際存在的「一工路,Yigong Rd.」
+- `taiwan-holidays`:114 年 CSV 補班日 awk 範例因檔案 CRLF 換行而比對不到備註欄 — 加上 `sub(/\r$/,"",$4)`;CSV 說明補上 CRLF 注意事項
+- `taiwan-holidays`:放假日標示機制誤寫為「紅色字體」— 實際是粉紅底色 fill（樣式 31/34/38 的 fillId=2、FFFF99FF,與一般上班日同字體）;SKILL、features 頁與英文摘要同步更正;解析常數與結果不變（115 年 365 天、放假 120 天與人事總處公告一致,2026-09-12 複驗）
+- `taiwan-stock`:補上 STOCK_DAY_ALL openapi 端點比 www STOCK_DAY 慢約半天的注意（2026-09-12 清晨實測 openapi 1150910 vs STOCK_DAY 1150911）;欄位清單補 `Transaction`;刪除未驗證的「Change 可能帶空白」說法（現行 1,379 檔全數無空白）
+
 ## [0.4.0] - 2026-09-12
 
 ### Added
