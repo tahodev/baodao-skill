@@ -32,15 +32,18 @@ curl -sm 30 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Autho
 
 ### 2. 鄉鎮預報（F-D0047 系列）
 
-每個縣市有各自的 dataset id（`F-D0047-xxx`，一週逐 12 小時或 3 小時鄉鎮預報）。到 https://opendata.cwa.gov.tw 資料目錄搜尋「鄉鎮天氣預報」確認目標縣市的 id，呼叫方式相同:
+每個縣市有各自的 dataset id（`F-D0047-xxx`，一週逐 12 小時或 3 小時鄉鎮預報；2026-09-14 實測臺北市 = `F-D0047-061`）。其餘縣市的 id 到 https://opendata.cwa.gov.tw 資料目錄搜尋「鄉鎮天氣預報」確認。**此系列的 `locationName` 參數無過濾效果**（2026-09-14 實測），一律回傳全縣市所有鄉鎮，下載後自行篩選：
 
 ```bash
-curl -sm 30 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/<F-D0047-xxx>?Authorization=<授權碼>&locationName=<鄉鎮市區名>'
+curl -sm 30 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-061?Authorization=<授權碼>' -o /tmp/cwa_tpe.json
+jq -r '.records.Locations[0].Location[] | select(.LocationName=="大安區") | .LocationName' /tmp/cwa_tpe.json
 ```
 
 ### 實測記錄
 
-2026-09-09 實測：未帶金鑰與帶無效金鑰呼叫 `F-C0032-001` 皆回 `401 Forbidden: Authorization key is not correct.`。**本技能未持有效金鑰做端到端實測**；端點、參數與回傳結構依 CWA 開放資料平臺官方文件（https://opendata.cwa.gov.tw 的 API 文件與資料集說明頁）。首次實際使用時，若回傳結構與上述不符，以實際回傳為準並回報差異。
+- 2026-09-09：未帶金鑰與帶無效金鑰呼叫 `F-C0032-001` 皆回 `401 Forbidden: Authorization key is not correct.`。
+- 2026-09-14：持有效授權碼端到端實測——`F-C0032-001?locationName=臺北市` 回 HTTP 200、`success:true`，結構與本文件一致。實際資料樣本：臺北市 2026-09-14 白天「多雲短暫陣雨」、PoP 30%、25-30°C、舒適度「舒適至悶熱」。
+- 2026-09-14：鄉鎮預報實測——`F-D0047-061` = 臺北市（回傳約 574KB，松山、信義、大安等 12 區全列）。**注意：`locationName` 參數對 F-D0047 無過濾效果**，帶 `locationName=大安區` 仍回全區 12 筆，需客戶端自行篩選。
 
 ## 錯誤與失敗時的處理
 
@@ -67,4 +70,4 @@ curl -sm 30 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/<F-D0047-xxx>?Aut
 
 ## English summary
 
-Queries official weather forecasts (36-hour per-county via F-C0032-001， township forecasts via the F-D0047 series) from Taiwan's Central Weather Administration open-data platform. Requires a free, instantly issued API key from opendata.cwa.gov.tw - keyless and bad-key calls return 401 (verified 2026-09-09; no end-to-end test with a real key yet, so the response layout follows the official docs). For typhoons, heavy-rain advisories, warnings, and earthquake reports, use the keyless NCDR CAP feeds documented in taiwan-weather (the CWA website is bot-protected; verified 403 on 2026-09-09) - official announcements remain at https://www.cwa.gov.tw. Without a key, fall back to the keyless taiwan-weather (Open-Meteo) skill. Never echo the user's key into replies or commits.
+Queries official weather forecasts (36-hour per-county via F-C0032-001， township forecasts via the F-D0047 series) from Taiwan's Central Weather Administration open-data platform. Requires a free, instantly issued API key from opendata.cwa.gov.tw - keyless and bad-key calls return 401 (verified 2026-09-09). End-to-end verified with a valid key 2026-09-14: F-C0032-001 structure matches this doc (real Taipei sample: 多雲短暫陣雨, PoP 30%, 25-30°C); F-D0047-061 = Taipei City confirmed, and note the F-D0047 series' locationName parameter does NOT filter - all districts come back, so filter client-side. For typhoons, heavy-rain advisories, warnings, and earthquake reports, use the keyless NCDR CAP feeds documented in taiwan-weather (the CWA website is bot-protected; verified 403 on 2026-09-09) - official announcements remain at https://www.cwa.gov.tw. Without a key, fall back to the keyless taiwan-weather (Open-Meteo) skill. Never echo the user's key into replies or commits.
