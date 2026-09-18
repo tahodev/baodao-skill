@@ -4,14 +4,14 @@ from pathlib import Path
 import json, re, subprocess, sys
 root=Path(__file__).resolve().parents[1]
 MAX_WORKERS=8; TIMEOUT=20
-WARN_HOSTS={'you-bike.com.tw', 'invoice.etax.nat.gov.tw', 'data.ntpc.gov.tw', 'data.taipei', 'etax.nat.gov.tw', 'opendata.cwa.gov.tw', 'opendata.tycg.gov.tw', 'youbike.com.tw', 'data.gov.tw', 'newdatacenter.taichung.gov.tw'}
+WARN_HOSTS={'you-bike.com.tw', 'invoice.etax.nat.gov.tw', 'data.ntpc.gov.tw', 'data.taipei', 'etax.nat.gov.tw', 'opendata.cwa.gov.tw', 'alerts.ncdr.nat.gov.tw', 'opendata.tycg.gov.tw', 'youbike.com.tw', 'data.gov.tw', 'newdatacenter.taichung.gov.tw'}
 OPENAPI_HOSTS={'opendata.cwa.gov.tw'}
 url_re=re.compile(r'https?://[^ )"`\'。，、；：（）<>]+')
 placeholders={'KEY':'INVALID_CI_KEY','SEOUL_KEY':'sample','KEXIM_KEY':'INVALID_CI_KEY','ECOS_KEY':'sample','CONTENT_ID':'126508','STATION_ID':'SUB0002','STN_ID':'108','TM_SEQ':'1','DEP_ID':'NAEK010','ARR_ID':'NAEK300','LON':'126.9780','LAT':'37.5665','START':'20260901','END':'20260930','AREA_NM':'%EB%AA%85%EB%8F%99','BASE_DATE':'20260919','TRAVEL_DATE':'20260919','RATE_DATE':'20260919','MONTH':'2026-09','TM_FC':'202609190600','CWA_API_KEY':'INVALID_CI_KEY'}
 items={}
 for path in root.glob('*/SKILL.md'):
     for raw in url_re.findall(path.read_text(encoding='utf-8')):
-        url=raw.rstrip('.,;。,)')
+        url=raw.rstrip('.,;。,)}')
         items.setdefault(url,set()).add(str(path.relative_to(root)))
 
 def materialize(url):
@@ -24,7 +24,7 @@ def host(url): return re.match(r'https?://([^/:]+)',url).group(1).lower()
 def warning_host(h): return any(h==x or h.endswith('.'+x) for x in WARN_HOSTS)
 def openapi_host(h): return any(h==x or h.endswith('.'+x) for x in OPENAPI_HOSTS)
 def api_error(body):
-    pats=[r'ERROR-[0-9]+',r'"(?:resultCode|returnCode|code)"\s*:\s*"?(?!00\b|INFO-000\b|0\b)([A-Z0-9_-]+)',r'<resultCode>\s*(?!00<)([^<]+)']
+    pats=[r'ERROR-[0-9]+',r'"(?:resultCode|returnCode)"\s*:\s*"?(?!00\b|INFO-000\b|0\b)([A-Z0-9_-]+)',r'<resultCode>\s*(?!00<)([^<]+)']
     for p in pats:
         m=re.search(p,body,re.I)
         if m: return m.group(0)[:120]
