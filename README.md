@@ -70,7 +70,7 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 
 ## 30 天計畫
 
-這個倉庫以「一天一技能」的速度成長中，目前有 21 個技能（見上方功能表）。候選項目分兩類：**全新技能**與**既有技能的擴充**；打勾代表該項目完成，完成一個擴充項目不代表新增一個技能。
+這個倉庫以「一天一技能」的速度成長中，目前有 24 個技能（見上方功能表）。候選項目分兩類：**全新技能**與**既有技能的擴充**；打勾代表該項目完成，完成一個擴充項目不代表新增一個技能。
 
 ### 新技能候選（24 項，已完成 19 項）
 
@@ -113,7 +113,7 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 
 ## English
 
-**baodao-skill** (寶島, "baodao" = treasure island, an affectionate name for Taiwan) is a collection of AI-agent skills for daily life in Taiwan. It focuses on read-only lookups built only on official APIs and public datasets: no login walls, no API keys, no scraping. One exception: `cwa-weather` uses a CWA API key - free and issued instantly on registration (the other four skills need no key).
+**baodao-skill** (寶島, "baodao" = treasure island, an affectionate name for Taiwan) is a collection of AI-agent skills for daily life in Taiwan. It focuses on read-only lookups built only on official APIs and public datasets: no login walls, no API keys, no scraping. One exception: `cwa-weather` uses a CWA API key - free and issued instantly on registration (the other skills need no key).
 
 Works with any coding agent that supports `npx skills add` (Claude Code, Codex, OpenCode, ...).
 
