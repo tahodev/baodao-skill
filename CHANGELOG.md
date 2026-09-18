@@ -2,6 +2,24 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.7.0] - 2026-09-19
+
+### Added
+
+八個新技能（替換先前因資料源受阻而無法驗證的候選）,全部於 2026-09-19 實測成功後收錄。
+
+- `taiwan-power`:台電今日電力供需 — 主站 403 改走 service.taipower.com.tw opendata(實測 200:目前用電 2,733.5 萬瓩、預估備轉率 26.21% 綠燈、115.09.19 03:10 發布);燈號對照、單位與雙曆注意
+- `taiwan-real-estate`:實價登錄季度批次下載 — plvr.land.moi.gov.tw(實測 115S2 zip 14.7MB、台北市買賣 5,609 列;UTF-8 BOM 雙標頭、民國日期、申報落差說明)
+- `taiwan-water`:台水停水降壓公告 — web.water.gov.tw wateroffapi JSON/CSV(實測 200;空清單=無公告的語意、僅台水轄區、1910 導引)
+- `taiwan-library`:國家圖書館圖書館名錄 — Big5 CSV(實測 5,207 館、類型分佈與複合值處理)
+- `taiwan-museum`:文化部博物館名錄 — emap typeId=H JSON(實測 144 館;故宮 350 元票價範例;票價自由文字逐字引用原則)
+- `taiwan-toilet`:全國公廁建檔 — data.gov.tw 公布的 resource key 打 MOENV api/v2(實測分頁正常;免註冊、key 失效回資料集頁重取)
+- `taiwan-schools`:教育部校別資料 — 國中 basej.csv(10,594 列、104-114 學年度)+ 國小 114_basec.csv(2,663 校);學年度換算
+- `taiwan-lunar-cal`:農曆與節氣換算 — 純計算,內附完整實作;9 個農曆錨點全過(115 春節/中秋/除夕、114 閏六月),節氣公式 2026 清明 4/5、冬至 12/22;±1 天例外如實記載
+
+- `docs/features/`:八個新技能各補 feature notes 頁
+
+
 ## [0.6.0] - 2026-09-19
 
 ### Added
