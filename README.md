@@ -51,6 +51,14 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 | 健保特約院所查詢 | `taiwan-hospital` | 健保署開放資料 API：37,127 家特約醫院診所名錄（地址、電話、科別、服務時段姊妹集） | 不需要 | [taiwan-hospital 指南](docs/features/taiwan-hospital.md) |
 | 郵資查詢 | `taiwan-postage` | 中華郵政資費表：國內信函/包裹/快捷/國際資費 | 不需要 | [taiwan-postage 指南](docs/features/taiwan-postage.md) |
 | 紫外線指數 | `taiwan-uv` | 中央氣象署各測站每日紫外線指數最大值（O-A0005-001） | 需要（免費即時發給） | [taiwan-uv 指南](docs/features/taiwan-uv.md) |
+| 台電電力供需 | `taiwan-power` | 台電開放資料：目前用電、預估尖峰、備轉容量率與供電燈號 | 不需要 | [taiwan-power 指南](docs/features/taiwan-power.md) |
+| 實價登錄查詢 | `taiwan-real-estate` | 內政部實價登錄季度批次下載：全台買賣/預售屋/租賃成交資料 | 不需要 | [taiwan-real-estate 指南](docs/features/taiwan-real-estate.md) |
+| 停水公告 | `taiwan-water` | 台灣自來水公司停水/降壓案件（起訖時間、範圍、戶數、原因） | 不需要 | [taiwan-water 指南](docs/features/taiwan-water.md) |
+| 圖書館名錄 | `taiwan-library` | 國家圖書館彙編全台 5,207 館清單（公共/學校/專門圖書館） | 不需要 | [taiwan-library 指南](docs/features/taiwan-library.md) |
+| 博物館名錄 | `taiwan-museum` | 文化部全台 144 間博物館（地址、票價、電話、經緯度） | 不需要 | [taiwan-museum 指南](docs/features/taiwan-museum.md) |
+| 全國公廁查詢 | `taiwan-toilet` | 環境部全國公廁建檔資料（位置、管理單位、評鑑等級、尿布台） | 不需要 | [taiwan-toilet 指南](docs/features/taiwan-toilet.md) |
+| 學校名錄與學生數 | `taiwan-schools` | 教育部統計處校別資料：國中/國小學校代碼、班級數、學生數 | 不需要 | [taiwan-schools 指南](docs/features/taiwan-schools.md) |
+| 農曆與節氣換算 | `taiwan-lunar-cal` | 國曆轉農曆（1900-2100 含閏月）、二十四節氣日期、生肖（純本地計算） | 不需要 | [taiwan-lunar-cal 指南](docs/features/taiwan-lunar-cal.md) |
 
 各技能的**正本是 `<技能名>/SKILL.md`**。`docs/features/` 的指南是摘要版，詳細步驟、參數與錯誤處理請務必參考 SKILL.md。
 
@@ -62,30 +70,35 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 
 ## 30 天計畫
 
-這個倉庫以「一天一技能」的速度成長中，目前有 13 個技能（見上方功能表）。候選項目分兩類：**全新技能**與**既有技能的擴充**；打勾代表該項目完成，完成一個擴充項目不代表新增一個技能。
+這個倉庫以「一天一技能」的速度成長中，目前有 21 個技能（見上方功能表）。候選項目分兩類：**全新技能**與**既有技能的擴充**；打勾代表該項目完成，完成一個擴充項目不代表新增一個技能。
 
-### 新技能候選（20 項，已完成 12 項）
+### 新技能候選（24 項，已完成 19 項）
 
 - [x] 中央氣象署天氣預報（免費 API 金鑰）→ `cwa-weather`
 - [x] 國定假日與連假查詢（行政院人事行政總處辦公日曆表）→ `taiwan-holidays`
 - [ ] 空氣品質指標 AQI
 - [x] 停車場剩餘車位 → `taiwan-parking`（台北市,2026-09-19）
 - [x] 郵遞區號查詢 → `postal-address`（含地址英譯對照）
-- [ ] 台電電力供需資訊
+- [x] 台電電力供需資訊 → `taiwan-power`（2026-09-19）
 - [x] 油價查詢（台灣中油）→ `taiwan-oil-price`（2026-09-19）
 - [x] 停班停課公告 → `taiwan-suspension`（2026-09-19）
 - [x] 農產品交易行情 → `taiwan-produce`（2026-09-19）
 - [ ] 綜合所得稅試算
 - [x] 統一編號與身分證字號檢核 → `taiwan-id-check`（2026-09-19）
 - [x] 醫院診所查詢 → `taiwan-hospital`（2026-09-19）
-- [ ] 公共圖書館館藏查詢
+- [ ] 公共圖書館館藏查詢（名錄已支援 → `taiwan-library`；館藏查詢待支援）
 - [ ] 國道即時路況
 - [x] 紫外線指數 → `taiwan-uv`（2026-09-19）
-- [ ] 停水公告
-- [ ] 節氣與農曆換算
+- [x] 停水公告 → `taiwan-water`（2026-09-19）
+- [x] 節氣與農曆換算 → `taiwan-lunar-cal`（2026-09-19）
 - [ ] 勞健保費率計算
 - [x] 郵資計算 → `taiwan-postage`（2026-09-19）
 - [x] 台股行情快照（TWSE/TPEX 每日收盤）→ `taiwan-stock`
+
+- [x] 實價登錄查詢 → `taiwan-real-estate`（2026-09-19）
+- [x] 博物館名錄 → `taiwan-museum`（2026-09-19）
+- [x] 全國公廁查詢 → `taiwan-toilet`（2026-09-19）
+- [x] 學校名錄與學生數 → `taiwan-schools`（2026-09-19）
 
 ### 既有技能的擴充（3 項，已完成 2 項）
 
@@ -136,6 +149,14 @@ Node.js 18+ and `npx` are required. See the [install guide](docs/install.md) for
 | NHI-contracted providers | `taiwan-hospital` | NHI open-data API: 37,127 contracted hospitals and clinics (address, phone; hours and departments via sibling datasets) | Not required | [taiwan-hospital guide](docs/features/taiwan-hospital.md) |
 | Postage rates | `taiwan-postage` | Chunghwa Post rate tables: domestic letters, parcels, express, international | Not required | [taiwan-postage guide](docs/features/taiwan-postage.md) |
 | UV index | `taiwan-uv` | CWA daily max UV index per station (O-A0005-001) | Free instant API key | [taiwan-uv guide](docs/features/taiwan-uv.md) |
+| Taipower supply/demand | `taiwan-power` | Taipower open data: current load, forecast peak, reserve rate and supply indicator | Not required | [taiwan-power guide](docs/features/taiwan-power.md) |
+| Real-price registry | `taiwan-real-estate` | MOI real-price registry quarterly batch downloads: sales, pre-sale, rentals nationwide | Not required | [taiwan-real-estate guide](docs/features/taiwan-real-estate.md) |
+| Water outage notices | `taiwan-water` | Taiwan Water Corp outage/pressure-reduction cases (times, areas, households, causes) | Not required | [taiwan-water guide](docs/features/taiwan-water.md) |
+| Library directory | `taiwan-library` | NCL directory of 5,207 libraries nationwide (public, school, special) | Not required | [taiwan-library guide](docs/features/taiwan-library.md) |
+| Museum directory | `taiwan-museum` | Ministry of Culture list of 144 museums (address, ticket info, phone, coordinates) | Not required | [taiwan-museum guide](docs/features/taiwan-museum.md) |
+| Public toilet lookup | `taiwan-toilet` | MOENV national public toilet registry (locations, managing orgs, inspection grades, diaper stations) | Not required | [taiwan-toilet guide](docs/features/taiwan-toilet.md) |
+| School directory & enrollment | `taiwan-schools` | MOE school-level data: codes, districts, class and student counts for elementary/junior-high schools | Not required | [taiwan-schools guide](docs/features/taiwan-schools.md) |
+| Lunar calendar & solar terms | `taiwan-lunar-cal` | Gregorian-to-lunar conversion (1900-2100 incl. leap months), 24 solar terms, zodiac (pure local computation) | Not required | [taiwan-lunar-cal guide](docs/features/taiwan-lunar-cal.md) |
 
 The canonical source for each skill is its `<skill>/SKILL.md`. The guides under `docs/features/` are summaries only - always refer to SKILL.md for full procedures, parameters, and error handling.
 
