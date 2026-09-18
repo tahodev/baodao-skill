@@ -43,6 +43,14 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 | 國定假日與連假查詢 | `taiwan-holidays` | 行政院人事行政總處辦公日曆表：國定假日、連假、補班日（當年度 xlsx 月曆 + 歷年結構化 CSV） | 不需要 | [taiwan-holidays 指南](docs/features/taiwan-holidays.md) |
 | 台股行情快照 | `taiwan-stock` | 上市（TWSE）與上櫃（TPEX）每日收盤行情、個股本月每日成交、大盤指數（收盤統計，非盤中報價） | 不需要 | [taiwan-stock 指南](docs/features/taiwan-stock.md) |
 | 郵遞區號與地址英譯 | `postal-address` | 中華郵政官方對照表：3 碼郵遞區號、縣市鄉鎮/村里/路街中英對照（漢語拼音） | 不需要 | [postal-address 指南](docs/features/postal-address.md) |
+| 統編與身分證字號檢核 | `taiwan-id-check` | 統一編號與身分證字號檢查碼驗證（純本地計算，零網路） | 不需要 | [taiwan-id-check 指南](docs/features/taiwan-id-check.md) |
+| 台北市停車場剩位 | `taiwan-parking` | 停管處 TCMSV 公開 JSON：1,177 場即時剩位＋1,773 場靜態資料（費率、地址） | 不需要 | [taiwan-parking 指南](docs/features/taiwan-parking.md) |
+| 中油每週油價 | `taiwan-oil-price` | 台灣中油歷史油價頁：92/95/98 無鉛與超柴週牌價 | 不需要 | [taiwan-oil-price 指南](docs/features/taiwan-oil-price.md) |
+| 停班停課公告 | `taiwan-suspension` | 人事行政總處天然災害停班停課官方公告 | 不需要 | [taiwan-suspension 指南](docs/features/taiwan-suspension.md) |
+| 農產品批發行情 | `taiwan-produce` | 農業部開放資料：全台 24 個批發市場蔬果行情（上中下價與交易量） | 不需要 | [taiwan-produce 指南](docs/features/taiwan-produce.md) |
+| 健保特約院所查詢 | `taiwan-hospital` | 健保署開放資料 API：37,127 家特約醫院診所名錄（地址、電話、科別、服務時段姊妹集） | 不需要 | [taiwan-hospital 指南](docs/features/taiwan-hospital.md) |
+| 郵資查詢 | `taiwan-postage` | 中華郵政資費表：國內信函/包裹/快捷/國際資費 | 不需要 | [taiwan-postage 指南](docs/features/taiwan-postage.md) |
+| 紫外線指數 | `taiwan-uv` | 中央氣象署各測站每日紫外線指數最大值（O-A0005-001） | 需要（免費即時發給） | [taiwan-uv 指南](docs/features/taiwan-uv.md) |
 
 各技能的**正本是 `<技能名>/SKILL.md`**。`docs/features/` 的指南是摘要版，詳細步驟、參數與錯誤處理請務必參考 SKILL.md。
 
@@ -54,29 +62,29 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 
 ## 30 天計畫
 
-這個倉庫以「一天一技能」的速度成長中，目前有 5 個技能（見上方功能表）。候選項目分兩類：**全新技能**與**既有技能的擴充**；打勾代表該項目完成，完成一個擴充項目不代表新增一個技能。
+這個倉庫以「一天一技能」的速度成長中，目前有 13 個技能（見上方功能表）。候選項目分兩類：**全新技能**與**既有技能的擴充**；打勾代表該項目完成，完成一個擴充項目不代表新增一個技能。
 
-### 新技能候選（20 項，已完成 4 項）
+### 新技能候選（20 項，已完成 12 項）
 
 - [x] 中央氣象署天氣預報（免費 API 金鑰）→ `cwa-weather`
 - [x] 國定假日與連假查詢（行政院人事行政總處辦公日曆表）→ `taiwan-holidays`
 - [ ] 空氣品質指標 AQI
-- [ ] 停車場剩餘車位
+- [x] 停車場剩餘車位 → `taiwan-parking`（台北市,2026-09-19）
 - [x] 郵遞區號查詢 → `postal-address`（含地址英譯對照）
 - [ ] 台電電力供需資訊
-- [ ] 油價查詢（台灣中油）
-- [ ] 停班停課公告
-- [ ] 農產品交易行情
+- [x] 油價查詢（台灣中油）→ `taiwan-oil-price`（2026-09-19）
+- [x] 停班停課公告 → `taiwan-suspension`（2026-09-19）
+- [x] 農產品交易行情 → `taiwan-produce`（2026-09-19）
 - [ ] 綜合所得稅試算
-- [ ] 統一編號與身分證字號檢核
-- [ ] 醫院診所查詢
+- [x] 統一編號與身分證字號檢核 → `taiwan-id-check`（2026-09-19）
+- [x] 醫院診所查詢 → `taiwan-hospital`（2026-09-19）
 - [ ] 公共圖書館館藏查詢
 - [ ] 國道即時路況
-- [ ] 紫外線指數
+- [x] 紫外線指數 → `taiwan-uv`（2026-09-19）
 - [ ] 停水公告
 - [ ] 節氣與農曆換算
 - [ ] 勞健保費率計算
-- [ ] 郵資計算
+- [x] 郵資計算 → `taiwan-postage`（2026-09-19）
 - [x] 台股行情快照（TWSE/TPEX 每日收盤）→ `taiwan-stock`
 
 ### 既有技能的擴充（3 項，已完成 2 項）
@@ -120,6 +128,14 @@ Node.js 18+ and `npx` are required. See the [install guide](docs/install.md) for
 | Look up Taiwan public holidays | `taiwan-holidays` | DGPA government work calendar: national holidays, long weekends, makeup workdays (current-year xlsx + historical structured CSV) | Not required | [taiwan-holidays guide](docs/features/taiwan-holidays.md) |
 | Taiwan stock daily-close snapshot | `taiwan-stock` | TWSE/TPEX daily closing quotes, per-stock daily rows, index levels (close statistics, not intraday) | Not required | [taiwan-stock guide](docs/features/taiwan-stock.md) |
 | Postal codes and address transliteration | `postal-address` | Chunghwa Post tables: 3-digit postal codes plus county/village/road Chinese-English tables (Hanyu Pinyin) | Not required | [postal-address guide](docs/features/postal-address.md) |
+| UBN and national ID checksum | `taiwan-id-check` | Uniform Business Number and national ID checksum validation (pure local computation, zero network) | Not required | [taiwan-id-check guide](docs/features/taiwan-id-check.md) |
+| Taipei parking availability | `taiwan-parking` | TCMSV public JSON: real-time spaces for 1,177 lots plus static details for 1,773 (pricing, addresses) | Not required | [taiwan-parking guide](docs/features/taiwan-parking.md) |
+| CPC weekly fuel prices | `taiwan-oil-price` | CPC history page: weekly list prices for 92/95/98 unleaded and premium diesel | Not required | [taiwan-oil-price guide](docs/features/taiwan-oil-price.md) |
+| Work/class suspension notices | `taiwan-suspension` | DGPA official natural-disaster work and class suspension announcements | Not required | [taiwan-suspension guide](docs/features/taiwan-suspension.md) |
+| Wholesale produce prices | `taiwan-produce` | MOA open data: high/mid/low prices and volumes across 24 wholesale markets | Not required | [taiwan-produce guide](docs/features/taiwan-produce.md) |
+| NHI-contracted providers | `taiwan-hospital` | NHI open-data API: 37,127 contracted hospitals and clinics (address, phone; hours and departments via sibling datasets) | Not required | [taiwan-hospital guide](docs/features/taiwan-hospital.md) |
+| Postage rates | `taiwan-postage` | Chunghwa Post rate tables: domestic letters, parcels, express, international | Not required | [taiwan-postage guide](docs/features/taiwan-postage.md) |
+| UV index | `taiwan-uv` | CWA daily max UV index per station (O-A0005-001) | Free instant API key | [taiwan-uv guide](docs/features/taiwan-uv.md) |
 
 The canonical source for each skill is its `<skill>/SKILL.md`. The guides under `docs/features/` are summaries only - always refer to SKILL.md for full procedures, parameters, and error handling.
 
