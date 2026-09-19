@@ -13,7 +13,7 @@
 
 
 台灣日常生活查詢的 AI 代理技能組合（寶島 = 台灣的美稱）。
-只使用官方 API 與公開資料：財政部電子發票整合服務平台、臺北市資料大平臺、新北市資料開放平臺、台中市政府資料開放平臺、桃園市政府資料開放平臺、YouBike 微笑單車公開資料與官方地圖即時 feed、Open-Meteo、中央氣象署開放資料平臺、國家災害防救科技中心（NCDR CAP）。以不需要登入、不需要 API 金鑰就能安全使用的查詢型技能為核心；少數技能（cwa-weather）使用免費、即時發給的 API 金鑰。
+只使用官方 API 與公開資料：財政部電子發票整合服務平台、臺北市資料大平臺、新北市資料開放平臺、台中市政府資料開放平臺、桃園市政府資料開放平臺、YouBike 微笑單車公開資料與官方地圖即時 feed、Open-Meteo、中央氣象署開放資料平臺、國家災害防救科技中心（NCDR CAP）。以不需要登入、不需要 API 金鑰就能安全使用的查詢型技能為核心；少數技能（cwa-weather、taiwan-uv）使用免費、即時發給的 API 金鑰。
 
 Claude Code、Codex、OpenCode 等支援 `npx skills add` 的編碼代理（coding agent）都可以使用。
 
@@ -27,7 +27,7 @@ npx --yes skills add tahodev/baodao-skill --all -g
 npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 ```
 
-需要 Node.js 18 以上與 `npx`。詳見[安裝指南]（docs/install.md）。
+需要 Node.js 18 以上與 `npx`。詳見[安裝指南](docs/install.md)。
 
 ## 功能
 
@@ -113,7 +113,7 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 
 ## English
 
-**baodao-skill** (寶島, "baodao" = treasure island, an affectionate name for Taiwan) is a collection of AI-agent skills for daily life in Taiwan. It focuses on read-only lookups built only on official APIs and public datasets: no login walls, no API keys, no scraping. One exception: `cwa-weather` uses a CWA API key - free and issued instantly on registration (the other skills need no key).
+**baodao-skill** (寶島, "baodao" = treasure island, an affectionate name for Taiwan) is a collection of AI-agent skills for daily life in Taiwan. It focuses on read-only lookups built only on official APIs and public datasets: no login walls, no API keys, no scraping. Two exceptions: `cwa-weather` and `taiwan-uv` use a CWA API key - free and issued instantly on registration; every other skill needs no key.
 
 Works with any coding agent that supports `npx skills add` (Claude Code, Codex, OpenCode, ...).
 
