@@ -27,7 +27,7 @@ curl -sm 30 -A 'Mozilla/5.0' -o /tmp/lib.csv 'https://www.ncl.edu.tw/OpenDataFil
 
 ### 2. 類型分佈（2026-09-19 實測）
 
-國民小學圖書館 2,644、國民中學 747、公共圖書館 610、高級中等學校 535、專門圖書館 438、大專校院 192、國家圖書館等；類型欄有複合值（如「專門圖書館, 公共圖書館」34 館）。篩「公共圖書館」要含複合值。
+以下為類型欄**完全相符**的館數：國民小學圖書館 2,644、國民中學 747、公共圖書館 610、高級中等學校 535、專門圖書館 438、大專校院 192、國家圖書館 2。「公共圖書館」另有複合值 34 館（如「專門圖書館, 公共圖書館」）；本 skill 的篩選方式（**包含比對**）= 610 + 34 = **644 館**。引用數字時說明口徑。
 
 ### 3. 解析範例
 
@@ -54,4 +54,4 @@ for r in pubs[:5]:
 
 ## English summary
 
-Taiwan library directory, keyless. `curl 'https://www.ncl.edu.tw/OpenDataFile/0Q112417873324994331/4cbfc49a-1127-45b1-9da6-113ebb444a12'` - BIG5-encoded CSV, 5,207 libraries (verified 2026-09-19). Columns: id, name, postal code, county, district, address, type. Type counts: elementary 2,644 / junior-high 747 / public 610 / senior-high 535 / special 438 / university 192; composite values exist ("專門圖書館, 公共圖書館") - match with "contains", not equality. Directory only: no opening hours, no holdings; school libraries are not open to the public. If the download URL rots, re-fetch the link from data.gov.tw dataset 8306.
+Taiwan library directory, keyless. `curl 'https://www.ncl.edu.tw/OpenDataFile/0Q112417873324994331/4cbfc49a-1127-45b1-9da6-113ebb444a12'` - BIG5-encoded CSV, 5,207 libraries (verified 2026-09-19). Columns: id, name, postal code, county, district, address, type. Type counts (exact match): elementary 2,644 / junior-high 747 / public 610 / senior-high 535 / special 438 / university 192 / national 2. Composite values exist ("專門圖書館, 公共圖書館", 34 libraries), so contains-matching for public libraries gives 644 - state which count you are quoting, and match with "contains", not equality. Directory only: no opening hours, no holdings; school libraries are not open to the public. If the download URL rots, re-fetch the link from data.gov.tw dataset 8306.
