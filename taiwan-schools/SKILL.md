@@ -29,7 +29,7 @@ curl -sm 30 -A 'Mozilla/5.0' -o /tmp/basec114.csv 'https://stats.moe.gov.tw/file
 2026-09-19 實測：
 
 - `basej.csv`（國民中學校別資料，data.gov.tw 資料集 6239）：HTTP 200、約 942KB、UTF-8 BOM、10,594 列，學年度 104-114 多年併存。欄位：學年度、縣市代碼、縣市名稱、學校代碼、學校名稱、班級數 7/8/9 年級、學生數各年級男女、畢業生數、專任教師數、職員數。
-- `114_basec.csv`（國民小學校別資料，資料集 6240，103-114 每年一檔）：HTTP 200、約 297KB、2,663 校，欄位多一個「鄉鎮市區」，班級/學生數分 1-6 年級。
+- `114_basec.csv`（國民小學校別資料，資料集 6240，103-114 每年一檔）：HTTP 200、約 297KB、2,663 校，欄位多一個「鄉鎮市區」。欄位順序（0 起）：0 學年度、1 縣市代碼、2 縣市名稱、3 鄉鎮市區、4 學校代碼、5 學校名稱、**6-11 = 1-6 年級班級數、12-23 = 1-6 年級男女學生數**（每年級男、女各一欄）、24-25 上學年畢業生、26-29 專任教師與職員。
 
 實測範例：114 學年度私立淡江高中附設國小部（新北市淡水區，代碼 011301）1-6 年級各 2-3 班；國中檔有新北市立學校 114 學年度列。
 
@@ -41,8 +41,9 @@ rows = list(csv.reader(io.StringIO(open('/tmp/basec114.csv','rb').read().decode(
 # 114 學年度台南市的國小
 for r in rows[1:]:
     if r[2] == '臺南市':
-        total = sum(int(x) for x in r[11:23] if x.isdigit())
-        print(r[5], r[3], '學生數合計(1-6年級男女欄位)', total)
+        classes  = sum(int(x) for x in r[6:12]  if x.isdigit())  # 欄 6-11:1-6 年級班級數
+        students = sum(int(x) for x in r[12:24] if x.isdigit())  # 欄 12-23:1-6 年級男+女學生數
+        print(r[5], r[3], classes, '班', students, '名學生')
 ```
 
 ### 3. 回報範式
@@ -60,4 +61,4 @@ for r in rows[1:]:
 
 ## English summary
 
-Taiwan school directory & enrollment (MOE statistics), keyless. Junior high: `https://stats.moe.gov.tw/files/opendata/basej.csv` (one file, school years 104-114, 10,594 rows). Elementary: per-year files `https://stats.moe.gov.tw/files/detail/114/114_basec.csv` (school year 114 = Aug 2025-Jul 2026, 2,663 schools; files exist for 103-114, CSV and JSON). UTF-8 BOM. Columns: school year, county code/name, district (elementary only), school code/name, class counts and student counts by grade and gender, graduates, teachers. Verified 2026-09-19. School-year vs calendar-year conversion required in answers; high schools/universities use different files not covered here.
+Taiwan school directory & enrollment (MOE statistics), keyless. Junior high: `https://stats.moe.gov.tw/files/opendata/basej.csv` (one file, school years 104-114, 10,594 rows). Elementary: per-year files `https://stats.moe.gov.tw/files/detail/114/114_basec.csv` (school year 114 = Aug 2025-Jul 2026, 2,663 schools; files exist for 103-114, CSV and JSON). UTF-8 BOM. Columns (0-based, elementary file): 0 school year, 1 county code, 2 county name, 3 district, 4 school code, 5 school name, 6-11 class counts for grades 1-6, 12-23 student counts by grade and gender (male/female pair per grade), 24-25 last-year graduates, 26-29 teachers/staff. Verified 2026-09-19. School-year vs calendar-year conversion required in answers; high schools/universities use different files not covered here.
