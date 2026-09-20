@@ -28,6 +28,10 @@ jobs:
         run: python3 scripts/check-docs-drift.py
       - name: Validate documented code blocks
         run: python3 scripts/check-code-blocks.py
+      - name: Run documented-code tests
+        run: python3 tests/test_documented_code.py
+      - name: Re-verify headline record counts
+        run: python3 scripts/check-counts.py
       - name: Check documented URLs and API responses
         run: python3 scripts/check-urls.py
       - name: Open or update a GitHub issue on scheduled/manual failure
