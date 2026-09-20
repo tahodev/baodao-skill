@@ -13,7 +13,7 @@
 
 
 台灣日常生活查詢的 AI 代理技能組合（寶島 = 台灣的美稱）。
-只使用官方 API 與公開資料：財政部電子發票整合服務平台、臺北市資料大平臺、新北市資料開放平臺、台中市政府資料開放平臺、桃園市政府資料開放平臺、YouBike 微笑單車公開資料與官方地圖即時 feed、Open-Meteo、中央氣象署開放資料平臺、國家災害防救科技中心（NCDR CAP）。以不需要登入、不需要 API 金鑰就能安全使用的查詢型技能為核心；少數技能（cwa-weather、taiwan-uv）使用免費、即時發給的 API 金鑰。
+只使用官方 API 與公開資料：財政部電子發票整合服務平台、臺北市資料大平臺、新北市資料開放平臺、台中市政府資料開放平臺、桃園市政府資料開放平臺、YouBike 微笑單車公開資料與官方地圖即時 feed、Open-Meteo、中央氣象署開放資料平臺、環境部環境資料開放平臺、國家災害防救科技中心（NCDR CAP）。以不需要登入、不需要 API 金鑰就能安全使用的查詢型技能為核心；少數技能（cwa-weather、taiwan-uv、taiwan-aqi）使用免費申請的 API 金鑰。
 
 Claude Code、Codex、OpenCode 等支援 `npx skills add` 的編碼代理（coding agent）都可以使用。
 
@@ -51,6 +51,7 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 | 健保特約院所查詢 | `taiwan-hospital` | 健保署開放資料 API：37,133 家特約醫院診所名錄（地址、電話、科別、服務時段姊妹集） | 不需要 | [taiwan-hospital 指南](docs/features/taiwan-hospital.md) |
 | 郵資查詢 | `taiwan-postage` | 中華郵政資費表：國內信函/包裹/快捷/國際資費 | 不需要 | [taiwan-postage 指南](docs/features/taiwan-postage.md) |
 | 紫外線指數 | `taiwan-uv` | 中央氣象署各測站每日紫外線指數最大值（O-A0005-001） | 需要（免費即時發給） | [taiwan-uv 指南](docs/features/taiwan-uv.md) |
+| 空氣品質指標 | `taiwan-aqi` | 環境部每小時測站 AQI、主要污染物、PM2.5/PM10 與發布時間（AQX_P_432） | 需要（免費申請） | [taiwan-aqi 指南](docs/features/taiwan-aqi.md) |
 | 台電電力供需 | `taiwan-power` | 台電開放資料：目前用電、預估尖峰、備轉容量率與供電燈號 | 不需要 | [taiwan-power 指南](docs/features/taiwan-power.md) |
 | 實價登錄查詢 | `taiwan-real-estate` | 內政部實價登錄季度批次下載：全台買賣/預售屋/租賃成交資料 | 不需要 | [taiwan-real-estate 指南](docs/features/taiwan-real-estate.md) |
 | 停水公告 | `taiwan-water` | 台灣自來水公司停水/降壓案件（起訖時間、範圍、戶數、原因） | 不需要 | [taiwan-water 指南](docs/features/taiwan-water.md) |
@@ -70,13 +71,13 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 
 ## 30 天計畫
 
-這個倉庫以「一天一技能」的速度成長中，目前有 24 個技能（見上方功能表）。候選項目分兩類：**全新技能**與**既有技能的擴充**；打勾代表該項目完成，完成一個擴充項目不代表新增一個技能。
+這個倉庫以「一天一技能」的速度成長中，目前有 25 個技能（見上方功能表）。候選項目分兩類：**全新技能**與**既有技能的擴充**；打勾代表該項目完成，完成一個擴充項目不代表新增一個技能。
 
-### 新技能候選（24 項，已完成 19 項）
+### 新技能候選（24 項，已完成 20 項）
 
 - [x] 中央氣象署天氣預報（免費 API 金鑰）→ `cwa-weather`
 - [x] 國定假日與連假查詢（行政院人事行政總處辦公日曆表）→ `taiwan-holidays`
-- [ ] 空氣品質指標 AQI
+- [x] 空氣品質指標 AQI → `taiwan-aqi`（2026-09-20）
 - [x] 停車場剩餘車位 → `taiwan-parking`（台北市,2026-09-19）
 - [x] 郵遞區號查詢 → `postal-address`（含地址英譯對照）
 - [x] 台電電力供需資訊 → `taiwan-power`（2026-09-19）
@@ -113,7 +114,7 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 
 ## English
 
-**baodao-skill** (寶島, "baodao" = treasure island, an affectionate name for Taiwan) is a collection of AI-agent skills for daily life in Taiwan. It focuses on read-only lookups built only on official APIs and public datasets: no login walls, no API keys, no scraping. Two exceptions: `cwa-weather` and `taiwan-uv` use a CWA API key - free and issued instantly on registration; every other skill needs no key.
+**baodao-skill** (寶島, "baodao" = treasure island, an affectionate name for Taiwan) is a collection of AI-agent skills for daily life in Taiwan. It focuses on read-only lookups built only on official APIs and public datasets, with no scraping or paid access. Most skills need no key. `cwa-weather` and `taiwan-uv` use a free CWA key; `taiwan-aqi` uses a free MOENV open-data key.
 
 Works with any coding agent that supports `npx skills add` (Claude Code, Codex, OpenCode, ...).
 
@@ -149,6 +150,7 @@ Node.js 18+ and `npx` are required. See the [install guide](docs/install.md) for
 | NHI-contracted providers | `taiwan-hospital` | NHI open-data API: 37,133 contracted hospitals and clinics (address, phone; hours and departments via sibling datasets) | Not required | [taiwan-hospital guide](docs/features/taiwan-hospital.md) |
 | Postage rates | `taiwan-postage` | Chunghwa Post rate tables: domestic letters, parcels, express, international | Not required | [taiwan-postage guide](docs/features/taiwan-postage.md) |
 | UV index | `taiwan-uv` | CWA daily max UV index per station (O-A0005-001) | Free instant API key | [taiwan-uv guide](docs/features/taiwan-uv.md) |
+| Air Quality Index | `taiwan-aqi` | Official hourly station AQI, dominant pollutant, PM2.5/PM10 and publication time (AQX_P_432) | Free API key | [taiwan-aqi guide](docs/features/taiwan-aqi.md) |
 | Taipower supply/demand | `taiwan-power` | Taipower open data: current load, forecast peak, reserve rate and supply indicator | Not required | [taiwan-power guide](docs/features/taiwan-power.md) |
 | Real-price registry | `taiwan-real-estate` | MOI real-price registry quarterly batch downloads: sales, pre-sale, rentals nationwide | Not required | [taiwan-real-estate guide](docs/features/taiwan-real-estate.md) |
 | Water outage notices | `taiwan-water` | Taiwan Water Corp outage/pressure-reduction cases (times, areas, households, causes) | Not required | [taiwan-water guide](docs/features/taiwan-water.md) |
