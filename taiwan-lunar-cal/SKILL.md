@@ -129,6 +129,26 @@ def solar_term_date(year, term):
 
 2026-09-19 實測驗證：對照中央氣象署《日曆資料表》官方交節時刻（cwa.gov.tw 的 2023-2027 年 PDF），**5 年 × 24 節氣 = 120 個日期全部一致**，交節時刻最大誤差 13 分鐘（如 2024 春分：官方 3/20 11:06，本實作 11:04;2026 清明：官方 4/5 02:40，本實作 02:28）。
 
+## 使用方式
+
+上面兩段程式（農曆換算、節氣計算）都是 python3 標準庫實作，不需要安裝任何套件。把兩段依序存成同一個 `.py` 檔（如 `/tmp/lunar.py`）後直接呼叫：
+
+```bash
+cat >> /tmp/lunar.py <<'EOF'
+
+if __name__ == '__main__':
+    import datetime, sys
+    today = datetime.date.today()
+    ly, lm, ld, leap = to_lunar(today)
+    print(f'今天是農曆{ly}年{"閏" if leap else ""}{lm}月{ld}日({zodiac(ly)}年)')
+    for term in ('秋分', '冬至'):
+        print(term, solar_term_moment(today.year, term).strftime('%Y-%m-%d %H:%M'))
+EOF
+python3 /tmp/lunar.py
+```
+
+2026-09-20 實測：兩段程式合併後可直接執行；`to_lunar` 回傳（農曆年， 月， 日， 是否閏月）。互動環境也可以直接把函式貼進 python3 REPL 使用。
+
 ## 錯誤與失敗時的處理
 
 - **節氣時刻誤差約 ±15 分鐘**：低精度天文式對 2023-2027 官方表 120 個節氣日期全對，但若交節時刻落在午夜前後約 15 分鐘內，日期可能差一天。涉及祭典、正式文件的精確日期時，對照中央氣象署《日曆資料表》並如實說明這是推算值。
