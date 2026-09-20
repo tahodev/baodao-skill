@@ -5,7 +5,7 @@ baodao-skill 透過 `npx skills add` 安裝。需要 Node.js 18 以上。
 ## 需求
 
 - Node.js 18 以上與 `npx`
-- 執行期工具（各技能用到）：`curl`（全部技能）、`jq`（youbike-realtime、taiwan-garbage）、`python3`（invoice-winning-numbers、taiwan-weather）、`pdftotext`（invoice-winning-numbers 的 PDF 清單）、`awk` 與 `sed`（taiwan-garbage 的台北 CSV）
+- 執行期工具（各技能用到）：`curl`（全部技能）、`jq`（youbike-realtime、taiwan-garbage、taiwan-aqi）、`python3`（invoice-winning-numbers、taiwan-weather）、`pdftotext`（invoice-winning-numbers 的 PDF 清單）、`awk` 與 `sed`（taiwan-garbage 的台北 CSV）
 
 ## 安裝全部技能
 
@@ -19,7 +19,16 @@ npx --yes skills add tahodev/baodao-skill --all -g
 npx --yes skills add tahodev/baodao-skill --skill taiwan-weather -g
 ```
 
-技能名就是倉庫根目錄下的目錄名（例如 `invoice-winning-numbers`、`youbike-realtime`、`taiwan-garbage`、`taiwan-weather`、`cwa-weather`）。
+技能名就是倉庫根目錄下的目錄名（例如 `invoice-winning-numbers`、`youbike-realtime`、`taiwan-garbage`、`taiwan-weather`、`cwa-weather`、`taiwan-aqi`）。
+
+## 需要 API 金鑰的技能
+
+大多數技能免金鑰。以下三個例外使用免費 API 金鑰：
+
+- `cwa-weather`、`taiwan-uv`：中央氣象署授權碼，建議放在 `CWA_API_KEY`。
+- `taiwan-aqi`：環境部環境資料開放平臺 API 金鑰，建議放在 `MOENV_API_KEY`。
+
+金鑰只放環境變數或安全的憑證儲存，不要寫進 repo、issue、PR、日誌或回覆。
 
 ## 全域與專案安裝
 
@@ -57,6 +66,6 @@ rm -rf ~/.agents/skills/taiwan-weather
 
 ## English
 
-Install with `npx skills add` (Node.js 18+). Use `--all` for every skill or `--skill <name>` for one, and `-g` for a global install. Skill names are the top-level directories in this repo. Runtime tools used by the skills: `curl` (all), `jq` (youbike-realtime, taiwan-garbage), `python3` (invoice-winning-numbers, taiwan-weather), `pdftotext` (invoice PDF lists), `awk`/`sed` (taiwan-garbage Taipei CSV).
+Install with `npx skills add` (Node.js 18+). Use `--all` for every skill or `--skill <name>` for one, and `-g` for a global install. Skill names are the top-level directories in this repo. Runtime tools used by the skills: `curl` (all), `jq` (youbike-realtime, taiwan-garbage, taiwan-aqi), `python3` (invoice-winning-numbers, taiwan-weather), `pdftotext` (invoice PDF lists), `awk`/`sed` (taiwan-garbage Taipei CSV).
 
-Verified in a clean environment (2026-09-11, Node.js v22 / npm 10.9, empty HOME and npm cache, no TTY): `--all -g` installs all 5 skills non-interactively into `~/.agents/skills/<skill>/` with agent directories such as `~/.claude/skills/<skill>/` symlinked to them. A single `--skill <name> -g` install cancels its agent-picker prompt without a TTY and installs nothing (exit code 1) - add `-y` (or `--agent <name>` / `--agent '*'`) in CI/SSH. The `Eve` and `PromptScript` targets are skipped by the installer itself (no global-install support), not a skill problem. Restart or refresh your agent after installing; it will pick up each SKILL.md automatically. To uninstall, delete the skill directory.
+Verified in a clean environment (2026-09-11, Node.js v22 / npm 10.9, empty HOME and npm cache, no TTY): `--all -g` installs all 25 skills non-interactively into `~/.agents/skills/<skill>/` with agent directories such as `~/.claude/skills/<skill>/` symlinked to them. A single `--skill <name> -g` install cancels its agent-picker prompt without a TTY and installs nothing (exit code 1) - add `-y` (or `--agent <name>` / `--agent '*'`) in CI/SSH. The `Eve` and `PromptScript` targets are skipped by the installer itself (no global-install support), not a skill problem. Restart or refresh your agent after installing; it will pick up each SKILL.md automatically. To uninstall, delete the skill directory.

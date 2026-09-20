@@ -2,6 +2,14 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.8.0] - 2026-09-20
+
+### Added
+
+- `taiwan-aqi`:環境部 `AQX_P_432` 每小時 AQI — 依縣市/測站查 AQI、狀態、主要污染物、PM2.5/PM10、發布時間與座標；免費 MOENV API 金鑰。2026-09-20 持有效金鑰端到端實測 HTTP 200（汐止/基隆 AQI 52、普通、細懸浮微粒，12:00 發布）
+- `docs/features/taiwan-aqi.md`:新增摘要指南；README 功能表、30 天計畫與安裝指南同步金鑰需求
+
+
 ## [0.7.1] - 2026-09-20
 
 ### Fixed
