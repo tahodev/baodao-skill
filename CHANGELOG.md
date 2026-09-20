@@ -2,6 +2,26 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.8.1] - 2026-09-20
+
+### Fixed
+
+- `taiwan-oil-price`:改用中油官方 open data JSON（data.gov.tw 資料集 166537,vipmbr.cpc.com.tw/opendata/sixtypeoillistprice）為主路徑,HTML 歷史頁改為歷史/備援;週日中午公告次週牌價,公告後可如實回答「下週漲跌」（2026-09-20 實測 200、51 列、免 UA）
+- `taiwan-hospital`:API 單次 limit 封頂 1,000 筆,全量下載範例改為 offset 分頁（2026-09-20 實測 38 頁取齊 37,133 筆）;院所數 37,127→37,133;frontmatter description 贅字修正
+- `taiwan-parking`:即時場數 1,177→1,174、availablecar=-9 場 87→88（2026-09-20 實測）
+- `taiwan-lunar-cal`:補「使用方式」一節（python3 存檔執行範例,2026-09-20 實測可跑）
+- `postal-address`:前 3 碼表 2026-09-20 確認下載區仍為 103.12.25 版,無更新版
+- `docs/install.md`:執行期工具清單依 25 技能全量盤點（python3 14 技能、jq 7 技能、iconv 3 技能等）;乾淨環境安裝以 25 技能重測（2026-09-20）
+- `README`:30 天計畫移至 docs/roadmap.md
+
+### Added
+
+- `docs/conventions.md`:跨技能共同慣例（民國年換算、Big5 編碼、curl 習慣、時區）,CONTRIBUTING 加連結
+- `.github/pull_request_template.md`:實測日期、錯誤處理、CHANGELOG、README 檢查清單
+- `tests/test_documented_code.py`:直接執行 taiwan-lunar-cal 與 taiwan-id-check 的 SKILL 文件程式並對已知向量（17 項）
+- `scripts/check-counts.py`:博物館 144、圖書館 5,207/610/644、健保院所 37,133、停車場 1,174/1,773 基準數複核;與文件程式測試一併併入 health-check
+- `scripts/check-docs-drift.py`:加內容檢查——feature note 的 URL 與單位數字須存在於 SKILL
+
 ## [0.8.0] - 2026-09-20
 
 ### Added
@@ -192,3 +212,20 @@
 - `invoice-winning-numbers`:HTML 標籤改為整個刪除（原先取代成空白會把 8 碼中獎號碼切成 3 碼碎片）
 - `invoice-winning-numbers`:領獎期間只引用與期別同區塊的文字;取不到時依「開獎日次月 6 日起 3 個月」推算並註明需向官方確認（頁面殘留的領獎期間常是上一期）
 - `taiwan-weather`:座標表擴充到 22 縣市（另收錄墾丁、埔里）;地理編碼 API 只認英文/拼音地名，修正備援指引
+
+[0.8.1]: https://github.com/tahodev/baodao-skill/compare/v0.8.0...v0.8.1
+[0.8.0]: https://github.com/tahodev/baodao-skill/compare/v0.7.1...v0.8.0
+[0.7.1]: https://github.com/tahodev/baodao-skill/compare/v0.7.0...v0.7.1
+[0.7.0]: https://github.com/tahodev/baodao-skill/compare/v0.6.0...v0.7.0
+[0.6.0]: https://github.com/tahodev/baodao-skill/compare/v0.5.1...v0.6.0
+[0.5.1]: https://github.com/tahodev/baodao-skill/compare/v0.5.0...v0.5.1
+[0.5.0]: https://github.com/tahodev/baodao-skill/compare/v0.4.2...v0.5.0
+[0.4.2]: https://github.com/tahodev/baodao-skill/compare/v0.4.1...v0.4.2
+[0.4.1]: https://github.com/tahodev/baodao-skill/compare/v0.4.0...v0.4.1
+[0.4.0]: https://github.com/tahodev/baodao-skill/compare/v0.3.3...v0.4.0
+[0.3.3]: https://github.com/tahodev/baodao-skill/compare/v0.3.2...v0.3.3
+[0.3.2]: https://github.com/tahodev/baodao-skill/compare/v0.3.1...v0.3.2
+[0.3.1]: https://github.com/tahodev/baodao-skill/compare/v0.3.0...v0.3.1
+[0.3.0]: https://github.com/tahodev/baodao-skill/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/tahodev/baodao-skill/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/tahodev/baodao-skill/releases/tag/v0.1.0
