@@ -16,6 +16,10 @@
 4. 更新 README 的功能表與 30 天計畫。
 5. 更新 CHANGELOG.md。
 
+## 共同慣例
+
+民國年換算、Big5 編碼、curl 習慣、時區等跨技能共通處理，見 [docs/conventions.md](docs/conventions.md)。
+
 ## 回報問題
 
 端點失效、欄位變更、數值錯誤等，請開 issue，並附上實際執行的指令與回應。
