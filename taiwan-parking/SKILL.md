@@ -23,9 +23,9 @@ metadata:
 curl -sm 30 -o /tmp/park.json 'https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_allavailable.json'
 ```
 
-2026-09-19 實測：HTTP 200、約 474KB、1,177 場，UPDATETIME 與查詢時刻同小時（近即時）。欄位：`id`（場站代碼，如 TPE0001）、`availablecar`（小型車可停數）、`availablemotor`、`availablebus`、`availablehandicap`（身障格）、`availablepregnancy`（孕婦親子格）、`availableheavymotor`，部分場另有 `ChargeStation.scoketStatusList`（充電樁，spot_status 為 待機中/充電中）。
+2026-09-20 實測：HTTP 200、約 474KB、1,174 場，UPDATETIME 與查詢時刻同小時（近即時）。欄位：`id`（場站代碼，如 TPE0001）、`availablecar`（小型車可停數）、`availablemotor`、`availablebus`、`availablehandicap`（身障格）、`availablepregnancy`（孕婦親子格）、`availableheavymotor`，部分場另有 `ChargeStation.scoketStatusList`（充電樁，spot_status 為 待機中/充電中）。
 
-**`-9` = 該場無此車種資料**（2026-09-19 實測 1,177 場中 87 場 availablecar 為 -9），不是「停滿」也不是錯誤，回報時略過或說「無資料」。
+**`-9` = 該場無此車種資料**（2026-09-20 實測 1,174 場中 88 場 availablecar 為 -9），不是「停滿」也不是錯誤，回報時略過或說「無資料」。
 
 ### 2. 靜態場站表（alldesc）
 
@@ -58,4 +58,4 @@ jq -r --slurpfile d /tmp/parkdesc.json '
 
 ## English summary
 
-Taipei City parking availability, keyless. Real-time availability: `https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_allavailable.json` (~474KB, 1,177 lots, fields availablecar/availablemotor/..., some with EV-charger status). Static details: `https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_alldesc.json` (~2.8MB, 1,773 lots: name, area, address, pricing text, totals, TWD97 coords). Join on `id`. `-9` means "no data for this vehicle type" - not full, not an error. Verified 2026-09-19 (e.g. 台灣聯通長春停車場, Zhongshan Dist., 15 car spaces free at query time). Taipei only; roadside metered spaces not included; always cite the feed's UPDATETIME.
+Taipei City parking availability, keyless. Real-time availability: `https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_allavailable.json` (~474KB, 1,174 lots, fields availablecar/availablemotor/..., some with EV-charger status). Static details: `https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_alldesc.json` (~2.8MB, 1,773 lots: name, area, address, pricing text, totals, TWD97 coords). Join on `id`. `-9` means "no data for this vehicle type" - not full, not an error. Verified 2026-09-20 (e.g. 台灣聯通長春停車場, Zhongshan Dist., 15 car spaces free at query time on 2026-09-19). Taipei only; roadside metered spaces not included; always cite the feed's UPDATETIME.
