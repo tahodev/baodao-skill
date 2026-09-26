@@ -9,6 +9,8 @@ metadata:
 
 # taiwan-holidays
 
+> 實測日：2026-09-12（最近一次端對端實測；數值基準日各自標於內文）
+
 用行政院人事行政總處公布的「政府行政機關辦公日曆表」查台灣的放假日與補班日。不需要 API 金鑰或登入。資料來源：https://www.dgpa.gov.tw/informationlist?uid=30 與 data.gov.tw 資料集 14718（106 年至 116 年的 CSV 都在這裡）。
 
 ## 主要方式：結構化 CSV（所有年份，含當年度）

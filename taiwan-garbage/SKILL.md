@@ -9,6 +9,8 @@ metadata:
 
 # taiwan-garbage
 
+> 實測日：2026-09-12（最近一次端對端實測；數值基準日各自標於內文）
+
 查垃圾車清運點與停靠時間。台北市用 data.taipei 的 CSV，新北市用 data.ntpc.gov.tw 的 JSON API，台中市用 newdatacenter.taichung.gov.tw 的資源下載（經 data.gov.tw 資料集 84004），都免登入、免 API 金鑰。三市資料格式完全不同，見各自章節。
 
 ## 基本流程

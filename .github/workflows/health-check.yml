@@ -22,25 +22,53 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: Lint skills and Markdown
+      - id: lint
+        name: Lint skills and Markdown
         run: bash scripts/lint-skills.sh
-      - name: Check README and docs drift
+      - id: drift
+        name: Check README and docs drift
         run: python3 scripts/check-docs-drift.py
-      - name: Validate documented code blocks
+      - id: codeblocks
+        name: Validate documented code blocks
         run: python3 scripts/check-code-blocks.py
-      - name: Run documented-code tests
+      - id: doctests
+        name: Run documented-code tests
         run: python3 tests/test_documented_code.py
-      - name: Re-verify headline record counts
+      - id: counts
+        name: Re-verify headline record counts
         run: python3 scripts/check-counts.py
-      - name: Check documented URLs and API responses
+      - id: invoice
+        name: Invoice winning-numbers page smoke test
+        run: python3 scripts/check-invoice.py
+      - id: measured
+        name: Check measured-date freshness (re-verify reminder)
+        run: python3 scripts/check-measured-date.py
+      - id: urls
+        name: Check documented URLs and API responses
         run: python3 scripts/check-urls.py
       - name: Open or update a GitHub issue on scheduled/manual failure
         if: failure() && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TITLE="health-check failed: lint, docs, code, or URL ($(date -u +%Y-%m-%d))"
-          BODY="Health-check failed. Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          TITLE="health-check failed: $(date -u +%Y-%m-%d)"
+          FAILED=""
+          for s in lint drift codeblocks doctests counts invoice measured urls; do
+            case "$s" in
+              lint) OUTCOME="${{ steps.lint.outcome }}";;
+              drift) OUTCOME="${{ steps.drift.outcome }}";;
+              codeblocks) OUTCOME="${{ steps.codeblocks.outcome }}";;
+              doctests) OUTCOME="${{ steps.doctests.outcome }}";;
+              counts) OUTCOME="${{ steps.counts.outcome }}";;
+              invoice) OUTCOME="${{ steps.invoice.outcome }}";;
+              measured) OUTCOME="${{ steps.measured.outcome }}";;
+              urls) OUTCOME="${{ steps.urls.outcome }}";;
+            esac
+            [ "$OUTCOME" = "failure" ] && FAILED="$FAILED $s"
+          done
+          BODY="Health-check failed. Failed step(s):${FAILED:- unknown}
+          Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+          處理方式：打開 run 找到對應步驟的 FAIL 行;WARN 是地區/網路限制,不會讓 CI 失敗。重測後更新文件與基準值即可關閉本 issue。"
           EXISTING=$(gh issue list --state open --search 'health-check failed' --json number --jq '.[0].number // empty')
           if [ -n "$EXISTING" ]; then
             gh issue edit "$EXISTING" --title "$TITLE"
