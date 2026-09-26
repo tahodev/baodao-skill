@@ -9,6 +9,8 @@ metadata:
 
 # invoice-winning-numbers
 
+> 實測日：2026-09-26（最近一次端對端實測；數值基準日各自標於內文）
+
 從財政部電子發票整合服務平台（https://invoice.etax.nat.gov.tw）的公開頁面取得統一發票中獎號碼，並用手上的發票號碼對獎。不需要 API 金鑰或登入，`curl` 即可。支援：最新期對獎、批次對獎、雲端發票專屬獎（PDF 清單）、歷史期別、每期自動對獎流程。
 
 ## 基本流程
@@ -25,6 +27,8 @@ curl -sm 30 https://invoice.etax.nat.gov.tw/lastNumber.html -o /tmp/lastNumber.h
 
 2026-09-09 實測：HTTP 200、約 20KB、不需特殊 User-Agent。頁面含最新一期的「中獎號碼單」（當日為 115年05-06月，特別獎 19531471、特獎 85941329、頭獎 07225810 / 20231230 / 83518781，無增開六獎），以及特別獎、特獎中獎清冊連結。雲端發票專屬獎在 `cloudNowNumber.html`（見下文專節）。
 
+2026-09-26 實測（115年07-08月期，9/25 開獎次日）：特別獎 `38548029`、特獎 `10138845`、頭獎 `24121106` / `28589937` / `83663333` 三組，無增開六獎。頁面殘留的「領獎期間自115年08月06日起至115年11月05日止」是上一期（115年05-06月）的，陷阱仍存在；本期領獎期間依規則推算為 115年10月6日至116年1月5日（開獎日 9/25 次月 6 日起 3 個月），引用時註明請向官方確認。**分頁連結陷阱**：頁首/頁尾的「115年05-06月特別獎、特獎中獎清冊」連結含獎項字樣，從期別標籤直接往後掃會把「特獎」對到清冊連結、讀出錯誤號碼（2026-09-26 實測重現）；解析務必從期別標籤後第一個「獎別」表格起點開始（見下方解析範例）。
+
 **領獎期間陷阱：** 頁面上的「領獎期間」文字只屬於它所在區塊的期別。2026-09-09 實測時，最新號碼單已是 115年05-06月，頁面殘留的「領獎期間自115年06月06日起至115年09月07日止」卻是上一期（115年03-04月）的，直接配對會讓使用者錯過領獎。領獎期間只能引用與期別標籤同一區塊的文字；取不到對應區塊時，依規則說明「開獎日（單月 25 日）次月 6 日起算 3 個月」（例：115年05-06月期，115年7月25日開獎，領獎期間為115年8月6日至11月5日），並請使用者到 https://invoice.etax.nat.gov.tw 確認實際期限。
 
 ### 2. 解析
@@ -40,7 +44,10 @@ text = re.sub(r'\s+', ' ', text)
 m = re.search(r'(1\d\d年\d\d-\d\d月)中獎號碼單', text)
 print('期別:', m.group(1) if m else '找不到')
 if m:
-    seg = text[m.end():m.end()+1200]
+    # 期別標籤也會出現在頁首/頁尾的分頁連結（含「特別獎、特獎中獎清冊」字樣），
+    # 直接從標籤往後掃會把清冊連結當獎項。務必從標籤後第一個「獎別」表格起點開始解析：
+    start = text.find('獎別', m.end())
+    seg = text[start:start+1200]
     for prize in ['特別獎', '特獎']:
         i = seg.find(prize)
         n = re.search(r'\d{8}', seg[i:i+100]) if i >= 0 else None
@@ -87,7 +94,8 @@ import re
 h = open('/tmp/lastNumber.html', encoding='utf-8').read()
 text = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', h))
 m = re.search(r'(1\d\d年\d\d-\d\d月)中獎號碼單', text)
-seg = text[m.end():m.end()+1200]
+start = text.find('獎別', m.end())   # 避開分頁連結,從「獎別」表格起點解析
+seg = text[start:start+1200]
 sp = re.search(r'\d{8}', seg[seg.find('特別獎'):][:100]).group(0)
 st = re.search(r'\d{8}', seg[seg.find('特獎'):][:100]).group(0)
 i = seg.find('頭獎'); j = seg.find('同期', i)
@@ -146,4 +154,4 @@ pdftotext /tmp/prize.pdf /tmp/prize.txt
 
 ## English summary
 
-Fetches Taiwan uniform-invoice winning numbers from the Ministry of Finance's public e-invoice pages (no API key, no login; `curl` is enough) and matches invoice numbers against them - single or batch. Always strip HTML tags before extracting numbers (they are split across tags), report the period label and claim window with the numbers, and never invent numbers when the fetch or parse fails. Cloud-invoice exclusive prizes live in per-prize PDF lists linked from cloudNowNumber.html (extract with pdftotext; identify the prize by the PDF's header line, not the filename; full serial = 2 letters + 8 digits, exact match only; historical periods at cloudListNumber.html). Regular-invoice history is only on the JS-rendered tax portal (ETW183W2_<period>) - hand the user the link rather than scraping. Draws happen on the 25th of every odd month; agents can proactively re-check a user's saved numbers on draw day and report only wins.
+Fetches Taiwan uniform-invoice winning numbers from the Ministry of Finance's public e-invoice pages (no API key, no login; `curl` is enough) and matches invoice numbers against them - single or batch. Always strip HTML tags before extracting numbers (they are split across tags), report the period label and claim window with the numbers, and never invent numbers when the fetch or parse fails. Cloud-invoice exclusive prizes live in per-prize PDF lists linked from cloudNowNumber.html (extract with pdftotext; identify the prize by the PDF's header line, not the filename; full serial = 2 letters + 8 digits, exact match only; historical periods at cloudListNumber.html). Regular-invoice history is only on the JS-rendered tax portal (ETW183W2_<period>) - hand the user the link rather than scraping. Parse from the first 獎別 table after the period label - the pager links repeat period labels and prize words (特別獎、特獎中獎清冊) and a naive scan misreads 特獎 from them (reproduced 2026-09-26). Draws happen on the 25th of every odd month; agents can proactively re-check a user's saved numbers on draw day and report only wins.
