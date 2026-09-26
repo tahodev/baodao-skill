@@ -3,7 +3,7 @@
 查 YouBike 2.0 站點即時可借車輛與可還空位。免 API 金鑰、免登入，`curl` + `jq` 即可。
 
 **主要來源：官方統一 feed（全台 14 個服務區）**
-- https://apis.youbike.com.tw/json/station-yb2.json — youbike.com.tw 地圖用的即時 JSON，約 9,500 站（2026-09-10 實測 9,521），涵蓋雙北、桃園、台中、台南、高雄、新竹、嘉義、苗栗、屏東、台東等 14 個服務區，每站含電輔車明細（`available_spaces_detail.eyb`）
+- https://apis.youbike.com.tw/json/station-yb2.json — youbike.com.tw 地圖用的即時 JSON，約 9,600 站（2026-09-26 實測 9,629），涵蓋雙北、桃園、台中、台南、高雄、新竹、嘉義、苗栗、屏東、台東等 14 個服務區，每站含電輔車明細（`available_spaces_detail.eyb`）
 - 非公開文件化 API，欄位可能無預警調整 → 下列各市府 feed 保留作為備援
 - 地區注意：apis.youbike.com.tw 由 Incapsula 防護，依來源 IP 攔截（2026-09-11 實測：美國機房 IP 拿到非 JSON 回應，台灣 IP 與部分海外 IP 正常）。CI 的 URL 檢查刻意跳過此網域；從台灣 IP 手動驗證。被擋時（503 / 非 JSON）改用下方市府 feed，不要當成全台資料失效
 
@@ -18,7 +18,7 @@
 **共通注意事項**
 - 站名「台 / 臺」混用（台北 147 站用「臺」，2026-09-10 實測），搜尋前兩邊都 `gsub("臺";"台")`
 - 更新時間格式各市不同（台北 `YYYY-MM-DD HH:MM:SS`、新北 `YYYYMMDDTHHMMSS`、台中/桃園 `YYYYMMDDHHMMSS`、統一 feed `updated_at` 同台北格式），全部台灣時間 UTC+8
-- 站數為 2026-09-10 實測約略值，會隨設站緩慢增加
+- 站數為 2026-09-26 實測約略值，會隨設站緩慢增加
 - 回報務必附上資料更新時間；數量為 0 或暫停營運（`status`/`act` ≠ 1）要如實說明
 
 完整欄位對照、服務區代碼表、查詢範例與錯誤處理請看 [SKILL.md]（../../youbike-realtime/SKILL.md）。

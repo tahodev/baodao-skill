@@ -44,7 +44,7 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 | 台股行情快照 | `taiwan-stock` | 上市（TWSE）與上櫃（TPEX）每日收盤行情、個股本月每日成交、大盤指數（收盤統計，非盤中報價） | 不需要 | [taiwan-stock 指南](docs/features/taiwan-stock.md) |
 | 郵遞區號與地址英譯 | `postal-address` | 中華郵政官方對照表：3 碼郵遞區號、縣市鄉鎮/村里/路街中英對照（漢語拼音） | 不需要 | [postal-address 指南](docs/features/postal-address.md) |
 | 統編與身分證字號檢核 | `taiwan-id-check` | 統一編號與身分證字號檢查碼驗證（純本地計算，零網路） | 不需要 | [taiwan-id-check 指南](docs/features/taiwan-id-check.md) |
-| 台北市停車場剩位 | `taiwan-parking` | 停管處 TCMSV 公開 JSON：1,174 場即時剩位＋1,773 場靜態資料（費率、地址） | 不需要 | [taiwan-parking 指南](docs/features/taiwan-parking.md) |
+| 台北市停車場剩位 | `taiwan-parking` | 停管處 TCMSV 公開 JSON：1,188 場即時剩位＋1,775 場靜態資料（費率、地址,2026-09-26 實測） | 不需要 | [taiwan-parking 指南](docs/features/taiwan-parking.md) |
 | 中油每週油價 | `taiwan-oil-price` | 台灣中油歷史油價頁：92/95/98 無鉛與超柴週牌價 | 不需要 | [taiwan-oil-price 指南](docs/features/taiwan-oil-price.md) |
 | 停班停課公告 | `taiwan-suspension` | 人事行政總處天然災害停班停課官方公告 | 不需要 | [taiwan-suspension 指南](docs/features/taiwan-suspension.md) |
 | 農產品批發行情 | `taiwan-produce` | 農業部開放資料：全台 24 個批發市場蔬果行情（上中下價與交易量） | 不需要 | [taiwan-produce 指南](docs/features/taiwan-produce.md) |
@@ -104,7 +104,7 @@ Node.js 18+ and `npx` are required. See the [install guide](docs/install.md) for
 | Taiwan stock daily-close snapshot | `taiwan-stock` | TWSE/TPEX daily closing quotes, per-stock daily rows, index levels (close statistics, not intraday) | Not required | [taiwan-stock guide](docs/features/taiwan-stock.md) |
 | Postal codes and address transliteration | `postal-address` | Chunghwa Post tables: 3-digit postal codes plus county/village/road Chinese-English tables (Hanyu Pinyin) | Not required | [postal-address guide](docs/features/postal-address.md) |
 | UBN and national ID checksum | `taiwan-id-check` | Uniform Business Number and national ID checksum validation (pure local computation, zero network) | Not required | [taiwan-id-check guide](docs/features/taiwan-id-check.md) |
-| Taipei parking availability | `taiwan-parking` | TCMSV public JSON: real-time spaces for 1,174 lots plus static details for 1,773 (pricing, addresses) | Not required | [taiwan-parking guide](docs/features/taiwan-parking.md) |
+| Taipei parking availability | `taiwan-parking` | TCMSV public JSON: real-time spaces for 1,188 lots plus static details for 1,775 (pricing, addresses; measured 2026-09-26) | Not required | [taiwan-parking guide](docs/features/taiwan-parking.md) |
 | CPC weekly fuel prices | `taiwan-oil-price` | CPC history page: weekly list prices for 92/95/98 unleaded and premium diesel | Not required | [taiwan-oil-price guide](docs/features/taiwan-oil-price.md) |
 | Work/class suspension notices | `taiwan-suspension` | DGPA official natural-disaster work and class suspension announcements | Not required | [taiwan-suspension guide](docs/features/taiwan-suspension.md) |
 | Wholesale produce prices | `taiwan-produce` | MOA open data: high/mid/low prices and volumes across 24 wholesale markets | Not required | [taiwan-produce guide](docs/features/taiwan-produce.md) |
