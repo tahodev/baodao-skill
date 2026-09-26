@@ -34,6 +34,20 @@ def check(label, actual, expected):
         print(f'OK    {label}: {actual}')
 
 
+def check_volatile(label, actual, expected, tol=0.05):
+    """變動本就頻繁的數字（停車場場數、YouBike 站數）：超出容忍範圍只 WARN。
+
+    這類數字會隨開歇業/設站每週小幅變動，exact-match 曾讓 health-check
+    連續 6 天誤報（2026-09-20~25,issue #6）。漂移超過容忍範圍時 WARN,
+    提醒下次維護時重測更新文件，但不讓 CI 失敗。
+    """
+    lo, hi = expected * (1 - tol), expected * (1 + tol)
+    if lo <= actual <= hi:
+        print(f'OK    {label}: {actual}（基準 {expected},容忍 ±{int(tol*100)}%）')
+    else:
+        print(f'WARN  {label}: 基準 {expected}、實測 {actual} 超出 ±{int(tol*100)}%——請重測並更新文件')
+
+
 def check_network(label, fn):
     try:
         fn()
@@ -64,14 +78,21 @@ def check_hospital():
 
 def check_parking():
     data = json.loads(fetch('https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_allavailable.json'))
-    check('taiwan-parking realtime lots', len(data['data']['park']), 1174)
+    check_volatile('taiwan-parking realtime lots', len(data['data']['park']), 1188)
     data = json.loads(fetch('https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_alldesc.json'))
-    check('taiwan-parking static lots', len(data['data']['park']), 1773)
+    check_volatile('taiwan-parking static lots', len(data['data']['park']), 1775)
+
+
+def check_youbike():
+    # apis.youbike.com.tw 由 Incapsula 防護,機房 IP 常被擋——擋住時走 WARN skip
+    data = json.loads(fetch('https://apis.youbike.com.tw/json/station-yb2.json', timeout=60))
+    check_volatile('youbike-realtime total stations', len(data), 9629)
 
 
 check_network('taiwan-museum', check_museum)
 check_network('taiwan-library', check_library)
 check_network('taiwan-hospital', check_hospital)
 check_network('taiwan-parking', check_parking)
+check_network('youbike-realtime', check_youbike)
 
 sys.exit(1 if failed else 0)
