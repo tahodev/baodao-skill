@@ -9,6 +9,8 @@ metadata:
 
 # taiwan-power
 
+> 實測日：2026-09-19（最近一次端對端實測；數值基準日各自標於內文）
+
 抓台電開放資料服務的「今日系統供需狀況」JSON，回報當前用電、預估尖峰與備轉容量率燈號。不需要 API 金鑰或登入。注意：台電主站 www.taipower.com.tw 有 CDN 擋程式存取（403），**要走開放資料主機 service.taipower.com.tw**。
 
 ## 基本流程

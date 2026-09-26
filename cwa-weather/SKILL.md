@@ -9,6 +9,8 @@ metadata:
 
 # cwa-weather
 
+> 實測日：2026-09-14（最近一次端對端實測；數值基準日各自標於內文）
+
 用中央氣象署（CWA）開放資料平臺（opendata.cwa.gov.tw）查正式天氣預報。**這是官方資料**，正式預報優先用這裡；免金鑰備援是 `taiwan-weather`（Open-Meteo）。
 
 **需要 API 金鑰（免費、即時發給）：** 到 https://opendata.cwa.gov.tw 註冊會員，登入後在「會員專區」即可看到授權碼。沒有金鑰時呼叫會回 `401 Forbidden: Authorization key is not correct.`（2026-09-09 實測）。使用者沒有金鑰時，請改用 `taiwan-weather` 或引導使用者申請，不要編造預報內容。

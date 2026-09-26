@@ -9,6 +9,8 @@ metadata:
 
 # taiwan-aqi
 
+> 實測日：2026-09-20（最近一次端對端實測；數值基準日各自標於內文）
+
 查環境部環境資料開放平臺的「空氣品質指標（AQI）」資料集（`AQX_P_432`）。資料由空氣品質監測網提供，每小時更新，含測站、縣市、AQI、主要污染物、狀態、PM2.5、PM10、氣體濃度、發布時間與座標。
 
 **需要 API 金鑰（免費）：** 到 https://data.moenv.gov.tw/api-term 註冊後取得 API 金鑰，放在環境變數 `MOENV_API_KEY` 或安全的憑證儲存中。金鑰不要寫進 repo、命令輸出或回覆。資料集說明：[環境部 AQX_P_432](https://data.moenv.gov.tw/dataset/detail/AQX_P_432)。

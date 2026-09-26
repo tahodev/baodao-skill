@@ -9,6 +9,8 @@ metadata:
 
 # postal-address
 
+> 實測日：2026-09-20（最近一次端對端實測；數值基準日各自標於內文）
+
 用中華郵政官網下載區的公開對照表查郵遞區號（前 3 碼）與地址英譯。不需要 API 金鑰或登入。下載區總頁：https://www.post.gov.tw/post/internet/Download/all_list.jsp?ID=2201 （2026-09-12 實測可連）。**TXT 檔是 Big5 編碼**，處理前先 `iconv -f big5 -t utf-8`；XML 檔（County_h_10906.xml 等）是 UTF-8，**不要**過 iconv，會轉壞。
 
 ## 1. 3 碼郵遞區號（各鄉鎮市區）
