@@ -2,6 +2,26 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.8.2] - 2026-09-26
+
+### Fixed
+
+- `invoice-winning-numbers`：修解析誤配——頁首/頁尾分頁連結含「特別獎、特獎中獎清冊」字樣,從期別標籤直接往後掃會把特獎對到清冊連結、讀出特別獎的號碼（2026-09-26 於 115年07-08月期實測重現）;解析改從期別標籤後第一個「獎別」表格起點開始。補 2026-09-26 實測記錄（特別獎 38548029、特獎 10138845、頭獎 3 組、無增開六獎;殘留領獎期間仍為上一期,陷阱存在）
+- `taiwan-parking`：即時場數 1,174→1,188、靜態場數 1,773→1,775（2026-09-26 實測;-9 場仍為 88）
+- `youbike-realtime`：統一 feed 站數基準 9,521→9,629、服務區約略站數更新（2026-09-26 實測;含「臺」站名 385 站不變）
+- `scripts/check-urls.py`：404 不再被地區限制 WARN 掩蓋（WARN 限 000/401/403/429/5xx）;URL 模式前綴（ETW183W2_、AlertType=）明確跳過;MOENV 的 HTTP 200+純文字金鑰錯誤納入 API 錯誤偵測,占位金鑰探測回此錯誤視為預期;NCDR 同網域請求串行隔 3 秒,不再自踩速率限制;清理 tabi-skill 殘留的無關占位變數;輸出遮蔽 api_key
+- `scripts/check-counts.py`：停車場場數改為容忍 ±5% 的 WARN 級檢查（變動頻繁,exact-match 曾致 health-check 9/20-25 連續誤報）;新增 YouBike 統一 feed 總站數同級檢查;基準值更新
+- `health-check.yml`：各檢查步驟加 id,自動 issue 內文列出失敗步驟與處理方式;納入 invoice 煙霧測試與實測日檢查
+
+### Added
+
+- `scripts/check-invoice.py`：lastNumber.html 煙霧測試——期別標籤存在、特別獎/特獎為 8 碼且不重複、頭獎至少一組（網路/地區限制 WARN 略過）
+- `scripts/check-measured-date.py`：各 SKILL.md 新增「實測日」標頭,超過 90 天未實測則 CI 失敗（排程時自動開 issue 提醒再實測）
+- `tests/test_documented_code.py`：新增 taiwan-schools 欄位切片回歸（114 學年度 011301 固定樣本,16 班/498 名）與 invoice 分頁連結誤配回歸（fixture 重現 07-08月期版面,執行文件中的解析程式）
+- `docs/response-contract.md`：回報給使用者的共通規則與實測踩過的陷阱清單,AGENTS/CONTRIBUTING 加連結
+- `docs/getting-started.md`：依目的分六組的入門指南（25 技能,3 個需金鑰）,README 加連結
+- `AGENTS.md`/`CONTRIBUTING.md`/PR 模板：金鑰規則補上唯一例外——政府資料平臺公布的資料集公用 key（如 taiwan-toilet 的 data.gov.tw resource key）可提交但須註明來源頁
+
 ## [0.8.1] - 2026-09-20
 
 ### Fixed
@@ -213,6 +233,7 @@
 - `invoice-winning-numbers`:領獎期間只引用與期別同區塊的文字;取不到時依「開獎日次月 6 日起 3 個月」推算並註明需向官方確認（頁面殘留的領獎期間常是上一期）
 - `taiwan-weather`:座標表擴充到 22 縣市（另收錄墾丁、埔里）;地理編碼 API 只認英文/拼音地名，修正備援指引
 
+[0.8.2]: https://github.com/tahodev/baodao-skill/compare/v0.8.1...v0.8.2
 [0.8.1]: https://github.com/tahodev/baodao-skill/compare/v0.8.0...v0.8.1
 [0.8.0]: https://github.com/tahodev/baodao-skill/compare/v0.7.1...v0.8.0
 [0.7.1]: https://github.com/tahodev/baodao-skill/compare/v0.7.0...v0.7.1

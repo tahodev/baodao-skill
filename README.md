@@ -27,7 +27,7 @@ npx --yes skills add tahodev/baodao-skill --all -g
 npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 ```
 
-需要 Node.js 18 以上與 `npx`。詳見[安裝指南](docs/install.md)。
+需要 Node.js 18 以上與 `npx`。詳見[安裝指南](docs/install.md);不知道從哪個技能開始請看[入門指南](docs/getting-started.md)。
 
 ## 功能
 
@@ -89,7 +89,7 @@ npx --yes skills add tahodev/baodao-skill --all -g
 npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 ```
 
-Node.js 18+ and `npx` are required. See the [install guide](docs/install.md) for details.
+Node.js 18+ and `npx` are required. See the [install guide](docs/install.md) for details, or the [getting-started guide](docs/getting-started.md) (Chinese) to pick skills by purpose.
 
 ### What you can do
 

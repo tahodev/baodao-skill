@@ -4,7 +4,7 @@
 
 ## 原則
 
-- 只用官方 API 與公開資料，且不需要登入（可即時免費申請的 API 金鑰可接受）。
+- 只用官方 API 與公開資料，且不需要登入（可即時免費申請的 API 金鑰可接受）。個人金鑰不提交進倉庫；政府資料平臺公布的資料集公用 key（如 taiwan-toilet 用的 data.gov.tw resource key）例外，但要在 SKILL.md 註明來源頁。
 - 只有查詢與計算，不改變外部狀態。
 - SKILL.md 裡的指令與 URL 都必須實測過。
 
@@ -17,6 +17,8 @@
 5. 更新 CHANGELOG.md。
 
 ## 共同慣例
+
+回報給使用者的共通規則（附資料時間、缺值處理、常見陷阱）見 [docs/response-contract.md](docs/response-contract.md)。
 
 民國年換算、Big5 編碼、curl 習慣、時區等跨技能共通處理，見 [docs/conventions.md](docs/conventions.md)。
 

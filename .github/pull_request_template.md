@@ -12,4 +12,4 @@
 - [ ] README 功能表與 30 天計畫已更新（技能數變動時）
 - [ ] CHANGELOG.md 已記錄本次變更
 - [ ] `bash scripts/lint-skills.sh`、`python3 scripts/check-docs-drift.py`、`python3 scripts/check-code-blocks.py` 本機通過
-- [ ] 沒有提交金鑰、權杖或個人資料；只查詢與計算，不改變外部狀態
+- [ ] 沒有提交個人金鑰、權杖或個人資料（政府資料平臺公布的資料集公用 key 除外，須註明來源頁）；只查詢與計算，不改變外部狀態
