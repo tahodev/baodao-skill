@@ -67,9 +67,50 @@ check('ID A123456789', ns['pid_ok']('A123456789'), True)
 check('ID B221003265', ns['pid_ok']('B221003265'), True)
 check('ID A123456788 非法', ns['pid_ok']('A123456788'), False)
 
+
+# --- taiwan-schools（欄位切片回歸）-------------------------------------------
+# 2026-09-19 修過 r[11:23] 誤切（多算 6 年級班級數、漏 6 年級女學生數）。
+# 固定樣本：114 學年度私立淡江高中附設國小部（新北市淡水區,代碼 011301）,
+# 取自 114_basec.csv 原列（2026-09-26 對原檔重算：16 班、498 名學生）。
+SCHOOL_ROW = ['114', '01', '新北市', '淡水區', '011301', '私立淡江高中附設國小部',
+              '2', '2', '3', '3', '3', '3',
+              '38', '32', '33', '36', '44', '49', '48', '55', '42', '40', '37', '44',
+              '28', '37', '8', '16', '0', '3']
+classes = sum(int(x) for x in SCHOOL_ROW[6:12] if x.isdigit())   # 欄 6-11:1-6 年級班級數
+students = sum(int(x) for x in SCHOOL_ROW[12:24] if x.isdigit())  # 欄 12-23:1-6 年級男+女學生數
+check('taiwan-schools 011301 班級數', classes, 16)
+check('taiwan-schools 011301 學生數', students, 498)
+
+# --- invoice-winning-numbers（分頁連結誤配回歸）------------------------------
+# 2026-09-26 實測重現：頁首/頁尾分頁連結含「115年05-06月特別獎、特獎中獎清冊」,
+# 從期別標籤直接往後掃會把「特獎」對到清冊連結,讀出特別獎的號碼。
+# 下面 fixture 重現同樣的版面結構（號碼為虛構）。SKILL.md 的解析流程是
+# 從期別標籤後第一個「獎別」表格起點開始,此測試執行文件中的程式驗證不誤配。
+INVOICE_FIXTURE = """
+115年07-08月中獎號碼單 115年05-06月中獎號碼單 115年05-06月特別獎、特獎中獎清冊 Previous
+115年07-08月中獎號碼單 115年05-06月中獎號碼單 115年05-06月特別獎、特獎中獎清冊 Next
+獎別 中獎號碼 特別獎 38548029 同期統一發票收執聯8位數號碼與特別獎號碼相同者獎金1,000萬元
+特獎 10138845 同期統一發票收執聯8位數號碼與特獎號碼相同者獎金200萬元
+頭獎 24121106 28589937 83663333 同期統一發票收執聯8位數號碼與頭獎號碼相同者獎金20萬元
+領獎期間自115年08月06日起至115年11月05日止
+"""
+# 執行 SKILL.md 記載的解析程式（heredoc 第一段）,fixture 寫到它讀取的 /tmp 路徑
+import contextlib as _cl, io as _io
+Path('/tmp/lastNumber.html').write_text(INVOICE_FIXTURE, encoding='utf-8')
+ns = {'__name__': '__main__'}
+block = heredoc_python_blocks(ROOT / 'invoice-winning-numbers' / 'SKILL.md')[0]
+buf = _io.StringIO()
+with _cl.redirect_stdout(buf):
+    exec(block, ns)
+out = buf.getvalue()
+check('invoice fixture 期別', '115年07-08月' in out, True)
+check('invoice fixture 特別獎', '特別獎 38548029' in out, True)
+check('invoice fixture 特獎（不誤配清冊連結）', '特獎 10138845' in out, True)
+check('invoice fixture 頭獎 3 組', "頭獎 ['24121106', '28589937', '83663333']" in out, True)
+
 if failures:
     print('FAIL')
     for f in failures:
         print(' -', f)
     sys.exit(1)
-print('OK    documented-code tests: taiwan-lunar-cal (10), taiwan-id-check (7)')
+print('OK    documented-code tests: taiwan-lunar-cal (10), taiwan-id-check (7), taiwan-schools (2), invoice-winning-numbers (4)')
