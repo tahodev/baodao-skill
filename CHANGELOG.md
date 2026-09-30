@@ -2,6 +2,12 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.8.3] - 2026-09-30
+
+### Fixed
+
+- `taiwan-id-check`：特例驗收向量更正——`97176270` 加權和 base=40,一般路徑即合法,無法鑑別第 7 碼 7 特例實作;新增合成向量 `10000073`(base=14,無特例判非法、有特例判合法)。SKILL.md 實測段落/錯誤處理/English summary 與 tests/test_documented_code.py 同步更正(2026-09-30 複測重現)
+
 ## [0.8.2] - 2026-09-26
 
 ### Fixed
