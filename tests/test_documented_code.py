@@ -58,10 +58,11 @@ check('zodiac 2026', ns['zodiac'](2026), '馬')
 ns = {}
 for block in heredoc_python_blocks(ROOT / 'taiwan-id-check' / 'SKILL.md'):
     exec(block, ns)
-# Vectors documented in SKILL.md (verified 2026-09-19)
+# Vectors documented in SKILL.md (verified 2026-09-19; 10000073 特例鑑別向量 2026-09-30 新增)
 check('UBN 22099131 台積電', ns['ubn_ok']('22099131'), True)
 check('UBN 96979933 中華電信', ns['ubn_ok']('96979933'), True)
-check('UBN 97176270 特例', ns['ubn_ok']('97176270'), True)
+check('UBN 97176270 合法(走一般路徑,不鑑別特例)', ns['ubn_ok']('97176270'), True)
+check('UBN 10000073 特例鑑別(無特例實作會誤判非法)', ns['ubn_ok']('10000073'), True)
 check('UBN 22099132 非法', ns['ubn_ok']('22099132'), False)
 check('ID A123456789', ns['pid_ok']('A123456789'), True)
 check('ID B221003265', ns['pid_ok']('B221003265'), True)
