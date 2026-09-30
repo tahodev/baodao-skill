@@ -32,12 +32,12 @@ def ubn_ok(n: str) -> bool:
         return (base - c + 0) % 5 == 0 or (base - c + 1) % 5 == 0
     return False
 
-for n in ['22099131', '97176270']:
+for n in ['22099131', '97176270', '10000073']:
     print(n, ubn_ok(n))
 PY
 ```
 
-2026-09-19 實測（公開公司統編）：台積電 `22099131`、中華電信 `96979933` 合法；台灣大哥大 `97176270`（第 7 碼 7）只在特例路徑下合法，可驗證特例實作有無；把任一碼改動（如 `22099132`）即判非法。
+2026-09-19 實測（公開公司統編）：台積電 `22099131`、中華電信 `96979933` 合法；台灣大哥大 `97176270` 也合法，但它的加權和 base=40，走一般路徑就過關，驗收不出特例實作；特例的驗收要用合成向量 `10000073`（base=14，無特例判非法、有特例判合法）才有鑑別力（2026-09-30 複測更正，原文誤植 97176270「只在特例路徑下合法」）；把任一碼改動（如 `22099132`）即判非法。
 
 ## 2. 國民身分證統一編號（1 英文字母 + 9 碼數字）
 
@@ -69,8 +69,8 @@ PY
 - **長度或字元不符**：直接回 `False`，不要嘗試補齊或猜測。
 - **檢核碼錯誤不等於「偽造」**：只代表這串號碼不符合檢核規則（常見於打錯字）。回報時用「檢核碼不符」，不要做法律判斷。
 - **本技能不查資料庫**：統編對應的公司名稱、狀態請導向財政部「稅籍登記資料公示查詢」；身分證真偽無法以檢核碼判斷（檢核碼可計算，不等於實際核發）。
-- **第 7 碼 7 的特例漏做**：舊版實作常漏掉特例，會把合法的統編（如 `97176270`）誤判非法；驗收時務必測這組。
+- **第 7 碼 7 的特例漏做**：舊版實作常漏掉特例，會把只靠特例才合法的統編（如合成向量 `10000073`）誤判非法；驗收時務必測這組（`97176270` 兩條路徑皆合法，不能驗收特例）。
 
 ## English summary
 
-Checksum validation for Taiwan Unified Business Numbers (UBN, 8 digits) and National ID numbers (1 letter + 9 digits). Pure computation - no network, no key, no database lookup. UBN: weights 1,2,1,2,1,2,4,1, digit-sum of products, total divisible by 5; special case when the 7th digit is 7 (its contribution may count as 0 or 1). National ID: letter mapped per the MOI table (A=10 ... Z=33 with the 34/35/32/30/31/33 exceptions), tens x1 + ones x9, then digits weighted 8..1 with the check digit x1, total divisible by 10. Verified 2026-09-19 against public UBNs (TSMC 22099131, Chunghwa Telecom 96979933, Taiwan Mobile 97176270 exercising the 7-special-case) and canonical ID test values. A wrong checksum means "fails the check rule" (usually a typo) - never call it forgery; this skill cannot confirm existence or issuance.
+Checksum validation for Taiwan Unified Business Numbers (UBN, 8 digits) and National ID numbers (1 letter + 9 digits). Pure computation - no network, no key, no database lookup. UBN: weights 1,2,1,2,1,2,4,1, digit-sum of products, total divisible by 5; special case when the 7th digit is 7 (its contribution may count as 0 or 1). National ID: letter mapped per the MOI table (A=10 ... Z=33 with the 34/35/32/30/31/33 exceptions), tens x1 + ones x9, then digits weighted 8..1 with the check digit x1, total divisible by 10. Verified 2026-09-19 against public UBNs (TSMC 22099131, Chunghwa Telecom 96979933) and canonical ID test values; synthetic vector 10000073 exercises the 7-special-case (97176270 passes both paths and cannot discriminate - corrected 2026-09-30). A wrong checksum means "fails the check rule" (usually a typo) - never call it forgery; this skill cannot confirm existence or issuance.
