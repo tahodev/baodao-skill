@@ -9,7 +9,7 @@ metadata:
 
 # taiwan-stock
 
-> 實測日：2026-09-12（最近一次端對端實測；數值基準日各自標於內文）
+> 實測日：2026-10-02（最近一次端對端實測；數值基準日各自標於內文）
 
 用證交所（TWSE）與櫃買中心（TPEX）的公開 JSON API 查台股每日收盤行情。不需要 API 金鑰或登入。資料是**每日收盤後**的統計，非盤中即時報價。日期欄位用民國年（1150911 = 2026-09-11）。
 
@@ -24,8 +24,15 @@ curl -sm 30 'https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL' -o /tm
 ```bash
 # 查台積電
 jq -r '.[] | select(.Code=="2330") | "\(.Name) 收 \(.ClosingPrice) 漲跌 \(.Change) 量 \(.TradeVolume)"' /tmp/twse.json
-# 今日漲幅前 10（Change 轉數字排序）
-jq -r 'sort_by(.Change|tonumber) | reverse | .[0:10][] | "\(.Code) \(.Name) \(.ClosingPrice) \(.Change)"' /tmp/twse.json
+# 最近交易日漲幅前 10：漲幅% = Change / (收盤 - Change)，不是 Change 的絕對值
+# 收盤價或 Change 為空字串（停牌、無成交）、昨收為 0 的筆數直接略過
+jq -r '[ .[]
+  | (.ClosingPrice | tonumber? // null) as $c
+  | (.Change | tonumber? // null) as $d
+  | select($c != null and $d != null and ($c - $d) > 0)
+  | {Code, Name, ClosingPrice, Change, pct: ($d / ($c - $d) * 100)} ]
+  | sort_by(.pct) | reverse | .[0:10][]
+  | "\(.Code) \(.Name) \(.ClosingPrice) \(.Change) \(.pct * 100 | round / 100)%"' /tmp/twse.json
 ```
 
 ## 2. 上櫃每日收盤（TPEX openapi）
@@ -65,7 +72,8 @@ curl -sm 30 'https://www.twse.com.tw/exchangeReport/MI_INDEX?response=json&date=
 
 - **非交易日**：假日沒有資料不是錯誤。先查 STOCK_DAY_ALL（永遠回最新交易日），需要指定日時若回空，往前找最近交易日。
 - **民國年換算**：API 的 `Date`/`日期` 是民國年，西元年 = 民國 + 1911（115 → 2026）。
-- **數字是字串**：`ClosingPrice`、`Change` 等全是字串，jq 計算前要 `tonumber`。
+- **數字是字串**：`ClosingPrice`、`Change` 等全是字串，jq 計算前要 `tonumber`；停牌或無成交的筆數收盤價是空字串，要略過。
+- **漲幅排名不能直接排 `Change`**：`Change` 是價差（元），高價股會永遠排前面；漲幅% 要用 `Change / (收盤 - Change)`，昨收為 0 的筆數略過（2026-10-02 實測 1151001 的 1,380 筆，前 10 名漲幅 9.9%～10%，與依價差排序的結果不同）。
 - **盤中資料**：本 API 盤中不更新；若使用者要即時報價，說明這是收盤統計資料。
 - **HTTP 200 但內容是 HTML**：可能是 WAF 暫時攔截，換 openapi.twse.com.tw 主機（或反向）再試一次；兩個主機都失敗就回報資料源異常，不要靜默編造數字。
 
