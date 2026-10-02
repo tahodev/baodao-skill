@@ -9,14 +9,14 @@ metadata:
 
 # taiwan-suspension
 
-> 實測日：2026-09-19（最近一次端對端實測；數值基準日各自標於內文）
+> 實測日：2026-10-02（最近一次端對端實測；數值基準日各自標於內文）
 
 查行政院人事行政總處的「天然災害停止上班及上課情形」官方公告頁。不需要 API 金鑰或登入。這是颱風天「到底放不放假」的唯一官方來源。
 
 ## 基本流程
 
 1. 抓公告頁
-2. 判斷目前狀態：出現「無停班停課訊息」代表全國正常上班上課；有公告時抽出各縣市文字
+2. 判斷目前狀態：只讀公告表格（`Table_Body`）的列；「無停班停課訊息」代表全國正常上班上課；有公告時逐列取「縣市名稱＋公告內容」，頁尾的備註、法條與發布時限說明不算公告
 3. **逐字引用公告內容並註明查詢時間**——散布不實停班停課訊息是刑事責任（災害防救法第 53 條），絕對不能猜
 
 ### 1. 抓頁面
@@ -30,19 +30,32 @@ curl -sm 30 -A 'Mozilla/5.0' 'https://www.dgpa.gov.tw/typh/daily/nds.html' -o /t
 ### 2. 解析狀態
 
 ```python
-import re
+import re, html
 t = open('/tmp/nds.html', encoding='utf-8', errors='replace').read()
-if '無停班停課訊息' in t:
+m = re.search(r'<tbody[^>]*class="Table_Body"[^>]*>(.*?)</tbody>', t, re.S | re.I)
+if not m:
+    raise SystemExit('找不到公告表格（頁面改版？），請直接看官網，不要猜')
+
+def text(cell):
+    return re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', ' ', cell))).strip()
+
+announcements, normal = [], False
+for row in re.findall(r'<tr[^>]*>(.*?)</tr>', m.group(1), re.S | re.I):
+    cells = [text(c) for c in re.findall(r'<td[^>]*>(.*?)</td>', row, re.S | re.I)]
+    if len(cells) == 1 and '無停班停課訊息' in cells[0]:
+        normal = True                      # 全國正常
+    elif len(cells) == 2 and cells[0] and cells[1]:
+        announcements.append((cells[0], cells[1]))   # 縣市, 公告內容；備註列是單一儲存格，不會進來
+if announcements:
+    for city, msg in announcements:
+        print(f'{city}：{msg}')
+elif normal:
     print('全國正常上班上課（頁面無停班停課公告）')
 else:
-    # 有公告:抽出公告區塊文字,逐字引用
-    body = re.sub(r'<script.*?</script>|<style.*?</style>', ' ', t, flags=re.S)
-    body = re.sub(r'<[^>]+>', '\n', body)
-    lines = [ln.strip() for ln in body.splitlines() if '停止上班' in ln or '停止上課' in ln]
-    print('\n'.join(lines))
+    print('無法判讀公告表格，請直接看官網，不要猜')
 ```
 
-2026-09-19 實測實測範例：當日頁面顯示「無停班停課訊息。」（正常上班上課）。
+2026-10-02 實測：頁面顯示「無停班停課訊息。」，上面程式輸出「全國正常上班上課」，不會把頁尾的刑責與發布時限說明當成公告。有公告時的列格式（縣市＋內容兩格）以 `tests/test_documented_code.py` 的合成 fixture 驗證，**尚未用真實颱風日頁面實測**。
 
 ### 3. 回報原則
 
