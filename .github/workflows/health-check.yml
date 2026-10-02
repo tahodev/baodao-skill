@@ -26,24 +26,31 @@ jobs:
         name: Lint skills and Markdown
         run: bash scripts/lint-skills.sh
       - id: drift
+        if: ${{ !cancelled() }}
         name: Check README and docs drift
         run: python3 scripts/check-docs-drift.py
       - id: codeblocks
+        if: ${{ !cancelled() }}
         name: Validate documented code blocks
         run: python3 scripts/check-code-blocks.py
       - id: doctests
+        if: ${{ !cancelled() }}
         name: Run documented-code tests
         run: python3 tests/test_documented_code.py
       - id: counts
+        if: ${{ !cancelled() }}
         name: Re-verify headline record counts
         run: python3 scripts/check-counts.py
       - id: invoice
+        if: ${{ !cancelled() }}
         name: Invoice winning-numbers page smoke test
         run: python3 scripts/check-invoice.py
       - id: measured
+        if: ${{ !cancelled() }}
         name: Check measured-date freshness (re-verify reminder)
         run: python3 scripts/check-measured-date.py
       - id: urls
+        if: ${{ !cancelled() }}
         name: Check documented URLs and API responses
         run: python3 scripts/check-urls.py
       - name: Open or update a GitHub issue on scheduled/manual failure
