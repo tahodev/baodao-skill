@@ -25,6 +25,8 @@ for path in root.glob('*/SKILL.md'):
         items.setdefault(url,set()).add(str(path.relative_to(root)))
 
 def materialize(url):
+    # 文件用 offset=N 說明分頁；探測時代入 0（模板說明與實際 probe 分離）
+    url=re.sub(r'(offset=)N\b',r'\g<1>0',url)
     def sub(m): return placeholders.get(m.group(1),'ci-probe')
     url=re.sub(r'\{([A-Za-z_][A-Za-z0-9_]*)\}',sub,url)
     url=re.sub(r'\$\{([A-Za-z_][A-Za-z0-9_]*)\}',sub,url)
