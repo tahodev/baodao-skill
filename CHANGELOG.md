@@ -2,6 +2,12 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.8.5] - 2026-10-03
+
+### Fixed
+
+- `scripts/check-counts.py`：0.8.4 新增的 `taiwan-hospital` 最後一頁完整性檢查會誤報——兩次請求之間總數已變（2026-10-02 排程 run：預期 177、實得 178，health-check 仍為紅燈）。改用最後一頁回應自己的 total 比對自己的筆數，兩次 total 差超過 50 才視為異常
+
 ## [0.8.4] - 2026-10-02
 
 ### Fixed
