@@ -2,6 +2,23 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.8.4] - 2026-10-02
+
+### Fixed
+
+- `scripts/check-counts.py`：`taiwan-hospital` 總數不再 exact-match 37,133（實際 37,175，health-check 自 9/29 起連續失敗，issue #8）。總數漂移改為 ±5% WARN；真正失敗改看 `success` 旗標、欄位缺失、總數驟降到 3 萬以下、最後一頁筆數與 total 對不上
+- `.github/workflows/health-check.yml`：各檢查步驟加 `if: ${{ !cancelled() }}`，一項失敗不再讓 drift/doctests/counts/invoice/measured/urls 被跳過；最後仍由失敗步驟清單開 issue
+- `scripts/check-urls.py`：文件的 `offset=N` 說明用網址探測時代入 `offset=0`，不再回 400 誤報
+- `taiwan-stock`：「漲幅前 10」範例原本依 `Change`（價差）排序，高價股永遠排前面；改為 `Change / (收盤 - Change)` 的漲幅%，空字串與昨收為 0 的筆數略過（2026-10-02 實測）
+- `taiwan-suspension`：解析器改為逐列讀公告表格（縣市＋內容），不再把頁尾備註、法條與發布時限說明混成公告、也不再遺失縣市名
+- `taiwan-hospital`：分頁範例存成 `/tmp/hosp.json`，與下一節篩選範例銜接；總數更新為 37,175（2026-10-02）
+- `taiwan-id-check`：統編與身分證改用 ASCII 正則；全形、上標、其他文字的數字不再丟例外而是回 `False`；身分證第二碼限 1/2/8/9
+- `taiwan-toilet`：最近公廁範例改為先合併全部頁面再排序（原本只看第 1 頁）；經緯度任一缺值都略過
+
+### Changed
+
+- `tests/test_documented_code.py`：改為抽出並執行 SKILL.md 內的程式（taiwan-schools、stock、suspension、hospital、toilet），不再複製公式；新增 id-check 異常輸入、stock 排序、suspension 公告列與頁尾、toilet 跨頁與缺值的 fixture（suspension 的公告列為合成 fixture，尚未用真實颱風日頁面驗證）
+
 ## [0.8.3] - 2026-09-30
 
 ### Fixed
