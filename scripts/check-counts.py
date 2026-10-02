@@ -76,7 +76,7 @@ def check_hospital():
 
     - 數字漂移（基準 ±5%）：只 WARN，提醒重測更新文件。
     - 真正的失敗：success 不為 true、欄位缺失、總數驟降到 3 萬以下、
-      最後一頁筆數和 total 對不上（分頁不完整）。
+      最後一頁筆數和該回應自己的 total 對不上（分頁不完整）。
     """
     base = 'https://info.nhi.gov.tw/api/iode0010/v1/rest/datastore/A21030000I-D2100G-001'
     data = json.loads(fetch(base + '?limit=1&offset=0'))
@@ -90,7 +90,14 @@ def check_hospital():
     check_volatile('taiwan-hospital provider total', total, 37175)
     last_off = ((total - 1) // 1000) * 1000
     last = json.loads(fetch(f'{base}?limit=1000&offset={last_off}', timeout=60))
-    check('taiwan-hospital last page size', len(last['result']['records']), total - last_off)
+    # 資料每天都在增減：兩次請求之間 total 可能已變（2026-10-03 排程 run 因此誤報 177≠178）。
+    # 所以用最後一頁回應自己的 total 對自己的筆數，不拿第一次請求的 total 比。
+    last_total = last['result']['total']
+    last_n = len(last['result']['records'])
+    if abs(last_total - total) > 50:
+        check('taiwan-hospital total stable between requests', last_total, total)
+    expected_n = min(1000, max(0, last_total - last_off))
+    check('taiwan-hospital last page size', last_n, expected_n)
 
 
 def check_parking():
