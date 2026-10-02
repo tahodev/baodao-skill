@@ -72,8 +72,25 @@ def check_library():
 
 
 def check_hospital():
-    data = json.loads(fetch('https://info.nhi.gov.tw/api/iode0010/v1/rest/datastore/A21030000I-D2100G-001?limit=1'))
-    check('taiwan-hospital provider total', data['result']['total'], 37133)
+    """健保院所總數會隨開歇業每週變動，不能 exact-match（2026-09-29 起因此連續誤報,issue #8）。
+
+    - 數字漂移（基準 ±5%）：只 WARN，提醒重測更新文件。
+    - 真正的失敗：success 不為 true、欄位缺失、總數驟降到 3 萬以下、
+      最後一頁筆數和 total 對不上（分頁不完整）。
+    """
+    base = 'https://info.nhi.gov.tw/api/iode0010/v1/rest/datastore/A21030000I-D2100G-001'
+    data = json.loads(fetch(base + '?limit=1&offset=0'))
+    check('taiwan-hospital success flag', data.get('success'), True)
+    total = data['result']['total']
+    first = data['result']['records'][0]
+    missing = [k for k in ('HOSP_ID', 'HOSP_NAME', 'HOSP_ADDR', 'TEL') if k not in first]
+    check('taiwan-hospital schema keys missing', missing, [])
+    if total < 30000:
+        check('taiwan-hospital total not collapsed (>=30000)', total, '>=30000')
+    check_volatile('taiwan-hospital provider total', total, 37175)
+    last_off = ((total - 1) // 1000) * 1000
+    last = json.loads(fetch(f'{base}?limit=1000&offset={last_off}', timeout=60))
+    check('taiwan-hospital last page size', len(last['result']['records']), total - last_off)
 
 
 def check_parking():
