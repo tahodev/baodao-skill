@@ -50,6 +50,8 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 | 農產品批發行情 | `taiwan-produce` | 農業部開放資料：全台 24 個批發市場蔬果行情（上中下價與交易量） | 不需要 | [taiwan-produce 指南](docs/features/taiwan-produce.md) |
 | 健保特約院所查詢 | `taiwan-hospital` | 健保署開放資料 API：37,133 家特約醫院診所名錄（地址、電話、科別、服務時段姊妹集） | 不需要 | [taiwan-hospital 指南](docs/features/taiwan-hospital.md) |
 | 郵資查詢 | `taiwan-postage` | 中華郵政資費表：國內信函/包裹/快捷/國際資費 | 不需要 | [taiwan-postage 指南](docs/features/taiwan-postage.md) |
+| 綜合所得稅試算 | `taiwan-income-tax` | 財政部公告的免稅額、扣除額與課稅級距（114、115 年度），純離線估算個人綜所稅 | 不需要 | [taiwan-income-tax 指南](docs/features/taiwan-income-tax.md) |
+| 勞健保費率計算 | `taiwan-labor-health-insurance` | 115 年勞保（含就保）、健保費率與投保級距，算受僱勞工每月自付與雇主勞退 6%（純離線） | 不需要 | [taiwan-labor-health-insurance 指南](docs/features/taiwan-labor-health-insurance.md) |
 | 紫外線指數 | `taiwan-uv` | 中央氣象署各測站每日紫外線指數最大值（O-A0005-001） | 需要（免費即時發給） | [taiwan-uv 指南](docs/features/taiwan-uv.md) |
 | 空氣品質指標 | `taiwan-aqi` | 環境部每小時測站 AQI、主要污染物、PM2.5/PM10 與發布時間（AQX_P_432） | 需要（免費申請） | [taiwan-aqi 指南](docs/features/taiwan-aqi.md) |
 | 台電電力供需 | `taiwan-power` | 台電開放資料：目前用電、預估尖峰、備轉容量率與供電燈號 | 不需要 | [taiwan-power 指南](docs/features/taiwan-power.md) |
@@ -71,7 +73,7 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 
 ## 30 天計畫
 
-這個倉庫以「一天一技能」的速度成長中，目前有 25 個技能（見上方功能表）。候選清單與否決紀錄見 [docs/roadmap.md](docs/roadmap.md)。
+這個倉庫以「一天一技能」的速度成長中，目前有 27 個技能（見上方功能表）。候選清單與否決紀錄見 [docs/roadmap.md](docs/roadmap.md)。
 
 ## English
 
@@ -110,6 +112,8 @@ Node.js 18+ and `npx` are required. See the [install guide](docs/install.md) for
 | Wholesale produce prices | `taiwan-produce` | MOA open data: high/mid/low prices and volumes across 24 wholesale markets | Not required | [taiwan-produce guide](docs/features/taiwan-produce.md) |
 | NHI-contracted providers | `taiwan-hospital` | NHI open-data API: 37,133 contracted hospitals and clinics (address, phone; hours and departments via sibling datasets) | Not required | [taiwan-hospital guide](docs/features/taiwan-hospital.md) |
 | Postage rates | `taiwan-postage` | Chunghwa Post rate tables: domestic letters, parcels, express, international | Not required | [taiwan-postage guide](docs/features/taiwan-postage.md) |
+| Income tax estimate | `taiwan-income-tax` | MOF-announced exemptions, deductions and brackets (income years 114 and 115); offline personal income tax estimate | Not required | [taiwan-income-tax guide](docs/features/taiwan-income-tax.md) |
+| Labor and health insurance premiums | `taiwan-labor-health-insurance` | 2026 labor (incl. employment) and health insurance rates and salary tiers; employee share plus employer 6% pension (offline) | Not required | [taiwan-labor-health-insurance guide](docs/features/taiwan-labor-health-insurance.md) |
 | UV index | `taiwan-uv` | CWA daily max UV index per station (O-A0005-001) | Free instant API key | [taiwan-uv guide](docs/features/taiwan-uv.md) |
 | Air Quality Index | `taiwan-aqi` | Official hourly station AQI, dominant pollutant, PM2.5/PM10 and publication time (AQX_P_432) | Free API key | [taiwan-aqi guide](docs/features/taiwan-aqi.md) |
 | Taipower supply/demand | `taiwan-power` | Taipower open data: current load, forecast peak, reserve rate and supply indicator | Not required | [taiwan-power guide](docs/features/taiwan-power.md) |
