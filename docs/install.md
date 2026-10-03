@@ -5,7 +5,7 @@ baodao-skill 透過 `npx skills add` 安裝。需要 Node.js 18 以上。
 ## 需求
 
 - Node.js 18 以上與 `npx`
-- 執行期工具（各技能用到）：`curl`（全部技能）、`python3`（14 個技能的解析範例：invoice-winning-numbers、taiwan-holidays、taiwan-hospital、taiwan-id-check、taiwan-library、taiwan-lunar-cal、taiwan-museum、taiwan-oil-price、taiwan-produce、taiwan-real-estate、taiwan-schools、taiwan-suspension、taiwan-toilet、taiwan-weather；標準庫即可，不需 pip 套件）、`jq`（cwa-weather、taiwan-aqi、taiwan-garbage、taiwan-oil-price、taiwan-parking、taiwan-stock、youbike-realtime）、`iconv`（postal-address、taiwan-holidays、taiwan-library 的 Big5 檔）、`pdftotext`（invoice-winning-numbers 的 PDF 清單）、`awk` 與 `sed`（taiwan-garbage 的台北 CSV、taiwan-holidays 的月曆表等）
+- 執行期工具（各技能用到）：`curl`（全部技能）、`python3`（16 個技能的解析範例：invoice-winning-numbers、taiwan-holidays、taiwan-hospital、taiwan-id-check、taiwan-income-tax、taiwan-labor-health-insurance、taiwan-library、taiwan-lunar-cal、taiwan-museum、taiwan-oil-price、taiwan-produce、taiwan-real-estate、taiwan-schools、taiwan-suspension、taiwan-toilet、taiwan-weather；標準庫即可，不需 pip 套件）、`jq`（cwa-weather、taiwan-aqi、taiwan-garbage、taiwan-oil-price、taiwan-parking、taiwan-stock、youbike-realtime）、`iconv`（postal-address、taiwan-holidays、taiwan-library 的 Big5 檔）、`pdftotext`（invoice-winning-numbers 的 PDF 清單）、`awk` 與 `sed`（taiwan-garbage 的台北 CSV、taiwan-holidays 的月曆表等）
 
 ## 安裝全部技能
 
@@ -39,7 +39,7 @@ npx --yes skills add tahodev/baodao-skill --skill taiwan-weather -g
 
 以 Node.js v22.23 / npm 10.9、空的 HOME、無 TTY（非互動）的環境實際執行上面的指令：
 
-- `--all -g -y`：非互動完成，結束碼 0，25 個技能安裝到 `~/.agents/skills/<技能名>/`，各代理的技能目錄（`~/.claude/skills/<技能名>/` 等）以 symlink 連結過去。`Eve` 與 `PromptScript` 兩個目標不支援全域安裝會被略過 — 這是安裝器本身的行為，不是技能的問題。
+- `--all -g -y`：非互動完成，結束碼 0，（當時 25 個技能；現為 27 個）技能安裝到 `~/.agents/skills/<技能名>/`，各代理的技能目錄（`~/.claude/skills/<技能名>/` 等）以 symlink 連結過去。`Eve` 與 `PromptScript` 兩個目標不支援全域安裝會被略過 — 這是安裝器本身的行為，不是技能的問題。
 - `--skill <名稱> -g`：互動環境會出現「要裝到哪些代理」的選擇提示；**非互動環境（CI、SSH 等無 TTY）提示會被取消，結束碼 1、什麼都不裝**。這種情況要加 `-y`（或用 `--agent <名稱>` / `--agent '*'` 指定代理）：
 
 ```bash
@@ -68,4 +68,4 @@ rm -rf ~/.agents/skills/taiwan-weather
 
 Install with `npx skills add` (Node.js 18+). Use `--all` for every skill or `--skill <name>` for one, and `-g` for a global install. Skill names are the top-level directories in this repo. Runtime tools used by the skills: `curl` (all), `python3` (parsing examples in 14 skills; stdlib only, no pip packages), `jq` (cwa-weather, taiwan-aqi, taiwan-garbage, taiwan-oil-price, taiwan-parking, taiwan-stock, youbike-realtime), `iconv` (Big5 files in postal-address, taiwan-holidays, taiwan-library), `pdftotext` (invoice PDF lists), `awk`/`sed` (taiwan-garbage Taipei CSV, taiwan-holidays calendar).
 
-Verified in a clean environment (2026-09-20, Node.js v22.23 / npm 10.9, empty HOME, no TTY): `--all -g -y` installs all 25 skills non-interactively into `~/.agents/skills/<skill>/` with agent directories such as `~/.claude/skills/<skill>/` symlinked to them. A single `--skill <name> -g` install cancels its agent-picker prompt without a TTY and installs nothing (exit code 1) - add `-y` (or `--agent <name>` / `--agent '*'`) in CI/SSH. The `Eve` and `PromptScript` targets are skipped by the installer itself (no global-install support), not a skill problem. Restart or refresh your agent after installing; it will pick up each SKILL.md automatically. To uninstall, delete the skill directory.
+Verified in a clean environment (2026-09-20, Node.js v22.23 / npm 10.9, empty HOME, no TTY): `--all -g -y` installs all 25 skills (the count at that date; the repo now has 27) non-interactively into `~/.agents/skills/<skill>/` with agent directories such as `~/.claude/skills/<skill>/` symlinked to them. A single `--skill <name> -g` install cancels its agent-picker prompt without a TTY and installs nothing (exit code 1) - add `-y` (or `--agent <name>` / `--agent '*'`) in CI/SSH. The `Eve` and `PromptScript` targets are skipped by the installer itself (no global-install support), not a skill problem. Restart or refresh your agent after installing; it will pick up each SKILL.md automatically. To uninstall, delete the skill directory.
