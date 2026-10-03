@@ -2,6 +2,20 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.9.0] - 2026-10-03
+
+### Added
+
+- `taiwan-income-tax`：綜合所得稅試算。114、115 所得年度的免稅額、標準扣除額、薪資特別扣除額與課稅級距取自財政部公告（2026-10-03 對照公告），純離線 Python，內建斷言（單身薪資 80 萬：115 年度稅額 16,800、114 年度 17,700）
+- `taiwan-labor-health-insurance`：勞健保費率計算。115 年（2026-01-01 起）勞保 11.5% 加就保 1%、健保 5.17%、勞退雇主 6% 與投保級距；程式輸出與公告分擔金額表的樣本金額核對一致（2026-10-03）。只涵蓋一般受僱全時勞工
+- `docs/features/` 兩份指南、README 功能表（中英）、getting-started 與 install 的清單同步
+
+### Changed
+
+- `docs/roadmap.md`：綜合所得稅試算、勞健保費率計算打勾（新技能 22/24）；國道即時路況註記無法驗證暫不實作（高公局 tisvcloud 於 2026-10-03 從實測環境逾時）
+- `scripts/check-urls.py`：`nhi.gov.tw` 加入已知會擋雲端 IP 的網域（2026-10-03 實測 `www.nhi.gov.tw` 回 403，與 `info.nhi.gov.tw` 同類），降為 WARN
+- README 技能總數 25 → 27；install.md 的 25 技能為 2026-09-20 當時的實測，已標註
+
 ## [0.8.5] - 2026-10-03
 
 ### Fixed
