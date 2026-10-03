@@ -1,6 +1,6 @@
 # 入門指南（getting started）
 
-25 個技能怎麼挑？依目的分成六組。只有 3 個技能需要免費申請的 API 金鑰（`cwa-weather`、`taiwan-uv` 用 CWA 授權碼;`taiwan-aqi` 用 MOENV 金鑰）,其他全部免金鑰免登入。
+27 個技能怎麼挑？依目的分成六組。只有 3 個技能需要免費申請的 API 金鑰（`cwa-weather`、`taiwan-uv` 用 CWA 授權碼;`taiwan-aqi` 用 MOENV 金鑰）,其他全部免金鑰免登入。
 
 ## 天氣與災害
 
@@ -22,6 +22,8 @@
 - `invoice-winning-numbers`：統一發票對獎（每期開獎日主動對）
 - `taiwan-oil-price`：中油每週油價
 - `taiwan-postage`：郵資查詢
+- `taiwan-income-tax`：綜合所得稅試算（純離線）
+- `taiwan-labor-health-insurance`：勞健保費用計算（純離線）
 - `taiwan-stock`：台股每日收盤快照
 - `taiwan-power`：台電電力供需與供電燈號
 - `taiwan-produce`：蔬果批發行情
