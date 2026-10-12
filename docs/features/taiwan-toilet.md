@@ -9,3 +9,5 @@
 - 部分缺經緯度；算距離先過濾
 
 完整步驟請看 [SKILL.md](../../taiwan-toilet/SKILL.md)。
+
+回功能表：[README](../../README.md)

@@ -9,3 +9,5 @@
 - 國際件分區計費；不確定分區如實說並給連結
 
 完整步驟請看 [SKILL.md](../../taiwan-postage/SKILL.md)。
+
+回功能表：[README](../../README.md)

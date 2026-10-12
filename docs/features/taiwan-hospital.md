@@ -9,3 +9,5 @@
 - 地址含全形字元與「（代表）」，勿自行刪改；新開/歇業可能有落差
 
 完整步驟請看 [SKILL.md](../../taiwan-hospital/SKILL.md)。
+
+回功能表：[README](../../README.md)

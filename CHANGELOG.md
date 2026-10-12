@@ -2,6 +2,20 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [0.9.1] - 2026-10-13
+
+### Added
+
+- `SECURITY.md`、`.github/CODEOWNERS`
+- `docs/series.md`：iT邦幫忙鐵人賽 30 篇連載索引；README 加入 CI／授權／版本徽章與連載連結
+- `tests/`：labor-health-insurance、income-tax 範例輸出的回歸測試
+
+### Changed
+
+- `scripts/check-urls.py`：連線失敗（000）或 5xx 時重試一次再判定
+- `docs/roadmap.md`：無法驗證來源的三項移到「保留」區，計數改為 22／2 全部完成
+- `docs/features/` 全部指南加上「回功能表」連結
+
 ## [0.9.0] - 2026-10-03
 
 ### Added

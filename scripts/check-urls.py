@@ -57,7 +57,7 @@ def ncdr_throttle(h):
         if wait>0: time.sleep(wait)
         _ncdr_last[0]=time.time()
 
-def check(pair):
+def check_once(pair):
     original,owners=pair; url=materialize(original)
     owner=', '.join(sorted(owners))
     if not url: return ('SKIP',f'{owner}: {redact(original)} (runtime shell variable)')
@@ -84,6 +84,15 @@ def check(pair):
         return ('OK',f'{owner}: {code} {disp}')
     if code in ('400','401','403') and openapi_host(h): return ('OK',f'{owner}: {code} {disp} (endpoint exists; auth/parameters required)')
     return ('FAIL',f'{owner}: {code} {disp}')
+
+def check(pair):
+    """暫時性失敗（連線 000 或 5xx）重試一次再判定，避免單次網路抖動讓排程變紅。"""
+    status,msg=check_once(pair)
+    if status=='FAIL' and re.search(r': (000|5\d\d) ',msg):
+        time.sleep(5)
+        status,msg=check_once(pair)
+        if status=='FAIL': msg+=' (retried once)'
+    return (status,msg)
 
 failed=False
 with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:

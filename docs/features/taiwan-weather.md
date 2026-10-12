@@ -8,3 +8,5 @@
 - 正式預報與警報以中央氣象署公告為準
 
 完整步驟、座標表、天氣代碼對照與錯誤處理請看 [SKILL.md]（../../taiwan-weather/SKILL.md）。
+
+回功能表：[README](../../README.md)

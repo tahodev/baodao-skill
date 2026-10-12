@@ -10,3 +10,5 @@
 - 民國年 = 西元年 - 1911
 
 完整步驟、解析範例與錯誤處理請看 [SKILL.md]（../../invoice-winning-numbers/SKILL.md）。
+
+回功能表：[README](../../README.md)

@@ -9,3 +9,5 @@
 - 生肖以農曆年起算；範圍外回 None
 
 完整步驟請看 [SKILL.md](../../taiwan-lunar-cal/SKILL.md)。
+
+回功能表：[README](../../README.md)

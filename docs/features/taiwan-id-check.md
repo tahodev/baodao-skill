@@ -8,3 +8,5 @@
 - 只驗格式與檢查碼，不代表該號碼真實存在；語意驗證（性別碼、字母對應）僅輔助
 
 完整步驟請看 [SKILL.md](../../taiwan-id-check/SKILL.md)。
+
+回功能表：[README](../../README.md)

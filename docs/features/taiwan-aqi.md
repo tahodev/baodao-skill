@@ -11,3 +11,5 @@
 - 金鑰只放環境變數或安全儲存，不進 repo、issue、PR、日誌或回覆
 
 AQI 等級與完整命令、欄位、錯誤處理請看 [SKILL.md](../../taiwan-aqi/SKILL.md)。
+
+回功能表：[README](../../README.md)

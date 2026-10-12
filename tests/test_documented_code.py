@@ -198,9 +198,18 @@ out = run_python_block(toilet[1]).strip().splitlines()
 check('toilet 最近一筆來自後面頁面', out[0].split()[1] if out else None, '第二頁近')
 check('toilet 缺值筆數被略過', any(('缺經度' in l or '缺緯度' in l) for l in out), False)
 
+# --- taiwan-labor-health-insurance / taiwan-income-tax（文件範例輸出回歸）--------
+# 執行 SKILL.md 的範例程式（內含公告金額表的 assert），並固定目前文件記載的輸出。
+# 這是防止後續編輯無意改動結果的回歸測試，不是對稅額/費率本身的獨立驗證。
+out = run_python_block(python_blocks(ROOT / 'taiwan-labor-health-insurance' / 'SKILL.md')[0])
+check('labor-health 範例輸出', out.strip(),
+      "{'labor_base': 45800, 'health_base': 50600, 'labor': 1145, 'health': 1570, 'pension_employer': 3036}")
+out = run_python_block(python_blocks(ROOT / 'taiwan-income-tax' / 'SKILL.md')[0])
+check('income-tax 範例輸出', out.strip(), '(336000, 16800) (354000, 17700)')
+
 if failures:
     print('FAIL')
     for f in failures:
         print(' -', f)
     sys.exit(1)
-print('OK    documented-code tests: lunar-cal, id-check (含異常輸入), schools (執行文件程式), invoice, stock, suspension, hospital, toilet')
+print('OK    documented-code tests: lunar-cal, id-check (含異常輸入), schools (執行文件程式), invoice, stock, suspension, hospital, toilet, labor-health-insurance, income-tax')
