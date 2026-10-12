@@ -9,3 +9,5 @@
 - 台塑牌價不同源；同一 JSON 還有燃料油/天然氣/液化石油氣（單位各異）
 
 完整步驟請看 [SKILL.md](../../taiwan-oil-price/SKILL.md)。
+
+回功能表：[README](../../README.md)

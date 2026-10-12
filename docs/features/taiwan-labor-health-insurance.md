@@ -9,3 +9,5 @@
 - 年度改變時級距會變，先查公告
 
 完整步驟請看 [SKILL.md](../../taiwan-labor-health-insurance/SKILL.md)。
+
+回功能表：[README](../../README.md)

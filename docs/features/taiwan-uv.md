@@ -10,3 +10,5 @@
 - 每日最大值非逐時即時值
 
 完整步驟請看 [SKILL.md](../../taiwan-uv/SKILL.md)。
+
+回功能表：[README](../../README.md)

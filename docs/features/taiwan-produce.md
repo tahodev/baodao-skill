@@ -9,3 +9,5 @@
 - 用 utf-8-sig 解 BOM；作物名要精確（944 種），查不到先列相近名
 
 完整步驟請看 [SKILL.md](../../taiwan-produce/SKILL.md)。
+
+回功能表：[README](../../README.md)

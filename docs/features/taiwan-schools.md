@@ -9,3 +9,5 @@
 - 高中職/大專是別的檔名，本頁未收錄
 
 完整步驟請看 [SKILL.md](../../taiwan-schools/SKILL.md)。
+
+回功能表：[README](../../README.md)

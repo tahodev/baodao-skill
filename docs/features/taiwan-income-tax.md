@@ -8,3 +8,5 @@
 - 所得年度與申報年度差一年（114 年度所得在 2026 年 5 月申報）；年度不在表內時先查公告
 
 完整步驟請看 [SKILL.md](../../taiwan-income-tax/SKILL.md)。
+
+回功能表：[README](../../README.md)

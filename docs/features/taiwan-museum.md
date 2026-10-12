@@ -9,3 +9,5 @@
 - website/srcWebsite 欄位可導各館官網
 
 完整步驟請看 [SKILL.md](../../taiwan-museum/SKILL.md)。
+
+回功能表：[README](../../README.md)

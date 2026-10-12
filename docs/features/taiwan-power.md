@@ -9,3 +9,5 @@
 - success 是字串；publish_time 民國年、real_hr_peak_time 西元並存
 
 完整步驟請看 [SKILL.md](../../taiwan-power/SKILL.md)。
+
+回功能表：[README](../../README.md)

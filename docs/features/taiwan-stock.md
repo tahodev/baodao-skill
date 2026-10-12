@@ -10,3 +10,5 @@
 - 以上全部 2026-09-12 實測 HTTP 200
 
 jq 查詢範例與錯誤處理請看 [SKILL.md](../../taiwan-stock/SKILL.md)。
+
+回功能表：[README](../../README.md)

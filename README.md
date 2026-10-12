@@ -12,6 +12,12 @@
 </p>
 
 
+<p align="center">
+  <a href="https://github.com/tahodev/baodao-skill/actions/workflows/health-check.yml"><img src="https://github.com/tahodev/baodao-skill/actions/workflows/health-check.yml/badge.svg" alt="health-check"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT"></a>
+  <a href="https://github.com/tahodev/baodao-skill/releases"><img src="https://img.shields.io/github/v/release/tahodev/baodao-skill" alt="release"></a>
+</p>
+
 台灣日常生活查詢的 AI 代理技能組合（寶島 = 台灣的美稱）。
 只使用官方 API 與公開資料：財政部電子發票整合服務平台、臺北市資料大平臺、新北市資料開放平臺、台中市政府資料開放平臺、桃園市政府資料開放平臺、YouBike 微笑單車公開資料與官方地圖即時 feed、Open-Meteo、中央氣象署開放資料平臺、環境部環境資料開放平臺、國家災害防救科技中心（NCDR CAP）。以不需要登入、不需要 API 金鑰就能安全使用的查詢型技能為核心；少數技能（cwa-weather、taiwan-uv、taiwan-aqi）使用免費申請的 API 金鑰。
 
@@ -74,6 +80,8 @@ npx --yes skills add tahodev/baodao-skill --skill invoice-winning-numbers -g
 ## 30 天計畫
 
 這個倉庫以「一天一技能」的速度成長中，目前有 27 個技能（見上方功能表）。候選清單與否決紀錄見 [docs/roadmap.md](docs/roadmap.md)。
+
+開發過程記錄在 iT邦幫忙鐵人賽連載，30 篇索引見 [docs/series.md](docs/series.md)。漏洞通報見 [SECURITY.md](SECURITY.md)。
 
 ## English
 

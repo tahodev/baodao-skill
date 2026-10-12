@@ -22,3 +22,5 @@
 - 回報務必附上資料更新時間；數量為 0 或暫停營運（`status`/`act` ≠ 1）要如實說明
 
 完整欄位對照、服務區代碼表、查詢範例與錯誤處理請看 [SKILL.md]（../../youbike-realtime/SKILL.md）。
+
+回功能表：[README](../../README.md)

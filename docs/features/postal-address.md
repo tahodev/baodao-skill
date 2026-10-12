@@ -9,3 +9,5 @@
 - 以上全部 2026-09-12 實測 HTTP 200
 
 完整指令與錯誤處理請看 [SKILL.md](../../postal-address/SKILL.md)。
+
+回功能表：[README](../../README.md)

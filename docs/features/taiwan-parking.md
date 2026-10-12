@@ -9,3 +9,5 @@
 - 僅台北市停車場；路邊停車格無公開即時資料
 
 完整步驟請看 [SKILL.md](../../taiwan-parking/SKILL.md)。
+
+回功能表：[README](../../README.md)

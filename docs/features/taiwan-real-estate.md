@@ -9,3 +9,5 @@
 - 申報制有 1-2 個月落差；門牌去識別化；特殊交易看備註
 
 完整步驟請看 [SKILL.md](../../taiwan-real-estate/SKILL.md)。
+
+回功能表：[README](../../README.md)

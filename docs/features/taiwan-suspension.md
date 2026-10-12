@@ -9,3 +9,5 @@
 - 僅政府機關與學校基準；民間公司放假由雇主決定
 
 完整步驟請看 [SKILL.md](../../taiwan-suspension/SKILL.md)。
+
+回功能表：[README](../../README.md)

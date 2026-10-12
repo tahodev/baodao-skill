@@ -9,3 +9,5 @@
 - 學校、銀行、股市休市日與行政機關日曆不同，請勿混用
 
 完整指令、編碼注意事項與錯誤處理請看 [SKILL.md](../../taiwan-holidays/SKILL.md)。
+
+回功能表：[README](../../README.md)

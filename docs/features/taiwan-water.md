@@ -8,3 +8,5 @@
 - 僅台水轄區；台北市屬北水處不在內；爆管突發可能來不及上公告 → 1910
 
 完整步驟請看 [SKILL.md](../../taiwan-water/SKILL.md)。
+
+回功能表：[README](../../README.md)
