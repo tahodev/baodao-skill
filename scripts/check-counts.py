@@ -102,7 +102,7 @@ def check_hospital():
 
 def check_parking():
     data = json.loads(fetch('https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_allavailable.json'))
-    check_volatile('taiwan-parking realtime lots', len(data['data']['park']), 1188)
+    check_volatile('taiwan-parking realtime lots', len(data['data']['park']), 1071)
     data = json.loads(fetch('https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_alldesc.json'))
     check_volatile('taiwan-parking static lots', len(data['data']['park']), 1775)
 
