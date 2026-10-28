@@ -2,6 +2,23 @@
 
 格式基於 [Keep a Changelog](https://keepachangelog.com/zh-TW/1.0.0/)。
 
+## [Unreleased]
+
+### Fixed
+
+- `scripts/check-urls.py`：`data.moa.gov.tw` 加入已知依來源 IP 攔連線的網域（2026-10-28 自兩個海外網路實測 TCP 連線逾時 HTTP 000；同一端點 2026-09-19 從台灣網路實測 200，資料集仍在 data.gov.tw 8066 上架），連線失敗降為 WARN。修復 2026-10-23 起 health-check 的 urls 步驟失敗（issue #12）
+- `scripts/check-measured-date.py`：「今天」改按台灣時間 UTC+8 計算（conventions.md 的時區慣例），不再用 runner 本地日期
+- `scripts/check-invoice.py`：探測 UA 改為 `Mozilla/5.0`（conventions.md：政府網站偶爾擋預設 UA）
+- `docs/install.md`：英文區 python3 技能數 14 → 16（與中文區及倉庫實際一致）
+- README、getting-started、taiwan-hospital 指南：健保特約院所數 37,133 → 37,175（2026-10-02 重測，總數每週小幅變動）
+
+### Changed
+
+- `taiwan-parking`：2026-10-28 重測——即時 1,214 場（9/26 為 1,188、10/13 為 1,071）、靜態 1,767 場；SKILL、README、指南、`check-counts.py` 基準同步。即時場數觀測兩週可差 ±13%，`check-counts.py` 容忍放寬到 ±15%。當次 feed UPDATETIME 落後查詢時刻 9 天，SKILL 加註 UPDATETIME 明顯落後時要註明資料可能停滯
+- `youbike-realtime`：2026-10-28 重測 9,713 站、14 個服務區（站數緩慢增加），服務區站數表同步
+- `taiwan-real-estate`：115S3 批次已上架（2026-10-28 實測 200、16.5MB、237 檔、台北市買賣 5,716 列），範例季代碼更新
+- `taiwan-produce`：錯誤處理加註海外/機房 IP 連線逾時（HTTP 000）時換台灣網路重試，不要當成資料集下架
+
 ## [0.9.1] - 2026-10-13
 
 ### Added

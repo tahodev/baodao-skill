@@ -6,7 +6,8 @@ root=Path(__file__).resolve().parents[1]
 MAX_WORKERS=8; TIMEOUT=20
 # 已知會依來源 IP 擋連線的網域：000/401/403/429/5xx 降為 WARN。
 # 404 不在此列——白名單網域上的 404 是真的連結失效,要 FAIL。
-WARN_HOSTS={'you-bike.com.tw', 'invoice.etax.nat.gov.tw', 'info.nhi.gov.tw', 'nhi.gov.tw', 'data.ntpc.gov.tw', 'data.taipei', 'etax.nat.gov.tw', 'opendata.cwa.gov.tw', 'alerts.ncdr.nat.gov.tw', 'opendata.tycg.gov.tw', 'youbike.com.tw', 'data.gov.tw', 'newdatacenter.taichung.gov.tw', 'stats.moe.gov.tw'}
+# data.moa.gov.tw:2026-10-28 自兩個海外網路實測 TCP 連線逾時(HTTP 000);同一端點 2026-09-19 從台灣網路實測 200,資料集仍在 data.gov.tw 8066 上架
+WARN_HOSTS={'you-bike.com.tw', 'data.moa.gov.tw', 'invoice.etax.nat.gov.tw', 'info.nhi.gov.tw', 'nhi.gov.tw', 'data.ntpc.gov.tw', 'data.taipei', 'etax.nat.gov.tw', 'opendata.cwa.gov.tw', 'alerts.ncdr.nat.gov.tw', 'opendata.tycg.gov.tw', 'youbike.com.tw', 'data.gov.tw', 'newdatacenter.taichung.gov.tw', 'stats.moe.gov.tw'}
 OPENAPI_HOSTS={'opendata.cwa.gov.tw'}
 # 文件裡的 URL 模式（帶 <期別> 等占位說明、或參數空著的前綴）不是可抓取的端點,跳過。
 SKIP_URLS={

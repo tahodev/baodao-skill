@@ -102,15 +102,16 @@ def check_hospital():
 
 def check_parking():
     data = json.loads(fetch('https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_allavailable.json'))
-    check_volatile('taiwan-parking realtime lots', len(data['data']['park']), 1071)
+    # 即時場數一個月內觀測 1,188(9/26)→1,071(10/13)→1,214(10/28),兩週可差 ±13%,容忍放寬到 ±15%
+    check_volatile('taiwan-parking realtime lots', len(data['data']['park']), 1214, tol=0.15)
     data = json.loads(fetch('https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_alldesc.json'))
-    check_volatile('taiwan-parking static lots', len(data['data']['park']), 1775)
+    check_volatile('taiwan-parking static lots', len(data['data']['park']), 1767)
 
 
 def check_youbike():
     # apis.youbike.com.tw 由 Incapsula 防護,機房 IP 常被擋——擋住時走 WARN skip
     data = json.loads(fetch('https://apis.youbike.com.tw/json/station-yb2.json', timeout=60))
-    check_volatile('youbike-realtime total stations', len(data), 9629)
+    check_volatile('youbike-realtime total stations', len(data), 9713)
 
 
 check_network('taiwan-museum', check_museum)

@@ -9,7 +9,7 @@ metadata:
 
 # taiwan-real-estate
 
-> 實測日：2026-09-19（最近一次端對端實測；數值基準日各自標於內文）
+> 實測日：2026-10-28（最近一次端對端實測；數值基準日各自標於內文）
 
 下載內政部「不動產交易實價查詢服務網」的季度批次 CSV（全台各縣市，買賣/預售屋/租賃）。不需要 API 金鑰或登入。
 
@@ -23,18 +23,18 @@ metadata:
 
 ```bash
 # 季代碼格式:民國年+S+季(115S2 = 2026 年第 2 季)
-curl -sm 60 -A 'Mozilla/5.0' -o /tmp/lvr.zip 'https://plvr.land.moi.gov.tw/DownloadSeason?season=115S2&type=zip&fileName=lvr_landcsv.zip'
+curl -sm 60 -A 'Mozilla/5.0' -o /tmp/lvr.zip 'https://plvr.land.moi.gov.tw/DownloadSeason?season=115S3&type=zip&fileName=lvr_landcsv.zip'
 unzip -o /tmp/lvr.zip -d /tmp/lvr
 ```
 
-2026-09-19 實測：HTTP 200、14.7MB，內含全台各縣市三類檔案；`a_lvr_land_a.csv`（台北市買賣）5,609 列。季代碼隨時間推進，當季抓不到時往前推一季。
+2026-10-28 實測：115S3 HTTP 200、16.5MB、237 個檔案；`a_lvr_land_a.csv`（台北市買賣）5,716 列（115S2 於 2026-09-19 實測 14.7MB、5,609 列）。季代碼隨時間推進，當季抓不到時往前推一季。
 
 ### 2. 格式
 
 - UTF-8 BOM；第 1 列中文欄名、第 2 列英文欄名，用 `utf-8-sig` 讀、跳過第 2 列
 - 30+ 欄：鄉鎮市區、交易標的（房地/建物/土地/車位）、土地位置建物門牌、交易年月日（民國 1150601）、總價元、單價元平方公尺、建物型態、車位資訊、備註、編號
 - 縣市代碼是單字母（a、b、c…）：**不要死背對照**——開檔看「鄉鎮市區」值即可確認縣市，或查內政部下載說明頁
-- 實測範例：台北市檔案中一筆中山區車位，交易日期 115/06/01，總價 370 萬元
+- 實測範例（115S2 檔）：台北市檔案中一筆中山區車位，交易日期 115/06/01，總價 370 萬元
 
 ### 3. 查詢範例
 
@@ -63,4 +63,4 @@ for r in deals[:5]:
 
 ## English summary
 
-Taiwan real-price registry (實價登錄) quarterly batch download, keyless. `curl 'https://plvr.land.moi.gov.tw/DownloadSeason?season=115S2&type=zip&fileName=lvr_landcsv.zip'` (~15MB; season = ROC year + S + quarter). Files per county letter: `<code>_lvr_land_a.csv` (sales), `_b` (pre-sale), `_c` (rentals). UTF-8 BOM with TWO header rows (Chinese then English - skip row 2). 30+ columns: district, transaction target, address (de-identified ranges), ROC date, total price, unit price per m² (multiply by 3.30579 for ping price). Verified 2026-09-19 (115S2 zip, Taipei sales file 5,609 rows; e.g. Zhongshan parking space 115/06/01, 3.7M TWD). Declarations lag transactions by 1-2 months; say so when recent deals are missing.
+Taiwan real-price registry (實價登錄) quarterly batch download, keyless. `curl 'https://plvr.land.moi.gov.tw/DownloadSeason?season=115S3&type=zip&fileName=lvr_landcsv.zip'` (~16.5MB; season = ROC year + S + quarter). Files per county letter: `<code>_lvr_land_a.csv` (sales), `_b` (pre-sale), `_c` (rentals). UTF-8 BOM with TWO header rows (Chinese then English - skip row 2). 30+ columns: district, transaction target, address (de-identified ranges), ROC date, total price, unit price per m² (multiply by 3.30579 for ping price). Verified 2026-10-28 (115S3 zip, 237 files, Taipei sales file 5,716 rows; 115S2 verified 2026-09-19: 5,609 rows, incl. a Zhongshan parking space traded 115/06/01 for 3.7M TWD). Declarations lag transactions by 1-2 months; say so when recent deals are missing.

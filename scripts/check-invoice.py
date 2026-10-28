@@ -14,7 +14,8 @@ import sys
 import urllib.request
 
 URL = 'https://invoice.etax.nat.gov.tw/lastNumber.html'
-UA = {'User-Agent': 'skill-repo-health-check/1.0'}
+# conventions.md:政府網站偶爾擋預設 UA,帶 Mozilla/5.0 較穩;自報家門的 UA 更容易被 etax 攔
+UA = {'User-Agent': 'Mozilla/5.0'}
 
 try:
     req = urllib.request.Request(URL, headers=UA)

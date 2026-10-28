@@ -9,7 +9,7 @@ metadata:
 
 # taiwan-parking
 
-> 實測日：2026-09-26（最近一次端對端實測；數值基準日各自標於內文）
+> 實測日：2026-10-28（最近一次端對端實測；數值基準日各自標於內文）
 
 用台北市停車管理工程處的公開 JSON 查台北市停車場的即時剩餘車位。不需要 API 金鑰或登入。兩支 feed 搭配使用：**即時剩位**（allavailable）與**靜態資料**（alldesc：場名、地址、費率、總格數）。
 
@@ -25,7 +25,7 @@ metadata:
 curl -sm 30 -o /tmp/park.json 'https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_allavailable.json'
 ```
 
-2026-09-26 實測：HTTP 200、約 474KB、1,188 場，UPDATETIME 與查詢時刻同小時（近即時）。場數會隨開歇業緩慢變動，本數字是該日實測值。欄位：`id`（場站代碼，如 TPE0001）、`availablecar`（小型車可停數）、`availablemotor`、`availablebus`、`availablehandicap`（身障格）、`availablepregnancy`（孕婦親子格）、`availableheavymotor`，部分場另有 `ChargeStation.scoketStatusList`（充電樁，spot_status 為 待機中/充電中）。
+2026-10-28 實測：HTTP 200、1,214 場（9/26 為 1,188、10/13 為 1,071——場數兩週可差一成以上，引用時附附實測日）。當次 UPDATETIME 為 2026-10-19 10:26，落後查詢時刻 9 天；UPDATETIME 明顯落後時要註明資料可能停滯，不要當近即時回報。欄位：`id`（場站代碼，如 TPE0001）、`availablecar`（小型車可停數）、`availablemotor`、`availablebus`、`availablehandicap`（身障格）、`availablepregnancy`（孕婦親子格）、`availableheavymotor`，部分場另有 `ChargeStation.scoketStatusList`（充電樁，spot_status 為 待機中/充電中）。
 
 **`-9` = 該場無此車種資料**（2026-09-26 實測 1,188 場中 88 場 availablecar 為 -9），不是「停滿」也不是錯誤，回報時略過或說「無資料」。
 
@@ -35,7 +35,7 @@ curl -sm 30 -o /tmp/park.json 'https://tcgbusfs.blob.core.windows.net/blobtcmsv/
 curl -sm 30 -o /tmp/parkdesc.json 'https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_alldesc.json'
 ```
 
-2026-09-26 實測：HTTP 200、約 2.8MB、1,775 場（含無即時資料的場）。欄位：`id`、`area`（行政區）、`name`、`address`、`tel`、`payex`（費率說明文字）、`serviceTime`、`totalcar` 等總格數、`tw97x`/`tw97y`（TWD97 坐標，字串）。
+2026-10-28 實測：HTTP 200、約 2.8MB、1,767 場（9/26 為 1,775；含無即時資料的場）。欄位：`id`、`area`（行政區）、`name`、`address`、`tel`、`payex`（費率說明文字）、`serviceTime`、`totalcar` 等總格數、`tw97x`/`tw97y`（TWD97 坐標，字串）。
 
 ### 3. 組合查詢範例
 
@@ -60,4 +60,4 @@ jq -r --slurpfile d /tmp/parkdesc.json '
 
 ## English summary
 
-Taipei City parking availability, keyless. Real-time availability: `https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_allavailable.json` (~474KB, 1,071 lots, fields availablecar/availablemotor/..., some with EV-charger status). Static details: `https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_alldesc.json` (~2.8MB, 1,762 lots: name, area, address, pricing text, totals, TWD97 coords). Join on `id`. `-9` means "no data for this vehicle type" - not full, not an error. Verified 2026-10-13 (e.g. 台灣聯通長春停車場, Zhongshan Dist., 15 car spaces free at query time on 2026-09-19). Taipei only; roadside metered spaces not included; always cite the feed's UPDATETIME.
+Taipei City parking availability, keyless. Real-time availability: `https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_allavailable.json` (1,214 lots, fields availablecar/availablemotor/..., some with EV-charger status). Static details: `https://tcgbusfs.blob.core.windows.net/blobtcmsv/TCMSV_alldesc.json` (~2.8MB, 1,767 lots: name, area, address, pricing text, totals, TWD97 coords). Join on `id`. `-9` means "no data for this vehicle type" - not full, not an error. Verified 2026-10-28 (e.g. 台灣聯通長春停車場, Zhongshan Dist., 15 car spaces free at query time on 2026-09-19). Taipei only; roadside metered spaces not included; always cite the feed's UPDATETIME.

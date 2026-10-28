@@ -5,7 +5,7 @@
 排程執行時由 health-check.yml 自動開 issue，作為再實測的提醒。
 沒有實測日標頭的技能只警告（應補上標頭）。
 """
-from datetime import date
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 import re, sys
 
@@ -13,7 +13,9 @@ STALE_AFTER_DAYS = 90
 HEADER_RE = re.compile(r'實測日[:：]\s*(\d{4}-\d{2}-\d{2})')
 
 root = Path(__file__).resolve().parents[1]
-today = date.today()
+# 本倉庫的「今天」是台灣時間 UTC+8（docs/conventions.md）,不用 runner 本地日期
+# （GitHub runner 是 UTC,台灣清晨的實測日會被當成「未來」,90 天邊界也會差一天）
+today = datetime.now(timezone(timedelta(hours=8))).date()
 stale, missing = [], []
 for path in sorted(root.glob('*/SKILL.md')):
     m = HEADER_RE.search(path.read_text(encoding='utf-8'))

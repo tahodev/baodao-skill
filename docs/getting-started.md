@@ -37,7 +37,7 @@
 
 ## 查資料
 
-- `taiwan-hospital`：健保特約院所 37,133 家
+- `taiwan-hospital`：健保特約院所 37,175 家（2026-10-02 實測，每週小幅變動）
 - `taiwan-library`：全台 5,207 館圖書館名錄
 - `taiwan-museum`：全台 144 間博物館
 - `taiwan-schools`：國中/國小名錄與班級學生數

@@ -3,7 +3,7 @@
 查 YouBike 2.0 站點即時可借車輛與可還空位。免 API 金鑰、免登入，`curl` + `jq` 即可。
 
 **主要來源：官方統一 feed（全台 14 個服務區）**
-- https://apis.youbike.com.tw/json/station-yb2.json — youbike.com.tw 地圖用的即時 JSON，約 9,600 站（2026-09-26 實測 9,629），涵蓋雙北、桃園、台中、台南、高雄、新竹、嘉義、苗栗、屏東、台東等 14 個服務區，每站含電輔車明細（`available_spaces_detail.eyb`）
+- https://apis.youbike.com.tw/json/station-yb2.json — youbike.com.tw 地圖用的即時 JSON，約 9,700 站（2026-10-28 實測 9,713），涵蓋雙北、桃園、台中、台南、高雄、新竹、嘉義、苗栗、屏東、台東等 14 個服務區，每站含電輔車明細（`available_spaces_detail.eyb`）
 - 非公開文件化 API，欄位可能無預警調整 → 下列各市府 feed 保留作為備援
 - 地區注意：apis.youbike.com.tw 由 Incapsula 防護，依來源 IP 攔截（2026-09-11 實測：美國機房 IP 拿到非 JSON 回應，台灣 IP 與部分海外 IP 正常）。CI 的 URL 檢查刻意跳過此網域；從台灣 IP 手動驗證。被擋時（503 / 非 JSON）改用下方市府 feed，不要當成全台資料失效
 
