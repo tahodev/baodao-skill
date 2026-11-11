@@ -6,6 +6,9 @@
 
 ### Fixed
 
+- `scripts/check-urls.py`：`service.taipower.com.tw`、`plvr.land.moi.gov.tw`、`gazette.nat.gov.tw` 加入已知依來源 IP 攔連線的網域（2026-11-11 自海外網路實測三者皆 200；GitHub runner 分別回 000／000／521），連線失敗降為 WARN。修復 2026-11-03 起 health-check urls 步驟的反覆失敗（issue #17）
+- `scripts/check-urls.py`：暫時性失敗（000／5xx）重試由 1 次（5 秒）改為最多 2 次（5 秒、15 秒退避）
+
 - `scripts/check-urls.py`：`data.moa.gov.tw` 加入已知依來源 IP 攔連線的網域（2026-10-28 自兩個海外網路實測 TCP 連線逾時 HTTP 000；同一端點 2026-09-19 從台灣網路實測 200，資料集仍在 data.gov.tw 8066 上架），連線失敗降為 WARN。修復 2026-10-23 起 health-check 的 urls 步驟失敗（issue #12）
 - `scripts/check-measured-date.py`：「今天」改按台灣時間 UTC+8 計算（conventions.md 的時區慣例），不再用 runner 本地日期
 - `scripts/check-invoice.py`：探測 UA 改為 `Mozilla/5.0`（conventions.md：政府網站偶爾擋預設 UA）

@@ -7,7 +7,10 @@ MAX_WORKERS=8; TIMEOUT=20
 # 已知會依來源 IP 擋連線的網域：000/401/403/429/5xx 降為 WARN。
 # 404 不在此列——白名單網域上的 404 是真的連結失效,要 FAIL。
 # data.moa.gov.tw:2026-10-28 自兩個海外網路實測 TCP 連線逾時(HTTP 000);同一端點 2026-09-19 從台灣網路實測 200,資料集仍在 data.gov.tw 8066 上架
-WARN_HOSTS={'you-bike.com.tw', 'data.moa.gov.tw', 'invoice.etax.nat.gov.tw', 'info.nhi.gov.tw', 'nhi.gov.tw', 'data.ntpc.gov.tw', 'data.taipei', 'etax.nat.gov.tw', 'opendata.cwa.gov.tw', 'alerts.ncdr.nat.gov.tw', 'opendata.tycg.gov.tw', 'youbike.com.tw', 'data.gov.tw', 'newdatacenter.taichung.gov.tw', 'stats.moe.gov.tw'}
+# service.taipower.com.tw:2026-11-11 自海外網路實測 200(JSON 正常);GitHub runner TCP 逾時(000),11/4·11/6·11/10 三度失敗且隔天自癒
+# plvr.land.moi.gov.tw:2026-11-11 自海外網路實測 200(zip 16.5MB);GitHub runner 000(11/3)
+# gazette.nat.gov.tw:2026-11-11 自海外網路實測 200(PDF);GitHub runner 回 521(10/29、11/1),疑擋雲端 IP
+WARN_HOSTS={'you-bike.com.tw', 'data.moa.gov.tw', 'invoice.etax.nat.gov.tw', 'info.nhi.gov.tw', 'nhi.gov.tw', 'data.ntpc.gov.tw', 'data.taipei', 'etax.nat.gov.tw', 'opendata.cwa.gov.tw', 'alerts.ncdr.nat.gov.tw', 'opendata.tycg.gov.tw', 'youbike.com.tw', 'data.gov.tw', 'newdatacenter.taichung.gov.tw', 'stats.moe.gov.tw', 'service.taipower.com.tw', 'plvr.land.moi.gov.tw', 'gazette.nat.gov.tw'}
 OPENAPI_HOSTS={'opendata.cwa.gov.tw'}
 # 文件裡的 URL 模式（帶 <期別> 等占位說明、或參數空著的前綴）不是可抓取的端點,跳過。
 SKIP_URLS={
@@ -87,12 +90,15 @@ def check_once(pair):
     return ('FAIL',f'{owner}: {code} {disp}')
 
 def check(pair):
-    """暫時性失敗（連線 000 或 5xx）重試一次再判定，避免單次網路抖動讓排程變紅。"""
+    """暫時性失敗（連線 000 或 5xx）最多重試兩次（5 秒、15 秒退避）再判定，避免單次網路抖動讓排程變紅。"""
     status,msg=check_once(pair)
-    if status=='FAIL' and re.search(r': (000|5\d\d) ',msg):
-        time.sleep(5)
+    retries=0
+    for wait in (5,15):
+        if not (status=='FAIL' and re.search(r': (000|5\d\d) ',msg)): break
+        time.sleep(wait)
+        retries+=1
         status,msg=check_once(pair)
-        if status=='FAIL': msg+=' (retried once)'
+    if retries and status=='FAIL': msg+=f' (retried {retries}x)'
     return (status,msg)
 
 failed=False
