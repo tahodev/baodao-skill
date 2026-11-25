@@ -6,6 +6,8 @@
 
 ### Fixed
 
+- URL 健康檢查只在 HTML 可見文字中辨識 API 錯誤，避免正常頁面的預載 `error-404.css` 被誤判；新增 6 個離線回歸測試，保留真正 API 錯誤的失敗判定。
+
 - `scripts/check-urls.py`：`service.taipower.com.tw`、`plvr.land.moi.gov.tw`、`gazette.nat.gov.tw` 加入已知依來源 IP 攔連線的網域（2026-11-11 自海外網路實測三者皆 200；GitHub runner 分別回 000／000／521），連線失敗降為 WARN。修復 2026-11-03 起 health-check urls 步驟的反覆失敗（issue #17）
 - `scripts/check-urls.py`：暫時性失敗（000／5xx）重試由 1 次（5 秒）改為最多 2 次（5 秒、15 秒退避）
 
