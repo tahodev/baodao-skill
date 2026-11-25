@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+from html.parser import HTMLParser
 import json, re, subprocess, sys, threading, time
 root=Path(__file__).resolve().parents[1]
 MAX_WORKERS=8; TIMEOUT=20
@@ -39,7 +40,30 @@ def materialize(url):
 def host(url): return re.match(r'https?://([^/:]+)',url).group(1).lower()
 def warning_host(h): return any(h==x or h.endswith('.'+x) for x in WARN_HOSTS)
 def openapi_host(h): return any(h==x or h.endswith('.'+x) for x in OPENAPI_HOSTS)
+class VisibleTextParser(HTMLParser):
+    """Exclude asset URLs and script/style data from HTML error detection."""
+    def __init__(self):
+        super().__init__()
+        self.hidden = 0
+        self.parts = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in ('script', 'style'):
+            self.hidden += 1
+
+    def handle_endtag(self, tag):
+        if tag in ('script', 'style') and self.hidden:
+            self.hidden -= 1
+
+    def handle_data(self, data):
+        if not self.hidden:
+            self.parts.append(data)
+
 def api_error(body):
+    if re.match(r'\s*(?:<!doctype\s+html|<html\b)', body, re.I):
+        parser = VisibleTextParser()
+        parser.feed(body)
+        body = ' '.join(parser.parts)
     pats=[r'ERROR-[0-9]+',r'"(?:resultCode|returnCode)"\s*:\s*"?(?!00\b|INFO-000\b|0\b)([A-Z0-9_-]+)',r'<resultCode>\s*(?!00<)([^<]+)',
           r'該 API KEY [^。]*',r'API KEY\s*(不存在|已經到期|無效)']  # MOENV：HTTP 200 但回純文字金鑰錯誤
     for p in pats:

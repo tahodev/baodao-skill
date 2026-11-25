@@ -37,6 +37,8 @@ jobs:
         if: ${{ !cancelled() }}
         name: Run documented-code tests
         run: python3 tests/test_documented_code.py
+      - name: Test URL response error detection
+        run: python3 tests/test_url_checker.py
       - id: counts
         if: ${{ !cancelled() }}
         name: Re-verify headline record counts
